@@ -13,9 +13,13 @@
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "noEmit": true,
+    "forceConsistentCasingInFileNames": true,
 
     /* Linting */
     "strict": true,
+    "isolatedModules": true,
+    "noImplicitReturns": true,
+    "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
