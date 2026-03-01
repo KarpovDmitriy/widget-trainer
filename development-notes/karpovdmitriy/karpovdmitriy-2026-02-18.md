@@ -1,4 +1,4 @@
-# Date: 18-02-2026
+# Date: 2026-02-18
 
 - **What was done:**
   1. Created a private repository "tandem" with a short project description:
