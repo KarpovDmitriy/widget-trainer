@@ -1,0 +1,48 @@
+.inputGroup {
+  position: relative; /* Оставляем для позиционирования ошибки, если нужно */
+  margin-bottom: 1.5rem;
+}
+
+.labelRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+/* Стилизуем input как дочерний элемент .inputGroup */
+.inputGroup input {
+  width: 100%;
+  padding: 0.825rem 1rem;
+  font-size: 1rem;
+  color: var(--text-dark);
+  background-color: var(--input-bg);
+  border: 1px solid transparent;
+  border-radius: 0.475rem;
+  transition: 0.2s;
+}
+
+.inputGroup input:focus {
+  outline: none;
+  background-color: var(--input-focus);
+  border-color: var(--blue);
+}
+
+.inputGroup input[class*='invalid'] {
+  color: var(--text-error);
+  background-color: var(--bg-invalid);
+  border-color: var(--text-error);
+}
+
+.errorText {
+  position: absolute;
+  margin-top: 0.25rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-error);
+}

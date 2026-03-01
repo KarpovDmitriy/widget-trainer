@@ -1,0 +1,81 @@
+.authAside {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem;
+  color: var(--white);
+  background: linear-gradient(135deg, var(--logo) 0%, #085a8a 100%);
+}
+
+.authAside h1 {
+  margin-bottom: 1.5rem;
+  font-size: 2.25rem;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--white);
+  text-align: left;
+}
+
+.authAsideContent {
+  max-width: 500px;
+  text-align: left;
+}
+
+.authAsideDescription {
+  margin-bottom: 2.5rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: rgb(255 255 255 / 80%);
+}
+
+.authAsideFeatures {
+  padding: 0;
+  margin-bottom: 3rem;
+  list-style: none;
+}
+
+.authAsideFeatures li {
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.4;
+  color: rgb(255 255 255 / 90%);
+}
+
+.authAsideFeatures strong {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-size: 1.1rem;
+  color: var(--white);
+}
+
+.authAsideFooter {
+  padding-top: 2rem;
+  margin-top: auto;
+  border-top: 1px solid rgb(255 255 255 / 10%);
+}
+
+.authAsideFooter span {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--blue);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+@media (width <= 805px) {
+  .authAside {
+    flex: 0 0 auto;
+    align-items: center;
+    padding: 3rem 2rem;
+  }
+
+  .authAside h1 {
+    font-size: 2.2rem;
+  }
+
+  .authAsideContent,
+  .authAsideFooter {
+    display: none;
+  }
+}

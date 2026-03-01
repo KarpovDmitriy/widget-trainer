@@ -1,0 +1,50 @@
+.btnPrimary {
+  width: 100%;
+  padding: 0.9rem;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  outline: none;
+  background-color: var(--btn-primary);
+  border-radius: 0.475rem;
+  transition: 0.2s;
+}
+
+.btnPrimary:hover:not(:disabled) {
+  outline: none;
+  background-color: var(--btn-primary-hover);
+}
+
+.btnPrimary:disabled {
+  color: #a1a5b7;
+  cursor: not-allowed;
+  outline: none;
+  background-color: #e1e3ea;
+}
+
+.btnSocial {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  font-weight: 600;
+  color: #5e6278;
+  cursor: pointer;
+  outline: none;
+  border: 1px solid var(--border);
+  border-radius: 0.475rem;
+  transition: all 0.3s;
+}
+
+.btnSocial:hover {
+  color: var(--btn-primary);
+  outline: none;
+  background-color: var(--btn-primary-light);
+  border: 1px solid var(--btn-primary);
+  transition: all 0.3s;
+}
+
+.btnSocial:focus {
+  outline: none;
+}
