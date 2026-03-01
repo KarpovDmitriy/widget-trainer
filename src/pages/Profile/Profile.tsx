@@ -25,7 +25,7 @@ const Profile: React.FC = () => {
 
   return (
     <div className={styles.profileContainer}>
-      <div className={styles.profileHeader}>
+      <div className={styles.profileHeader} style={{ minHeight: '200px' }}>
         <div className={styles.profileHeaderTop}>
           <div className={styles.profileInfo}>
             <div className={styles.profileDetails}>
