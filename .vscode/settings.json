@@ -1,0 +1,66 @@
+{
+  "files.eol": "\n",
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "javascript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.preferences.importModuleSpecifierEnding": "minimal",
+
+  "css.validate": false,
+  "scss.validate": false,
+  "stylelint.validate": ["css", "scss"],
+
+  "prettier.requireConfig": true,
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.stylelint": "explicit"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact",
+    "typescript": "typescriptreact"
+  },
+  "folderTemplates.structures": [
+    {
+      "name": "React Component",
+      "structure": [
+        {
+          "fileName": "[FTName].tsx",
+          "template": "ReactTSX"
+        },
+        {
+          "fileName": "[FTName].module.css",
+          "template": "ReactCSS"
+        }
+      ],
+      "openFilesWhenDone": ["[FTName].tsx", "[FTName].module.css"]
+    }
+  ],
+  "folderTemplates.fileTemplates": {
+    "ReactTSX": [
+      "import { type PropsWithChildren } from 'react';",
+      "import styles from './[FTName].module.css';",
+      "",
+      "interface [FTName]Props extends PropsWithChildren {",
+      "  __addYourOwnPropsHere?: unknown;",
+      "}",
+      "",
+      "export const [FTName]: React.FC<[FTName]Props> = ({ children }) => {",
+      "  return <div className={styles.container}>{children || '[FTName]'}</div>;",
+      "};",
+      ""
+    ],
+    "ReactCSS": [".container {", "  display: block;", "}", ""]
+  },
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "typescript.tsdk": "node_modules\\typescript\\lib"
+}
