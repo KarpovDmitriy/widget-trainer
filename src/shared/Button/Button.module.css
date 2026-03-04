@@ -1,5 +1,5 @@
-.btnPrimary {
-  width: 100%;
+.primary {
+  min-width: 8.75rem;
   padding: 0.9rem;
   font-weight: 600;
   color: white;
@@ -7,22 +7,23 @@
   outline: none;
   background-color: var(--btn-primary);
   border-radius: 0.475rem;
-  transition: 0.2s;
+  transition: 0.3s;
 }
 
-.btnPrimary:hover:not(:disabled) {
+.primary:hover:not(:disabled) {
   outline: none;
   background-color: var(--btn-primary-hover);
+  transition: all 0.3s;
 }
 
-.btnPrimary:disabled {
+.primary:disabled {
   color: #a1a5b7;
   cursor: not-allowed;
   outline: none;
   background-color: #e1e3ea;
 }
 
-.btnSocial {
+.secondary {
   display: flex;
   gap: 10px;
   align-items: center;
@@ -37,7 +38,7 @@
   transition: all 0.3s;
 }
 
-.btnSocial:hover {
+.secondary:hover {
   color: var(--btn-primary);
   outline: none;
   background-color: var(--btn-primary-light);
@@ -45,6 +46,6 @@
   transition: all 0.3s;
 }
 
-.btnSocial:focus {
+.secondary:focus {
   outline: none;
 }

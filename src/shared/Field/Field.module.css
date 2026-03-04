@@ -1,6 +1,6 @@
 .inputGroup {
-  position: relative; /* Оставляем для позиционирования ошибки, если нужно */
-  margin-bottom: 1.5rem;
+  position: relative;
+  margin-bottom: 2rem;
 }
 
 .labelRow {
@@ -15,7 +15,11 @@
   color: var(--text-dark);
 }
 
-/* Стилизуем input как дочерний элемент .inputGroup */
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+}
+
 .inputGroup input {
   width: 100%;
   padding: 0.825rem 1rem;
@@ -41,8 +45,12 @@
 
 .errorText {
   position: absolute;
-  margin-top: 0.25rem;
+  bottom: -23px;
   font-size: 0.85rem;
   font-weight: 500;
   color: var(--text-error);
+}
+
+.hasError input {
+  border-color: red;
 }

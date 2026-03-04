@@ -1,16 +1,24 @@
-.authPage {
+.registerPage {
   display: flex;
+  flex-direction: row;
   min-height: 100vh;
   font-family: Inter, sans-serif;
   background-color: var(--white);
 }
 
-.authMain {
+.registerMain {
   display: flex;
   flex: 1;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 2rem;
+}
+
+.registerCard {
+  width: 100%;
+  max-width: 450px;
+  background: var(--white);
 }
 
 .subtitle {
@@ -25,12 +33,16 @@
   text-decoration: none;
 }
 
+.registerBtn {
+  width: 100%;
+}
+
 @media (width <= 805px) {
-  .authPage {
+  .registerPage {
     flex-direction: column;
   }
 
-  .authMain {
+  .registerMain {
     padding: 2.5rem 1.5rem;
   }
 }

@@ -1,5 +1,4 @@
 export const authContent = {
-  // Левая панель (HeaderAuth)
   aside: {
     title: 'Widget Trainer',
     subtitle: 'Interactive Trainer for Developers',
@@ -13,7 +12,6 @@ export const authContent = {
     footer: 'Deep dive into coding with visual tasks and gamified learning.',
   },
 
-  // Форма входа
   login: {
     title: 'Log in',
     googleBtn: 'Sign in with Google',
@@ -26,7 +24,6 @@ export const authContent = {
     },
   },
 
-  // Форма регистрации
   register: {
     title: 'Sign Up',
     subtitle: 'Already have an account?',

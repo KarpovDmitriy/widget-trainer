@@ -1,6 +1,6 @@
 import React from 'react';
-import { authContent } from '../../locales/en/auth';
-import styles from './HeaderAuth.module.css';
+import { authContent } from '../../../locales/en/auth';
+import styles from './AuthInfo.module.css';
 
 const HeaderAuth: React.FC = () => {
   const { aside } = authContent;

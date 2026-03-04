@@ -1,4 +1,4 @@
-.authPage {
+.loginPage {
   display: flex;
   flex-direction: row;
   min-height: 100vh;
@@ -6,7 +6,7 @@
   background-color: var(--white);
 }
 
-.authMain {
+.loginMain {
   display: flex;
   flex: 1;
   align-items: center;
@@ -14,13 +14,13 @@
   padding: 2rem;
 }
 
-.authCard {
+.loginCard {
   width: 100%;
   max-width: 450px;
-  background: white;
+  background: var(--white);
 }
 
-.authCard h2 {
+.loginCard h2 {
   margin-bottom: 0.5rem;
   font-size: 1.75rem;
   font-weight: 700;
@@ -56,48 +56,22 @@
   margin-left: 1.25rem;
 }
 
-.btnPrimary {
-  width: 100%;
-  padding: 0.9rem;
-  margin-top: 0.5rem;
-  font-size: 1rem;
-  font-weight: 600;
-  color: white;
-  cursor: pointer;
-  background-color: var(--btn-primary);
-  border: none;
-  border-radius: 0.475rem;
-  transition: background-color 0.2s;
-}
-
-.btnPrimary:hover:not(:disabled) {
-  background-color: var(--btn-primary-hover);
-}
-
-.btnPrimary:disabled {
-  color: #a1a5b7;
-  cursor: not-allowed;
-  background-color: #e1e3ea;
-}
-
 .forgotLink {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--blue);
   text-decoration: none;
 }
 
-.inputInvalid {
-  color: var(--text-error);
-  background-color: var(--bg-invalid);
-  border-color: var(--text-error);
+.loginBtn {
+  width: 100%;
 }
 
 @media (width <= 805px) {
-  .authPage {
+  .loginPage {
     flex-direction: column;
   }
 
-  .authMain {
+  .loginMain {
     padding: 2.5rem 1.5rem;
   }
 }
