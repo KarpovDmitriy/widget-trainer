@@ -1,4 +1,4 @@
-# Date: 23-02-2026
+# Date: 2026-02-23
 
 - **What was done:**
   1. Uniform code standards were established for the project: the repository structure was organized according to requirements, formatting and linting tools (ESLint, Prettier) were enabled, and naming rules for files, components, and variables were established. Basic configuration was prepared to maintain code quality across the team.
