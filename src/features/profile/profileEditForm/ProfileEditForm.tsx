@@ -9,6 +9,7 @@ import styles from '../Profile.module.css';
 
 interface ProfileEditFormProps {
   initialValues: UserData;
+
   onSubmit: (data: UserData) => void;
   onCancel: () => void;
 }

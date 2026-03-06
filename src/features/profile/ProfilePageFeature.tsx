@@ -23,7 +23,6 @@ const Profile: React.FC = () => {
   const navigate = useNavigate();
   const { nav, headers, notifications } = profileContent;
 
-  // Логика сохранения теперь принимает уже готовый объект data от RHF
   const handleSave = (data: UserData): void => {
     setProfileData({ type: 'SET_ALL', profile: data });
     alert(notifications.success);
@@ -76,7 +75,7 @@ const Profile: React.FC = () => {
             <ProfileOverview profileData={profileData} />
           ) : (
             <ProfileEditForm
-              initialValues={profileData} // Передаем текущие данные как начальные
+              initialValues={profileData}
               onSubmit={handleSave}
               onCancel={() => setActiveTab('overview')}
             />
