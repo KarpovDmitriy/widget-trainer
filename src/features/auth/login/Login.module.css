@@ -1,0 +1,77 @@
+.loginPage {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  font-family: Inter, sans-serif;
+  background-color: var(--white);
+}
+
+.loginMain {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.loginCard {
+  width: 100%;
+  max-width: 450px;
+  background: var(--white);
+}
+
+.loginCard h2 {
+  margin-bottom: 0.5rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.btnSignInGoogle {
+  width: 100%;
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+  margin: 2rem 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-gray);
+  text-align: center;
+}
+
+.separator::before,
+.separator::after {
+  flex: 1;
+  content: '';
+  border-bottom: 1px solid var(--border);
+}
+
+.separator:not(:empty)::before {
+  margin-right: 1.25rem;
+}
+
+.separator:not(:empty)::after {
+  margin-left: 1.25rem;
+}
+
+.forgotLink {
+  font-size: 0.75rem;
+  color: var(--blue);
+  text-decoration: none;
+}
+
+.loginBtn {
+  width: 100%;
+}
+
+@media (width <= 805px) {
+  .loginPage {
+    flex-direction: column;
+  }
+
+  .loginMain {
+    padding: 2.5rem 1.5rem;
+  }
+}
