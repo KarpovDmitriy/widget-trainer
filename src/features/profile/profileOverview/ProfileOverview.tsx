@@ -1,7 +1,7 @@
 import React from 'react';
-import { countryOptions, languageOptions, timezoneOptions } from '../../../data/selectOptions';
-import type { UserData } from '../../../data/userDefaults';
-import { profileContent } from '../../../locales/en/profile';
+import { countryOptions, languageOptions, timezoneOptions } from '@data/selectOptions';
+import type { UserData } from '@data/userDefaults';
+import { profileContent } from '@locales/en/profile';
 import styles from '../Profile.module.css';
 
 interface ProfileOverviewProps {

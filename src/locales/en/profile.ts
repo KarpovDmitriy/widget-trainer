@@ -24,6 +24,12 @@ export const profileContent = {
     save: 'Save Changes',
     cancel: 'Cancel',
   },
+  errors: {
+    required: (field: string): string => `${field} is required`,
+    invalidPhone: 'Invalid phone format',
+    invalidUrl: 'Must be a valid URL (e.g., https://example.com)',
+  },
+
   notifications: {
     success: 'Settings updated!',
   },

@@ -9,6 +9,7 @@ interface ControlledInputProps<T extends FieldValues> {
   rules?: object;
   type?: string;
   placeholder?: string;
+  extra?: React.ReactNode;
 }
 
 export function ControlledInput<T extends FieldValues>({
@@ -18,6 +19,7 @@ export function ControlledInput<T extends FieldValues>({
   rules,
   type = 'text',
   placeholder,
+  extra,
 }: ControlledInputProps<T>): React.JSX.Element {
   const {
     field,
@@ -25,7 +27,7 @@ export function ControlledInput<T extends FieldValues>({
   } = useController({ name, control, rules });
 
   return (
-    <Field label={label} error={error?.message}>
+    <Field label={label} error={error?.message} extra={extra}>
       <input {...field} type={type} placeholder={placeholder} className={error ? 'invalid' : ''} />
     </Field>
   );

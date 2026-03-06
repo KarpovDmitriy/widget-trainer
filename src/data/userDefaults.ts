@@ -15,8 +15,8 @@ export interface UserData {
   lastName: string;
   email: string;
   company: string;
-  phone: string;
-  site: string;
+  phone?: string;
+  site?: string;
   country: string;
   language: string;
   timezone: string;

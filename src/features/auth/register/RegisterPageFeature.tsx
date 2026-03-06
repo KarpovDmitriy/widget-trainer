@@ -1,32 +1,31 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import AuthInfo from '@features/auth/authInfo/AuthInfo';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { authContent } from '@locales/en/auth';
+import { type RegisterFormData, registerSchema } from '@shared/Validation/schemas';
 import { useForm } from 'react-hook-form';
 import Button from '@src/shared/Button/Button';
-import { isValidEmail, isValidPassword, isValidUsername } from '@src/utils/validation';
-import AuthInfo from '../../../features/auth/authInfo/AuthInfo';
-import { authContent } from '../../../locales/en/auth';
-import Field from '../../../shared/Field/Field';
+import { ControlledInput } from '@src/shared/Controlled/ControlledInput';
 import styles from './Register.module.css';
 
-const INITIAL_REGISTER_DATA = {
+const INITIAL_REGISTER_DATA: RegisterFormData = {
   username: '',
   email: '',
   password: '',
   confirmPassword: '',
 };
 
-type RegisterFormData = typeof INITIAL_REGISTER_DATA;
-
-const RegisterPageFeature: React.FC = () => {
+const RegisterPageFeature: React.FC = (): React.JSX.Element => {
   const navigate = useNavigate();
   const { register: content } = authContent;
 
   const {
-    register,
+    control,
     handleSubmit,
-    getValues,
-    formState: { errors, isValid },
+    formState: { isValid },
   } = useForm<RegisterFormData>({
+    resolver: zodResolver(registerSchema),
     defaultValues: INITIAL_REGISTER_DATA,
     mode: 'onChange',
   });
@@ -49,53 +48,31 @@ const RegisterPageFeature: React.FC = () => {
           </div>
 
           <form onSubmit={handleSubmit(onFormSubmit)}>
-            <Field label="Username" error={errors.username?.message}>
-              <input
-                {...register('username', {
-                  required: content.errors.username,
-                  validate: (val) => isValidUsername(val) || content.errors.username,
-                })}
-                className={errors.username ? 'invalid' : ''}
-                placeholder="John Doe"
-              />
-            </Field>
+            <ControlledInput name="username" control={control} label="Username" placeholder="John Doe" />
 
-            <Field label="Email" error={errors.email?.message}>
-              <input
-                type="email"
-                {...register('email', {
-                  required: content.errors.email,
-                  validate: (val) => isValidEmail(val) || content.errors.email,
-                })}
-                className={errors.email ? 'invalid' : ''}
-                placeholder="example@domain.com"
-              />
-            </Field>
+            <ControlledInput
+              name="email"
+              control={control}
+              label="Email"
+              type="email"
+              placeholder="example@domain.com"
+            />
 
-            <Field label="Password" error={errors.password?.message}>
-              <input
-                type="password"
-                {...register('password', {
-                  required: content.errors.password,
-                  validate: (val) => isValidPassword(val) || content.errors.password,
-                })}
-                className={errors.password ? 'invalid' : ''}
-                placeholder="••••••••"
-              />
-            </Field>
+            <ControlledInput
+              name="password"
+              control={control}
+              label="Password"
+              type="password"
+              placeholder="••••••••"
+            />
 
-            <Field label="Confirm Password" error={errors.confirmPassword?.message}>
-              <input
-                type="password"
-                {...register('confirmPassword', {
-                  required: content.errors.confirmPassword,
-
-                  validate: (val) => val === getValues('password') || content.errors.confirmPassword,
-                })}
-                className={errors.confirmPassword ? 'invalid' : ''}
-                placeholder="••••••••"
-              />
-            </Field>
+            <ControlledInput
+              name="confirmPassword"
+              control={control}
+              label="Confirm Password"
+              type="password"
+              placeholder="••••••••"
+            />
 
             <Button className={styles.registerBtn} type="submit" variant="primary" disabled={!isValid}>
               {content.submitBtn}

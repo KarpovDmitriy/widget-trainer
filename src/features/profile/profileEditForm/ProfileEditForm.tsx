@@ -1,26 +1,28 @@
 import React from 'react';
+import { countryOptions, languageOptions, timezoneOptions } from '@data/selectOptions';
+import { type UserData } from '@data/userDefaults';
+import { zodResolver } from '@hookform/resolvers/zod';
+import Button from '@shared/Button/Button';
+import { ControlledInput } from '@shared/Controlled/ControlledInput';
+import { ControlledSelect } from '@shared/Controlled/ControlledSelect';
+import { type ProfileFormData, profileSchema } from '@shared/Validation/schemas';
 import { useForm } from 'react-hook-form';
-import { countryOptions, languageOptions, timezoneOptions } from '../../../data/selectOptions';
-import { type UserData } from '../../../data/userDefaults';
-import Button from '../../../shared/Button/Button';
-import { ControlledInput } from '../../../shared/Controlled/ControlledInput';
-import { ControlledSelect } from '../../../shared/Controlled/ControlledSelect';
 import styles from '../Profile.module.css';
 
 interface ProfileEditFormProps {
   initialValues: UserData;
-
   onSubmit: (data: UserData) => void;
   onCancel: () => void;
 }
 
-const ProfileEditForm: React.FC<ProfileEditFormProps> = ({ initialValues, onSubmit }) => {
+const ProfileEditForm: React.FC<ProfileEditFormProps> = ({ initialValues, onSubmit }): React.JSX.Element => {
   const {
     control,
     handleSubmit,
     reset,
     formState: { isValid },
-  } = useForm<UserData>({
+  } = useForm<ProfileFormData>({
+    resolver: zodResolver(profileSchema),
     defaultValues: initialValues,
     mode: 'onChange',
   });
@@ -32,8 +34,8 @@ const ProfileEditForm: React.FC<ProfileEditFormProps> = ({ initialValues, onSubm
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.row}>
-        <ControlledInput name="firstName" control={control} label="First Name" rules={{ required: 'Required' }} />
-        <ControlledInput name="lastName" control={control} label="Last Name" rules={{ required: 'Required' }} />
+        <ControlledInput name="firstName" control={control} label="First Name" />
+        <ControlledInput name="lastName" control={control} label="Last Name" />
       </div>
 
       <div className={styles.row}>
@@ -46,13 +48,7 @@ const ProfileEditForm: React.FC<ProfileEditFormProps> = ({ initialValues, onSubm
       </div>
 
       <div className={styles.selectWrapper}>
-        <ControlledSelect
-          name="country"
-          control={control}
-          label="Country"
-          options={countryOptions}
-          rules={{ required: 'Required' }}
-        />
+        <ControlledSelect name="country" control={control} label="Country" options={countryOptions} />
         <ControlledSelect name="language" control={control} label="Language" options={languageOptions} />
         <ControlledSelect name="timezone" control={control} label="TimeZone" options={timezoneOptions} />
       </div>

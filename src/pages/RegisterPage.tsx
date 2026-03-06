@@ -1,5 +1,5 @@
 import React from 'react';
-import RegisterPageFeature from '../features/auth/register/RegisterPageFeature';
+import RegisterPageFeature from '@features/auth/register/RegisterPageFeature';
 
 const RegisterPage: React.FC = () => {
   return (

@@ -31,7 +31,7 @@
 }
 
 .profileDetails h1 {
-  margin: 0 0 0.5rem;
+  margin: 0 0 1.5rem;
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--text-dark);
@@ -110,7 +110,7 @@
 }
 
 .infoLabel {
-  width: 30%;
+  width: clamp(30%, 50% - 10vw, 40%);
   font-size: 1rem;
   font-weight: 500;
   color: var(--text-gray);
@@ -173,4 +173,17 @@
 
 .btnPrimary {
   width: 15%;
+}
+
+@media (width <= 650px) {
+  .row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .selectWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
 }

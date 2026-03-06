@@ -1,9 +1,9 @@
 import React, { useReducer, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { countryOptions } from '@data/selectOptions';
+import { INITIAL_USER_DATA, type UserData } from '@data/userDefaults';
+import { profileContent } from '@locales/en/profile';
 import Button from '@src/shared/Button/Button';
-import { countryOptions } from '../../data/selectOptions';
-import { INITIAL_USER_DATA, type UserData } from '../../data/userDefaults';
-import { profileContent } from '../../locales/en/profile';
 import styles from './Profile.module.css';
 import ProfileEditForm from './profileEditForm/ProfileEditForm';
 import ProfileOverview from './profileOverview/ProfileOverview';
