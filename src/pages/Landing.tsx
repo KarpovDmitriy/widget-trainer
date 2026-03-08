@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const Landing: React.FC = () => {
   return (
     <div style={{ padding: '2rem', fontFamily: 'Arial, sans-serif' }}>
-      <h1>Tandem — Home Page</h1>
+      <h1>Tandem - Home Page</h1>
       <p>Welcome! This is a landing page for guests.</p>
 
       <nav

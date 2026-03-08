@@ -1,32 +1,39 @@
-import React, { useReducer, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { countryOptions } from '@data/selectOptions';
 import { INITIAL_USER_DATA, type UserData } from '@data/userDefaults';
 import { profileContent } from '@locales/en/profile';
+import { useAuthStore } from '@s/auth.store';
 import Button from '@src/shared/Button/Button';
 import styles from './Profile.module.css';
 import ProfileEditForm from './profileEditForm/ProfileEditForm';
 import ProfileOverview from './profileOverview/ProfileOverview';
 
-type ProfileAction = { type: 'SET_ALL'; profile: UserData };
-
-const profileReducer = (state: UserData, action: ProfileAction): UserData => {
-  if (action.type === 'SET_ALL') {
-    return action.profile;
-  }
-  return state;
-};
-
 const Profile: React.FC = () => {
-  const [profileData, setProfileData] = useReducer(profileReducer, INITIAL_USER_DATA);
+  const profile = useAuthStore((s) => s.profile);
+  const storeError = useAuthStore((s) => s.error);
+  const saveProfile = useAuthStore((s) => s.saveProfile);
+  const fetchProfile = useAuthStore((s) => s.fetchProfile);
+
   const [activeTab, setActiveTab] = useState<'overview' | 'settings'>('overview');
   const navigate = useNavigate();
   const { nav, headers, notifications } = profileContent;
 
-  const handleSave = (data: UserData): void => {
-    setProfileData({ type: 'SET_ALL', profile: data });
-    alert(notifications.success);
-    setActiveTab('overview');
+  const profileData: UserData = profile ?? INITIAL_USER_DATA;
+
+  useEffect(() => {
+    void fetchProfile();
+  }, [fetchProfile]);
+
+  const handleSave = async (data: UserData): Promise<void> => {
+    try {
+      await saveProfile(data);
+      alert(notifications.success);
+      setActiveTab('overview');
+    } catch (err) {
+      // TODO: replace with toast notification when global toast system is implemented
+      alert((err as Error).message ?? '[Profile] failed to save profile');
+    }
   };
 
   return (
@@ -65,6 +72,9 @@ const Profile: React.FC = () => {
           </button>
         </nav>
       </div>
+
+      {/* TODO: remove this inline error once the global toast system is implemented */}
+      {storeError && <p className={styles.storeError}>{storeError}</p>}
 
       <div className={styles.card}>
         <div className={styles.cardHeader}>

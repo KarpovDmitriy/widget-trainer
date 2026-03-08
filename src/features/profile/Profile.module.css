@@ -175,6 +175,16 @@
   width: 15%;
 }
 
+.storeError {
+  padding: 0.5rem 1rem;
+  margin: 0.75rem 0;
+  font-size: 0.85rem;
+  color: #dc3545;
+  text-align: center;
+  background: #fce4e4;
+  border-radius: 6px;
+}
+
 @media (width <= 650px) {
   .row {
     flex-direction: column;

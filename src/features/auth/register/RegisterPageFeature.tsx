@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthInfo from '@features/auth/authInfo/AuthInfo';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { authContent } from '@locales/en/auth';
 import { type RegisterFormData, registerSchema } from '@shared/Validation/schemas';
 import { useForm } from 'react-hook-form';
+import { useAuthStore } from '@s/auth.store';
 import Button from '@src/shared/Button/Button';
 import { ControlledInput } from '@src/shared/Controlled/ControlledInput';
 import styles from './Register.module.css';
@@ -19,6 +20,9 @@ const INITIAL_REGISTER_DATA: RegisterFormData = {
 const RegisterPageFeature: React.FC = (): React.JSX.Element => {
   const navigate = useNavigate();
   const { register: content } = authContent;
+  const authRegister = useAuthStore((s) => s.register);
+  const [serverError, setServerError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
     control,
@@ -30,8 +34,17 @@ const RegisterPageFeature: React.FC = (): React.JSX.Element => {
     mode: 'onChange',
   });
 
-  const onFormSubmit = (): void => {
-    navigate('/login');
+  const onFormSubmit = async (data: RegisterFormData): Promise<void> => {
+    try {
+      setServerError(null);
+      setIsSubmitting(true);
+      await authRegister(data.username, data.email, data.password);
+      navigate('/login');
+    } catch (err) {
+      setServerError((err as Error).message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -74,9 +87,11 @@ const RegisterPageFeature: React.FC = (): React.JSX.Element => {
               placeholder="••••••••"
             />
 
-            <Button className={styles.registerBtn} type="submit" variant="primary" disabled={!isValid}>
-              {content.submitBtn}
+            <Button className={styles.registerBtn} type="submit" variant="primary" disabled={!isValid || isSubmitting}>
+              {isSubmitting ? 'Signing up…' : content.submitBtn}
             </Button>
+
+            {serverError && <p className={styles.serverError}>{serverError}</p>}
           </form>
         </div>
       </div>

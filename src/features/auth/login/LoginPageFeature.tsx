@@ -1,11 +1,12 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import googleIcon from '@assets/icon-google.png';
 import AuthInfo from '@features/auth/authInfo/AuthInfo';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { authContent } from '@locales/en/auth';
 import { type LoginFormData, loginSchema } from '@shared/Validation/schemas';
 import { useForm } from 'react-hook-form';
+import { useAuthStore } from '@s/auth.store';
 import Button from '@src/shared/Button/Button';
 import { ControlledInput } from '@src/shared/Controlled/ControlledInput';
 import styles from './Login.module.css';
@@ -17,6 +18,10 @@ const INITIAL_LOGIN_DATA: LoginFormData = {
 
 const Login: React.FC = (): React.JSX.Element => {
   const { login } = authContent;
+  const navigate = useNavigate();
+  const authLogin = useAuthStore((s) => s.login);
+  const [serverError, setServerError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
     control,
@@ -28,8 +33,17 @@ const Login: React.FC = (): React.JSX.Element => {
     mode: 'onChange',
   });
 
-  const onFormSubmit = (): void => {
-    // TODO:
+  const onFormSubmit = async (data: LoginFormData): Promise<void> => {
+    try {
+      setServerError(null);
+      setIsSubmitting(true);
+      await authLogin(data.email, data.password);
+      navigate('/dashboard');
+    } catch (err) {
+      setServerError((err as Error).message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -68,10 +82,19 @@ const Login: React.FC = (): React.JSX.Element => {
               }
             />
 
-            <Button className={styles.loginBtn} type="submit" variant="primary" disabled={!isValid}>
-              {login.submitBtn}
+            <Button className={styles.loginBtn} type="submit" variant="primary" disabled={!isValid || isSubmitting}>
+              {isSubmitting ? 'Signing in…' : login.submitBtn}
             </Button>
+
+            {serverError && <p className={styles.serverError}>{serverError}</p>}
           </form>
+
+          <div className={styles.signupLink}>
+            Don&apos;t have an account?{' '}
+            <Link to="/register" className={styles.signupAnchor}>
+              Sign up
+            </Link>
+          </div>
         </div>
       </div>
     </div>
