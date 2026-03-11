@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { authLogin } from '@api/auth.api';
 import googleIcon from '@assets/icon-google.png';
 import AuthInfo from '@features/auth/authInfo/AuthInfo';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { authContent } from '@locales/en/auth';
 import { type LoginFormData, loginSchema } from '@shared/Validation/schemas';
 import { useForm } from 'react-hook-form';
-import { useAuthStore } from '@s/auth.store';
 import Button from '@src/shared/Button/Button';
 import { ControlledInput } from '@src/shared/Controlled/ControlledInput';
 import styles from './Login.module.css';
@@ -19,7 +19,6 @@ const INITIAL_LOGIN_DATA: LoginFormData = {
 const Login: React.FC = (): React.JSX.Element => {
   const { login } = authContent;
   const navigate = useNavigate();
-  const authLogin = useAuthStore((s) => s.login);
   const [serverError, setServerError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -34,16 +33,15 @@ const Login: React.FC = (): React.JSX.Element => {
   });
 
   const onFormSubmit = async (data: LoginFormData): Promise<void> => {
-    try {
-      setServerError(null);
-      setIsSubmitting(true);
-      await authLogin(data.email, data.password);
+    setServerError(null);
+    setIsSubmitting(true);
+    const { error } = await authLogin(data);
+    if (!error) {
       navigate('/dashboard');
-    } catch (err) {
-      setServerError((err as Error).message);
-    } finally {
-      setIsSubmitting(false);
+    } else {
+      setServerError(error);
     }
+    setIsSubmitting(false);
   };
 
   return (

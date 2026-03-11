@@ -1,14 +1,15 @@
 import type React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuthStore } from '@s/auth.store';
+import { authLogout } from '@api/auth.api';
 
-const Dashboard: React.FC = () => {
-  const logout = useAuthStore((s) => s.logout);
+export const DashboardPage: React.FC = () => {
   const navigate = useNavigate();
 
   const handleLogout = async (): Promise<void> => {
-    await logout();
-    navigate('/login');
+    const { error } = await authLogout();
+    if (!error) {
+      navigate('/login');
+    }
   };
 
   return (
@@ -24,5 +25,3 @@ const Dashboard: React.FC = () => {
     </div>
   );
 };
-
-export default Dashboard;

@@ -1,6 +1,7 @@
-import type { User } from '@supabase/supabase-js';
+import { processAuthError } from '@api/helpers';
+import { SYSTEM_ERROR } from '@shared/Constants/constants';
+import type { AuthResponse as SupabaseResponse, User } from '@supabase/supabase-js';
 import { supabase } from '@src/lib/supabase';
-import { AuthError, NetworkError } from './errors';
 
 export interface LoginPayload {
   email: string;
@@ -14,90 +15,78 @@ export interface RegisterPayload {
 }
 
 export interface AuthResult {
-  user: User;
+  user: User | null;
+  error: string | null;
 }
 
-export const login = async (payload: LoginPayload): Promise<AuthResult> => {
+const handleAuthRequest = async (request: () => Promise<SupabaseResponse>): Promise<AuthResult> => {
   try {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: payload.email,
-      password: payload.password,
-    });
+    const { data, error } = await request();
 
     if (error) {
-      throw new AuthError(error.message, error.code);
+      return {
+        user: null,
+        error: processAuthError(error),
+      };
     }
 
-    if (!data.user) {
-      throw new AuthError('Login succeeded but no user returned');
+    if (!data || !data.user) {
+      // TODO: I18N: The 'errors.unknown' key can be returned here
+      console.warn('[Auth No Error No user]:', data); //TODO: remove the console when toast system will be implemented.
+      return {
+        user: null,
+        error: 'unknown_error',
+      };
     }
 
-    return { user: data.user };
-  } catch (err) {
-    if (err instanceof AuthError) {
-      throw err;
-    }
-    throw new NetworkError((err as Error).message);
+    return {
+      user: data.user,
+      error: null,
+    };
+  } catch (err: unknown) {
+    console.warn('[Auth API Catch]:', err); //TODO: remove the console when toast system will be implemented.
+    // TODO: TOAST: addToast('Critical error', 'error')
+    return {
+      user: null,
+      error: SYSTEM_ERROR,
+    };
   }
 };
 
-export const register = async (payload: RegisterPayload): Promise<AuthResult> => {
-  try {
-    const { data, error } = await supabase.auth.signUp({
-      email: payload.email,
-      password: payload.password,
-      options: {
-        data: { username: payload.username },
-      },
-    });
-
-    if (error) {
-      throw new AuthError(error.message, error.code);
-    }
-
-    if (!data.user) {
-      throw new AuthError('Registration succeeded but no user returned');
-    }
-
-    return { user: data.user };
-  } catch (err) {
-    if (err instanceof AuthError) {
-      throw err;
-    }
-    throw new NetworkError((err as Error).message);
-  }
+export const authLogin = async ({ email, password }: LoginPayload): Promise<AuthResult> => {
+  return handleAuthRequest(() => supabase.auth.signInWithPassword({ email, password }));
 };
 
-export const logout = async (): Promise<void> => {
+export const authRegister = async ({ email, password, username }: RegisterPayload): Promise<AuthResult> => {
+  return handleAuthRequest(() =>
+    supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { username } },
+    }),
+  );
+};
+
+export const authLogout = async (): Promise<{ error: string | null }> => {
   try {
     const { error } = await supabase.auth.signOut();
     if (error) {
-      throw new AuthError(error.message, error.code);
+      return { error: processAuthError(error) };
     }
-  } catch (err) {
-    if (err instanceof AuthError) {
-      throw err;
-    }
-    throw new NetworkError((err as Error).message);
+    return { error: null };
+  } catch (err: unknown) {
+    console.warn('[Auth API Catch]:', err); //TODO: remove the console when toast system will be implemented.
+    // TODO: TOAST: addToast('Critical error', 'error')
+    return { error: SYSTEM_ERROR };
   }
 };
 
-export const getCurrentUser = async (): Promise<User | null> => {
-  try {
-    const {
-      data: { user },
-      error,
-    } = await supabase.auth.getUser();
-
-    if (error) {
-      throw new AuthError(error.message, error.code);
-    }
-
-    return user;
-  } catch (err) {
-    if (err instanceof AuthError) {
-      throw err;
-    }
-    throw new NetworkError((err as Error).message);
-  }
+export const onSessionChange = (callback: (user: User | null) => void) => {
+  const {
+    data: { subscription },
+  } = supabase.auth.onAuthStateChange((_event, session) => {
+    console.warn({ _event, session });
+    callback(session?.user ?? null);
+  });
+  return (): void => subscription.unsubscribe();
 };

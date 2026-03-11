@@ -69,7 +69,7 @@
 .serverError {
   margin-top: 0.75rem;
   font-size: 0.85rem;
-  color: #dc3545;
+  color: var(--red);
   text-align: center;
 }
 

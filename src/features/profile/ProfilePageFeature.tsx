@@ -4,16 +4,18 @@ import { countryOptions } from '@data/selectOptions';
 import { INITIAL_USER_DATA, type UserData } from '@data/userDefaults';
 import { profileContent } from '@locales/en/profile';
 import { useAuthStore } from '@s/auth.store';
+import { useProfileStore } from '@s/profile.store';
 import Button from '@src/shared/Button/Button';
 import styles from './Profile.module.css';
 import ProfileEditForm from './profileEditForm/ProfileEditForm';
 import ProfileOverview from './profileOverview/ProfileOverview';
 
 const Profile: React.FC = () => {
-  const profile = useAuthStore((s) => s.profile);
-  const storeError = useAuthStore((s) => s.error);
-  const saveProfile = useAuthStore((s) => s.saveProfile);
-  const fetchProfile = useAuthStore((s) => s.fetchProfile);
+  const profile = useProfileStore((s) => s.profile);
+  const storeError = useProfileStore((s) => s.error);
+  const saveProfile = useProfileStore((s) => s.saveProfile);
+  const fetchProfile = useProfileStore((s) => s.fetchProfile);
+  const { id: userId } = useAuthStore((s) => s.user) ?? {};
 
   const [activeTab, setActiveTab] = useState<'overview' | 'settings'>('overview');
   const navigate = useNavigate();
@@ -22,12 +24,19 @@ const Profile: React.FC = () => {
   const profileData: UserData = profile ?? INITIAL_USER_DATA;
 
   useEffect(() => {
-    void fetchProfile();
-  }, [fetchProfile]);
+    if (!userId) {
+      return;
+    }
+    void fetchProfile(userId);
+  }, [fetchProfile, userId]);
 
   const handleSave = async (data: UserData): Promise<void> => {
+    if (!userId) {
+      return;
+    }
+
     try {
-      await saveProfile(data);
+      await saveProfile(userId, data);
       alert(notifications.success);
       setActiveTab('overview');
     } catch (err) {

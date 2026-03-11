@@ -1,6 +1,8 @@
+import { processPostgrestError } from '@api/helpers';
 import type { UserData } from '@data/userDefaults';
+import { SYSTEM_ERROR } from '@shared/Constants/constants';
+import type { PostgrestSingleResponse } from '@supabase/supabase-js';
 import { supabase } from '@src/lib/supabase';
-import { NetworkError, ProfileError } from './errors';
 
 interface UserProfileRow {
   id: string;
@@ -42,44 +44,56 @@ const mapUserDataToRow = (data: UserData): Omit<UserProfileRow, 'id' | 'user_id'
   timezone: data.timezone,
 });
 
-export const getProfile = async (userId: string): Promise<UserData | null> => {
+export interface ProfileResponse {
+  data: UserData | null;
+  error: string | null;
+}
+
+const handleProfileRequest = async <T extends UserProfileRow>(
+  request: () => PromiseLike<PostgrestSingleResponse<T>>,
+): Promise<ProfileResponse> => {
   try {
-    const { data, error } = await supabase.from('user_profiles').select('*').eq('user_id', userId).maybeSingle();
+    const { data, error } = await request();
 
     if (error) {
-      throw new ProfileError(error.message, error.code);
+      return {
+        data: null,
+        error: processPostgrestError(error),
+      };
     }
 
-    return data ? mapRowToUserData(data as UserProfileRow) : null;
-  } catch (err) {
-    if (err instanceof ProfileError) {
-      throw err;
+    return {
+      data: data ? mapRowToUserData(data) : null,
+      error: null,
+    };
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.warn('[Profile API Catch]:', err.message);
     }
-
-    throw new NetworkError((err as Error).message);
+    // TODO: TOAST: addToast('Critical data error', 'error')
+    return { data: null, error: SYSTEM_ERROR };
   }
 };
 
-export const saveProfile = async (userId: string, profileData: UserData): Promise<UserData> => {
-  try {
-    const row = mapUserDataToRow(profileData);
+export const getProfile = async (userId: string): Promise<ProfileResponse> => {
+  return handleProfileRequest(() => supabase.from('user_profiles').select('*').eq('user_id', userId).maybeSingle());
+};
 
-    const { data, error } = await supabase
+export const saveProfile = async (user_id: string, profileData: UserData): Promise<ProfileResponse> => {
+  const row = mapUserDataToRow(profileData);
+
+  return handleProfileRequest(() =>
+    supabase
       .from('user_profiles')
-      .upsert({ user_id: userId, ...row, updated_at: new Date().toISOString() }, { onConflict: 'user_id' })
+      .upsert(
+        {
+          user_id,
+          ...row,
+          updated_at: new Date().toISOString(),
+        },
+        { onConflict: 'user_id' },
+      )
       .select()
-      .single();
-
-    if (error) {
-      throw new ProfileError(error.message, error.code);
-    }
-
-    return mapRowToUserData(data as UserProfileRow);
-  } catch (err) {
-    if (err instanceof ProfileError) {
-      throw err;
-    }
-
-    throw new NetworkError((err as Error).message);
-  }
+      .single(),
+  );
 };
