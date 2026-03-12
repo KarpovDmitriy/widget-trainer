@@ -1,13 +1,13 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { PATHS } from '@shared/Constants/paths';
-import LoginPage from '@src/pages/LoginPage';
-import ProfilePage from '@src/pages/ProfilePage';
-import RegisterPage from '@src/pages/RegisterPage';
-import { DashboardPage } from '@p/Dashboard';
-import LandingPage from '@p/Landing';
-import LibraryPage from '@p/Library';
-import NotFound from '@p/NotFound';
-import PracticePage from '@p/Practice';
+import { LoginPage } from '@src/pages/LoginPage';
+import { ProfilePage } from '@src/pages/ProfilePage';
+import { RegisterPage } from '@src/pages/RegisterPage';
+import { DashboardPage } from '@p/DashboardPage';
+import { LandingPage } from '@p/LandingPage';
+import { LibraryPage } from '@p/LibraryPage';
+import { NotFoundPage } from '@p/NotFoundPage';
+import { PracticePage } from '@p/PracticePage';
 import { GuestRoute } from './GuestRoute';
 import { ProtectedRoute } from './ProtectedRoute';
 
@@ -31,6 +31,6 @@ export const router = createBrowserRouter([
   },
   {
     path: '*',
-    element: <NotFound />,
+    element: <NotFoundPage />,
   },
 ]);

@@ -1,7 +1,7 @@
 import type React from 'react';
 import { Link } from 'react-router-dom';
 
-const Library: React.FC = () => {
+export const LibraryPage: React.FC = () => {
   return (
     <div style={{ padding: '2rem' }}>
       <h1>Topic Library</h1>
@@ -10,5 +10,3 @@ const Library: React.FC = () => {
     </div>
   );
 };
-
-export default Library;

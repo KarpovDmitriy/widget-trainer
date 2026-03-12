@@ -1,7 +1,7 @@
 import type React from 'react';
 import { Link } from 'react-router-dom';
 
-const Landing: React.FC = () => {
+export const LandingPage: React.FC = () => {
   return (
     <div style={{ padding: '2rem', fontFamily: 'Arial, sans-serif' }}>
       <h1>Tandem - Home Page</h1>
@@ -53,5 +53,3 @@ const linkStyle: React.CSSProperties = {
   fontSize: '1rem',
   transition: 'background-color 0.2s',
 };
-
-export default Landing;
