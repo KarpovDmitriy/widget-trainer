@@ -28,6 +28,7 @@ export default defineConfig({
       '@locales': path.resolve(__dirname, './src/locales'),
       '@shared': path.resolve(__dirname, './src/shared'),
       '@styles': path.resolve(__dirname, './src/styles'),
+      '@api': path.resolve(__dirname, './src/api'),
       '@utils': path.resolve(__dirname, './src/utils'),
     },
   },

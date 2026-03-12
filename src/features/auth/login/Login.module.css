@@ -66,6 +66,26 @@
   width: 100%;
 }
 
+.serverError {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: var(--red);
+  text-align: center;
+}
+
+.signupLink {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--text-gray);
+  text-align: center;
+}
+
+.signupAnchor {
+  font-weight: 600;
+  color: var(--blue);
+  text-decoration: none;
+}
+
 @media (width <= 805px) {
   .loginPage {
     flex-direction: column;

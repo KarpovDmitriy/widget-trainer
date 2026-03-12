@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { authRegister } from '@api/auth.api';
 import AuthInfo from '@features/auth/authInfo/AuthInfo';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { authContent } from '@locales/en/auth';
@@ -19,6 +20,8 @@ const INITIAL_REGISTER_DATA: RegisterFormData = {
 const RegisterPageFeature: React.FC = (): React.JSX.Element => {
   const navigate = useNavigate();
   const { register: content } = authContent;
+  const [serverError, setServerError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
     control,
@@ -30,8 +33,16 @@ const RegisterPageFeature: React.FC = (): React.JSX.Element => {
     mode: 'onChange',
   });
 
-  const onFormSubmit = (): void => {
-    navigate('/login');
+  const onFormSubmit = async (data: RegisterFormData): Promise<void> => {
+    setServerError(null);
+    setIsSubmitting(true);
+    const { error } = await authRegister(data);
+    if (!error) {
+      navigate('/dashboard');
+    } else {
+      setServerError(error);
+    }
+    setIsSubmitting(false);
   };
 
   return (
@@ -74,9 +85,11 @@ const RegisterPageFeature: React.FC = (): React.JSX.Element => {
               placeholder="••••••••"
             />
 
-            <Button className={styles.registerBtn} type="submit" variant="primary" disabled={!isValid}>
-              {content.submitBtn}
+            <Button className={styles.registerBtn} type="submit" variant="primary" disabled={!isValid || isSubmitting}>
+              {isSubmitting ? 'Signing up…' : content.submitBtn}
             </Button>
+
+            {serverError && <p className={styles.serverError}>{serverError}</p>}
           </form>
         </div>
       </div>

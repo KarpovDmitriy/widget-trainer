@@ -1,7 +1,7 @@
 import type React from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-const Practice: React.FC = () => {
+export const PracticePage: React.FC = () => {
   const { topicId } = useParams<{ topicId: string }>();
 
   return (
@@ -14,5 +14,3 @@ const Practice: React.FC = () => {
     </div>
   );
 };
-
-export default Practice;

@@ -12,13 +12,13 @@ const ProfileOverview: React.FC<ProfileOverviewProps> = ({ profileData }): React
   const { labels } = profileContent;
 
   const getLabel = (options: { value: string; label: string }[], value: string): string =>
-    options.find((o) => o.value === value)?.label || '—';
+    options.find((o) => o.value === value)?.label || '-';
 
   const infoItems = [
-    { label: labels.fullName, value: `${profileData.firstName} ${profileData.lastName}`.trim() || '—' },
-    { label: labels.company, value: profileData.company || '—' },
-    { label: labels.phone, value: profileData.phone || '—' },
-    { label: labels.site, value: profileData.site || '—' },
+    { label: labels.fullName, value: `${profileData.firstName} ${profileData.lastName}`.trim() || '-' },
+    { label: labels.company, value: profileData.company || '-' },
+    { label: labels.phone, value: profileData.phone || '-' },
+    { label: labels.site, value: profileData.site || '-' },
     { label: labels.country, value: getLabel(countryOptions, profileData.country) },
     { label: labels.language, value: getLabel(languageOptions, profileData.language) },
     { label: labels.timezone, value: getLabel(timezoneOptions, profileData.timezone) },

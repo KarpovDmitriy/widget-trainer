@@ -1,5 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { authLogin } from '@api/auth.api';
 import googleIcon from '@assets/icon-google.png';
 import AuthInfo from '@features/auth/authInfo/AuthInfo';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -17,6 +18,9 @@ const INITIAL_LOGIN_DATA: LoginFormData = {
 
 const Login: React.FC = (): React.JSX.Element => {
   const { login } = authContent;
+  const navigate = useNavigate();
+  const [serverError, setServerError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
     control,
@@ -28,8 +32,16 @@ const Login: React.FC = (): React.JSX.Element => {
     mode: 'onChange',
   });
 
-  const onFormSubmit = (): void => {
-    // TODO:
+  const onFormSubmit = async (data: LoginFormData): Promise<void> => {
+    setServerError(null);
+    setIsSubmitting(true);
+    const { error } = await authLogin(data);
+    if (!error) {
+      navigate('/dashboard');
+    } else {
+      setServerError(error);
+    }
+    setIsSubmitting(false);
   };
 
   return (
@@ -68,10 +80,19 @@ const Login: React.FC = (): React.JSX.Element => {
               }
             />
 
-            <Button className={styles.loginBtn} type="submit" variant="primary" disabled={!isValid}>
-              {login.submitBtn}
+            <Button className={styles.loginBtn} type="submit" variant="primary" disabled={!isValid || isSubmitting}>
+              {isSubmitting ? 'Signing in…' : login.submitBtn}
             </Button>
+
+            {serverError && <p className={styles.serverError}>{serverError}</p>}
           </form>
+
+          <div className={styles.signupLink}>
+            Don&apos;t have an account?{' '}
+            <Link to="/register" className={styles.signupAnchor}>
+              Sign up
+            </Link>
+          </div>
         </div>
       </div>
     </div>
