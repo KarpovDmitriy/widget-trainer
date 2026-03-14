@@ -1,26 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { LangSwitcher } from '@shared/LangSwitcher/LangSwitcher';
 import { LogoutButton } from '@shared/LogoutButton';
+import { useTranslation } from 'react-i18next';
 import { useProfileStore } from '@s/profile.store';
-import { headerContent } from '../../locales/en/header';
 import styles from './Header.module.css';
 
 const Header: React.FC = () => {
   const { pathname } = useLocation();
-  const { header } = headerContent;
-
+  const { t } = useTranslation();
   const profile = useProfileStore((state) => state.profile);
-  const [currentLang, setCurrentLang] = useState<'en' | 'ru'>('en');
 
   const navItems = [
-    { path: '/dashboard', label: header.menu.dashboard },
-    { path: '/profile', label: header.menu.profile },
+    { path: '/dashboard', label: t('header.menu.dashboard') },
+    { path: '/profile', label: t('header.menu.profile') },
   ];
 
   return (
     <header className={styles.header}>
       <Link to="/" className={styles.logoText}>
-        {header.logo}
+        <span>Widget Trainer</span>
       </Link>
 
       <nav className={styles.nav}>
@@ -36,27 +35,15 @@ const Header: React.FC = () => {
       </nav>
 
       <div className={styles.rightSection}>
-        <div className={styles.langSwitcher}>
-          <button
-            className={`${styles.langBtn} ${currentLang === 'en' ? styles.langBtnActive : ''}`}
-            onClick={() => setCurrentLang('en')}
-          >
-            {header.languages.en}
-          </button>
-          <button
-            className={`${styles.langBtn} ${currentLang === 'ru' ? styles.langBtnActive : ''}`}
-            onClick={() => setCurrentLang('ru')}
-          >
-            {header.languages.ru}
-          </button>
-        </div>
+        <LangSwitcher />
 
         <div className={styles.userSection}>
           <div className={styles.avatar}>
-            {profile?.firstName?.[0] || 'U'}
-            {profile?.lastName?.[0] || 'P'}
+            {profile?.firstName?.charAt(0) || 'U'}
+            {profile?.lastName?.charAt(0) || 'P'}
           </div>
-          <LogoutButton>{header.user.signOut}</LogoutButton>
+
+          <LogoutButton>{t('header.user.signOut')}</LogoutButton>
         </div>
       </div>
     </header>

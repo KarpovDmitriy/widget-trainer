@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { countryOptions } from '@data/selectOptions';
 import { INITIAL_USER_DATA, type UserData } from '@data/userDefaults';
-import { profileContent } from '@locales/en/profile';
+import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '@s/auth.store';
 import { useProfileStore } from '@s/profile.store';
 import Button from '@src/shared/Button/Button';
@@ -11,6 +11,7 @@ import ProfileEditForm from './profileEditForm/ProfileEditForm';
 import ProfileOverview from './profileOverview/ProfileOverview';
 
 const Profile: React.FC = () => {
+  const { t } = useTranslation();
   const profile = useProfileStore((s) => s.profile);
   const storeError = useProfileStore((s) => s.error);
   const saveProfile = useProfileStore((s) => s.saveProfile);
@@ -19,7 +20,6 @@ const Profile: React.FC = () => {
 
   const [activeTab, setActiveTab] = useState<'overview' | 'settings'>('overview');
   const navigate = useNavigate();
-  const { nav, headers, notifications } = profileContent;
 
   const profileData: UserData = profile ?? INITIAL_USER_DATA;
 
@@ -37,7 +37,8 @@ const Profile: React.FC = () => {
 
     try {
       await saveProfile(userId, data);
-      alert(notifications.success);
+      // Короткий ключ после распаковки ...profileEn в i18n.ts
+      alert(t('settings.notifications.success'));
       setActiveTab('overview');
     } catch (err) {
       // TODO: replace with toast notification when global toast system is implemented
@@ -62,7 +63,7 @@ const Profile: React.FC = () => {
             </div>
           </div>
           <Button variant="secondary" onClick={() => navigate(-1)}>
-            {nav.back}
+            {t('form.buttons.back')}
           </Button>
         </div>
 
@@ -71,13 +72,13 @@ const Profile: React.FC = () => {
             className={`${styles.navLinkBtn} ${activeTab === 'overview' ? styles.active : ''}`}
             onClick={() => setActiveTab('overview')}
           >
-            {nav.overview}
+            {t('header.tabs.overview')}
           </button>
           <button
             className={`${styles.navLinkBtn} ${activeTab === 'settings' ? styles.active : ''}`}
             onClick={() => setActiveTab('settings')}
           >
-            {nav.settings}
+            {t('header.tabs.settings')}
           </button>
         </nav>
       </div>
@@ -87,7 +88,7 @@ const Profile: React.FC = () => {
 
       <div className={styles.card}>
         <div className={styles.cardHeader}>
-          <h3>{activeTab === 'overview' ? headers.details : headers.settings}</h3>
+          <h3>{activeTab === 'overview' ? t('overview.headers.details') : t('form.headers.settings')}</h3>
         </div>
         <div className={styles.cardBody}>
           {activeTab === 'overview' ? (

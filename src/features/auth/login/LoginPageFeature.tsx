@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+// Добавляем хук
 import { authLogin } from '@api/auth.api';
 import googleIcon from '@assets/icon-google.png';
 import AuthInfo from '@features/auth/authInfo/AuthInfo';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { authContent } from '@locales/en/auth';
+import { LangSwitcher } from '@shared/LangSwitcher/LangSwitcher';
 import { type LoginFormData, loginSchema } from '@shared/Validation/schemas';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import Button from '@src/shared/Button/Button';
 import { ControlledInput } from '@src/shared/Controlled/ControlledInput';
 import styles from './Login.module.css';
@@ -17,10 +19,13 @@ const INITIAL_LOGIN_DATA: LoginFormData = {
 };
 
 const Login: React.FC = (): React.JSX.Element => {
-  const { login } = authContent;
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [serverError, setServerError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const loginLang = 'auth.login';
+  const regLang = 'auth.register';
 
   const {
     control,
@@ -48,21 +53,24 @@ const Login: React.FC = (): React.JSX.Element => {
     <div className={styles.loginPage}>
       <AuthInfo />
       <div className={styles.loginMain}>
+        <div className={styles.authLangSwitcher}>
+          <LangSwitcher />
+        </div>
         <div className={styles.loginCard}>
-          <h2>{login.title}</h2>
+          <h2>{t(`${loginLang}.title`)}</h2>
 
           <Button type="button" variant="secondary" className={styles.btnSignInGoogle}>
             <img src={googleIcon} alt="Google" width="18" />
-            {login.googleBtn}
+            {t(`${loginLang}.googleBtn`)}
           </Button>
 
-          <div className={styles.separator}>{login.separator}</div>
+          <div className={styles.separator}>{t(`${loginLang}.separator`)}</div>
 
           <form onSubmit={handleSubmit(onFormSubmit)}>
             <ControlledInput
               name="email"
               control={control}
-              label="Email"
+              label={t(`${loginLang}.form.email`)}
               type="email"
               placeholder="example@domain.com"
             />
@@ -70,27 +78,27 @@ const Login: React.FC = (): React.JSX.Element => {
             <ControlledInput
               name="password"
               control={control}
-              label="Password"
+              label={t(`${loginLang}.form.password`)}
               type="password"
               placeholder="••••••••"
               extra={
                 <Link to="/forgot-password" className={styles.forgotLink}>
-                  {login.forgotPassword}
+                  {t(`${loginLang}.forgotPassword`)}
                 </Link>
               }
             />
 
             <Button className={styles.loginBtn} type="submit" variant="primary" disabled={!isValid || isSubmitting}>
-              {isSubmitting ? 'Signing in…' : login.submitBtn}
+              {isSubmitting ? '...' : t(`${loginLang}.submitBtn`)}
             </Button>
 
             {serverError && <p className={styles.serverError}>{serverError}</p>}
           </form>
 
           <div className={styles.signupLink}>
-            Don&apos;t have an account?{' '}
+            {t(`${regLang}.subtitle`)}{' '}
             <Link to="/register" className={styles.signupAnchor}>
-              Sign up
+              {t(`${regLang}.title`)}
             </Link>
           </div>
         </div>

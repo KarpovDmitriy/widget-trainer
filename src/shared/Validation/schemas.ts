@@ -2,8 +2,13 @@ import { z } from 'zod';
 import { authContent } from '@src/locales/en/auth';
 import { profileContent } from '@src/locales/en/profile';
 
-const { login: loginLang, register: regLang } = authContent;
-const { labels, errors: profErrors } = profileContent;
+const {
+  auth: { login: loginLang, register: regLang },
+} = authContent;
+const {
+  form: { labels },
+  errors: profErrors,
+} = profileContent;
 
 const emailRule = z.string().min(1, loginLang.errors.email).email(loginLang.errors.email);
 

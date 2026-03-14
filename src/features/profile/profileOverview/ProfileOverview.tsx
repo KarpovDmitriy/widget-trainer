@@ -1,7 +1,8 @@
 import React from 'react';
+// Импортируем хук
 import { countryOptions, languageOptions, timezoneOptions } from '@data/selectOptions';
 import type { UserData } from '@data/userDefaults';
-import { profileContent } from '@locales/en/profile';
+import { useTranslation } from 'react-i18next';
 import styles from '../Profile.module.css';
 
 interface ProfileOverviewProps {
@@ -9,19 +10,25 @@ interface ProfileOverviewProps {
 }
 
 const ProfileOverview: React.FC<ProfileOverviewProps> = ({ profileData }): React.JSX.Element => {
-  const { labels } = profileContent;
+  const { t } = useTranslation();
+
+  // Вспомогательная функция для получения текста, если значение не указано
+  const notSpecified = t('overview.placeholders.notSpecified');
 
   const getLabel = (options: { value: string; label: string }[], value: string): string =>
-    options.find((o) => o.value === value)?.label || '-';
+    options.find((o) => o.value === value)?.label || notSpecified;
 
   const infoItems = [
-    { label: labels.fullName, value: `${profileData.firstName} ${profileData.lastName}`.trim() || '-' },
-    { label: labels.company, value: profileData.company || '-' },
-    { label: labels.phone, value: profileData.phone || '-' },
-    { label: labels.site, value: profileData.site || '-' },
-    { label: labels.country, value: getLabel(countryOptions, profileData.country) },
-    { label: labels.language, value: getLabel(languageOptions, profileData.language) },
-    { label: labels.timezone, value: getLabel(timezoneOptions, profileData.timezone) },
+    {
+      label: t('overview.labels.fullName'),
+      value: `${profileData.firstName} ${profileData.lastName}`.trim() || notSpecified,
+    },
+    { label: t('overview.labels.company'), value: profileData.company || notSpecified },
+    { label: t('overview.labels.phone'), value: profileData.phone || notSpecified },
+    { label: t('overview.labels.site'), value: profileData.site || notSpecified },
+    { label: t('overview.labels.country'), value: getLabel(countryOptions, profileData.country) },
+    { label: t('overview.labels.language'), value: getLabel(languageOptions, profileData.language) },
+    { label: t('overview.labels.timezone'), value: getLabel(timezoneOptions, profileData.timezone) },
   ];
 
   return (

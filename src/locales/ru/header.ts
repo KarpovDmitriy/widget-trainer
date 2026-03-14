@@ -2,15 +2,15 @@ export const headerContent = {
   header: {
     logo: 'Gs',
     menu: {
-      dashboard: 'Dashboard',
-      profile: 'Profile',
+      dashboard: 'Панель управления',
+      profile: 'Профиль',
     },
     languages: {
       en: 'EN',
       ru: 'RU',
     },
     user: {
-      signOut: 'Sign Out',
+      signOut: 'Выйти',
     },
   },
 };

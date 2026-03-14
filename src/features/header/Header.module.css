@@ -41,48 +41,10 @@
   align-items: center;
 }
 
-.langSwitcher {
-  display: flex;
-  gap: 0.5rem;
-  padding-right: 1.5rem;
-  border-right: 1px solid var(--border);
-}
-
-.langBtn {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--text-gray);
-  cursor: pointer;
-  background: none;
-  border: none;
-}
-
-.langBtnActive {
-  color: var(--blue);
-  text-decoration: underline;
-}
-
 .userSection {
   display: flex;
   gap: 1rem;
   align-items: center;
-}
-
-.userInfo {
-  display: flex;
-  flex-direction: column;
-  text-align: right;
-}
-
-.userName {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--text-dark);
-}
-
-.userRole {
-  font-size: 0.75rem;
-  color: var(--text-gray);
 }
 
 .avatar {
@@ -95,16 +57,5 @@
   color: var(--blue);
   text-transform: uppercase;
   background-color: var(--input-bg);
-  border-radius: 0.475rem;
-}
-
-.logoutBtn {
-  padding: 0.5rem 0.75rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text-error);
-  cursor: pointer;
-  background: var(--bg-invalid);
-  border: none;
   border-radius: 0.475rem;
 }
