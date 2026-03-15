@@ -1,0 +1,52 @@
+.langSwitcher {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding-right: 1.5rem;
+  border-right: 1px solid var(--border);
+}
+
+.langBtn {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-light-gray);
+  text-transform: uppercase;
+  cursor: pointer;
+  background: none;
+  background-color: var(--white);
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.langBtn:hover {
+  color: var(--blue);
+  text-shadow:
+    0 0 10px #fff,
+    0 0 20px var(--blue),
+    0 0 30px var(--logo);
+  border: none;
+}
+
+.langBtn:focus {
+  outline: none;
+}
+
+.langBtnActive {
+  position: relative;
+  color: var(--blue);
+  border: none;
+}
+
+.langBtnActive::after {
+  position: absolute;
+  right: 4px;
+  bottom: 0;
+  left: 4px;
+  height: 2px;
+  content: '';
+  background-color: var(--blue);
+  border-radius: 2px;
+}

@@ -1,7 +1,7 @@
 import react from '@vitejs/plugin-react';
 import path from 'path';
-import { defineConfig } from 'vite';
 import checker from 'vite-plugin-checker';
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   plugins: [
@@ -31,5 +31,10 @@ export default defineConfig({
       '@api': path.resolve(__dirname, './src/api'),
       '@utils': path.resolve(__dirname, './src/utils'),
     },
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/setupTests.ts',
   },
 });
