@@ -37,7 +37,6 @@ const Profile: React.FC = () => {
 
     try {
       await saveProfile(userId, data);
-      // Короткий ключ после распаковки ...profileEn в i18n.ts
       alert(t('settings.notifications.success'));
       setActiveTab('overview');
     } catch (err) {

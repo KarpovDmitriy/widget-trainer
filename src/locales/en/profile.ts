@@ -51,9 +51,8 @@ export const profileContent = {
   errors: {
     fetchFailed: 'Unable to load profile data',
     saveFailed: '[Profile] failed to save profile',
-    // Новые ключи для схем:
     invalidPhone: 'Invalid phone number format',
     invalidUrl: 'Please enter a valid URL',
-    required: (label: string): string => `${label} is required`, // Динамическая строка
+    required: (label: string): string => `${label} is required`,
   },
 };

@@ -51,7 +51,6 @@ export const profileContent = {
   errors: {
     fetchFailed: 'Не удалось загрузить данные профиля',
     saveFailed: '[Профиль] ошибка при сохранении данных',
-    // Новые ключи для схем:
     invalidPhone: 'Неверный формат номера телефона',
     invalidUrl: 'Пожалуйста, введите корректный URL',
     required: (label: string): string => `Поле "${label}" обязательно для заполнения`,

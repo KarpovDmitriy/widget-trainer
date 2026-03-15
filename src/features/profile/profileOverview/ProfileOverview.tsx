@@ -1,5 +1,4 @@
 import React from 'react';
-// Импортируем хук
 import { countryOptions, languageOptions, timezoneOptions } from '@data/selectOptions';
 import type { UserData } from '@data/userDefaults';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +11,6 @@ interface ProfileOverviewProps {
 const ProfileOverview: React.FC<ProfileOverviewProps> = ({ profileData }): React.JSX.Element => {
   const { t } = useTranslation();
 
-  // Вспомогательная функция для получения текста, если значение не указано
   const notSpecified = t('overview.placeholders.notSpecified');
 
   const getLabel = (options: { value: string; label: string }[], value: string): string =>

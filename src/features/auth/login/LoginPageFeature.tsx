@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-// Добавляем хук
 import { authLogin } from '@api/auth.api';
 import googleIcon from '@assets/icon-google.png';
 import AuthInfo from '@features/auth/authInfo/AuthInfo';
