@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { authRegister } from '@api/auth.api';
 import AuthInfo from '@features/auth/authInfo/AuthInfo';
+import { useToast } from '@features/notifications';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LangSwitcher } from '@shared/LangSwitcher/LangSwitcher';
 import { type RegisterFormData, registerSchema } from '@shared/Validation/schemas';
+import type { AuthError } from '@supabase/supabase-js';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import Button from '@src/shared/Button/Button';
@@ -21,9 +23,8 @@ const INITIAL_REGISTER_DATA: RegisterFormData = {
 const RegisterPageFeature: React.FC = (): React.JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [serverError, setServerError] = useState<string | null>(null);
+  const { addToast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const regPath = 'auth.register';
 
   const {
@@ -37,13 +38,16 @@ const RegisterPageFeature: React.FC = (): React.JSX.Element => {
   });
 
   const onFormSubmit = async (data: RegisterFormData): Promise<void> => {
-    setServerError(null);
     setIsSubmitting(true);
-    const { error } = await authRegister(data);
+
+    const { error } = (await authRegister(data)) as { error: AuthError | string | null };
+
     if (!error) {
+      addToast('Account created successfully!', 'success');
       navigate('/dashboard');
     } else {
-      setServerError(error);
+      const errorMessage = typeof error === 'string' ? error : error.message;
+      addToast(errorMessage, 'error');
     }
     setIsSubmitting(false);
   };
@@ -100,7 +104,7 @@ const RegisterPageFeature: React.FC = (): React.JSX.Element => {
               {isSubmitting ? '...' : t(`${regPath}.submitBtn`)}
             </Button>
 
-            {serverError && <p className={styles.serverError}>{serverError}</p>}
+            {/*  Какие-то ошибки будут отображаться здесь */}
           </form>
         </div>
       </div>

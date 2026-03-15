@@ -3,9 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { authLogin } from '@api/auth.api';
 import googleIcon from '@assets/icon-google.png';
 import AuthInfo from '@features/auth/authInfo/AuthInfo';
+import { useToast } from '@features/notifications';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LangSwitcher } from '@shared/LangSwitcher/LangSwitcher';
 import { type LoginFormData, loginSchema } from '@shared/Validation/schemas';
+import type { AuthError } from '@supabase/supabase-js';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import Button from '@src/shared/Button/Button';
@@ -20,7 +22,7 @@ const INITIAL_LOGIN_DATA: LoginFormData = {
 const Login: React.FC = (): React.JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [serverError, setServerError] = useState<string | null>(null);
+  const { addToast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const loginLang = 'auth.login';
@@ -37,13 +39,16 @@ const Login: React.FC = (): React.JSX.Element => {
   });
 
   const onFormSubmit = async (data: LoginFormData): Promise<void> => {
-    setServerError(null);
     setIsSubmitting(true);
-    const { error } = await authLogin(data);
+
+    const { error } = (await authLogin(data)) as { error: AuthError | string | null };
+
     if (!error) {
+      addToast('Successfully logged in!', 'success');
       navigate('/dashboard');
     } else {
-      setServerError(error);
+      const errorMessage = typeof error === 'string' ? error : error.message;
+      addToast(errorMessage, 'error');
     }
     setIsSubmitting(false);
   };
@@ -91,7 +96,7 @@ const Login: React.FC = (): React.JSX.Element => {
               {isSubmitting ? '...' : t(`${loginLang}.submitBtn`)}
             </Button>
 
-            {serverError && <p className={styles.serverError}>{serverError}</p>}
+            {/* Какие-то ошибки будут отображаться здесь */}
           </form>
 
           <div className={styles.signupLink}>

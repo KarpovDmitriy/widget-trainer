@@ -67,3 +67,15 @@
     transform: translateX(100%);
   }
 }
+
+@media (width <= 480px) {
+  .container {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+  }
+
+  .toast {
+    min-width: auto;
+  }
+}
