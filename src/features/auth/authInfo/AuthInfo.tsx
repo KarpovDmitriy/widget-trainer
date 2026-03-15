@@ -2,7 +2,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './AuthInfo.module.css';
 
-// Типизируем структуру фичи для безопасности
 interface Feature {
   label: string;
   text: string;
@@ -11,7 +10,6 @@ interface Feature {
 const HeaderAuth: React.FC = () => {
   const { t } = useTranslation();
 
-  // ИСПРАВЛЕНО: заменен ключ .title на .features
   const features = t('auth.aside.features', { returnObjects: true }) as Feature[];
 
   return (
@@ -22,7 +20,6 @@ const HeaderAuth: React.FC = () => {
         <p className={styles.authAsideDescription}>{t('auth.aside.description')}</p>
 
         <ul className={styles.authAsideFeatures}>
-          {/* Проверка Array.isArray важна, если перевод вдруг не загрузится */}
           {Array.isArray(features) &&
             features.map((feature, index) => (
               <li key={index}>
