@@ -20,6 +20,15 @@
   top: 0;
   right: 0;
   padding: 1.5rem;
+
+  [class*='_langSwitcher'] {
+    padding-right: 0;
+    border-right: none;
+
+    [class*='_langBtn']:hover {
+      color: var(--text-gray);
+    }
+  }
 }
 
 .loginCard {

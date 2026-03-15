@@ -54,6 +54,7 @@
 }
 
 .navLinkBtn {
+  width: 75px;
   padding: 1rem 0;
   font-size: 0.95rem;
   font-weight: 600;

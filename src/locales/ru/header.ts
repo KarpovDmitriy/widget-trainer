@@ -3,6 +3,8 @@ export const headerContent = {
     logo: 'Gs',
     menu: {
       dashboard: 'Панель управления',
+      library: 'Библиотека',
+      practice: 'Практика',
       profile: 'Профиль',
     },
     languages: {

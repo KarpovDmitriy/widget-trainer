@@ -3,6 +3,8 @@ export const headerContent = {
     logo: 'Gs',
     menu: {
       dashboard: 'Dashboard',
+      library: 'Library',
+      practice: 'Practice',
       profile: 'Profile',
     },
     languages: {

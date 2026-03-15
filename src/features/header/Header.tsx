@@ -13,6 +13,8 @@ const Header: React.FC = () => {
 
   const navItems = [
     { path: '/dashboard', label: t('header.menu.dashboard') },
+    { path: '/library', label: t('header.menu.library') },
+    { path: '/practice', label: t('header.menu.practice') },
     { path: '/profile', label: t('header.menu.profile') },
   ];
 
