@@ -1,7 +1,7 @@
 import type React from 'react';
 import { Link } from 'react-router-dom';
 
-const NotFound: React.FC = () => {
+export const NotFoundPage: React.FC = () => {
   return (
     <div style={{ padding: '2rem', textAlign: 'center' }}>
       <h1 style={{ fontSize: '4rem', margin: '0' }}>404</h1>
@@ -13,5 +13,3 @@ const NotFound: React.FC = () => {
     </div>
   );
 };
-
-export default NotFound;

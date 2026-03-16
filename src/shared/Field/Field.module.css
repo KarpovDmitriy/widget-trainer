@@ -1,0 +1,56 @@
+.inputGroup {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.labelRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputGroup input {
+  width: 100%;
+  padding: 0.825rem 1rem;
+  font-size: 1rem;
+  color: var(--text-dark);
+  background-color: var(--input-bg);
+  border: 1px solid transparent;
+  border-radius: 0.475rem;
+  transition: 0.2s;
+}
+
+.inputGroup input:focus {
+  outline: none;
+  background-color: var(--input-focus);
+  border-color: var(--blue);
+}
+
+.inputGroup input[class*='invalid'] {
+  color: var(--text-error);
+  background-color: var(--bg-invalid);
+  border-color: var(--text-error);
+}
+
+.errorText {
+  position: absolute;
+  bottom: -23px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-error);
+}
+
+.hasError input {
+  border-color: red;
+}
