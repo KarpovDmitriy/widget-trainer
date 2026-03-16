@@ -21,6 +21,15 @@
   top: 0;
   right: 0;
   padding: 1.5rem;
+
+  .langSwitcher {
+    padding-right: 0;
+    border-right: none;
+
+    .langBtn:hover {
+      color: var(--text-gray);
+    }
+  }
 }
 
 .registerCard {

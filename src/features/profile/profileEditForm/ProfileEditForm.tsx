@@ -36,41 +36,46 @@ const ProfileEditForm: React.FC<ProfileEditFormProps> = ({ initialValues, onSubm
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.row}>
-        <ControlledInput name="firstName" control={control} label={t('form.labels.firstName')} />
-        <ControlledInput name="lastName" control={control} label={t('form.labels.lastName')} />
+        <ControlledInput name="firstName" control={control} label={t('profile.form.labels.firstName')} />
+        <ControlledInput name="lastName" control={control} label={t('profile.form.labels.lastName')} />
       </div>
 
       <div className={styles.row}>
-        <ControlledInput name="company" control={control} label={t('form.labels.company')} />
-        <ControlledInput name="site" control={control} label={t('form.labels.site')} />
+        <ControlledInput name="company" control={control} label={t('profile.form.labels.company')} />
+        <ControlledInput name="site" control={control} label={t('profile.form.labels.site')} />
       </div>
 
       <div className={styles.row}>
-        <ControlledInput name="phone" control={control} label={t('form.labels.phone')} />
+        <ControlledInput name="phone" control={control} label={t('profile.form.labels.phone')} />
       </div>
 
       <div className={styles.selectWrapper}>
-        <ControlledSelect name="country" control={control} label={t('form.labels.country')} options={countryOptions} />
+        <ControlledSelect
+          name="country"
+          control={control}
+          label={t('profile.form.labels.country')}
+          options={countryOptions}
+        />
         <ControlledSelect
           name="language"
           control={control}
-          label={t('form.labels.language')}
+          label={t('profile.form.labels.language')}
           options={languageOptions}
         />
         <ControlledSelect
           name="timezone"
           control={control}
-          label={t('form.labels.timezone')}
+          label={t('profile.form.labels.timezone')}
           options={timezoneOptions}
         />
       </div>
 
       <div className={styles.formFooter}>
         <Button type="submit" variant="primary" disabled={!isValid}>
-          {t('form.buttons.save')}
+          {t('profile.form.buttons.save')}
         </Button>
         <Button type="button" variant="secondary" onClick={handleCancel}>
-          {t('form.buttons.cancel')}
+          {t('profile.form.buttons.cancel')}
         </Button>
       </div>
     </form>

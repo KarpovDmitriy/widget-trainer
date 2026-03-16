@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { countryOptions } from '@data/selectOptions';
 import { INITIAL_USER_DATA, type UserData } from '@data/userDefaults';
+import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '@s/auth.store';
 import { useProfileStore } from '@s/profile.store';
@@ -37,7 +38,7 @@ const Profile: React.FC = () => {
 
     try {
       await saveProfile(userId, data);
-      alert(t('settings.notifications.success'));
+      alert(t('profile.notifications.success'));
       setActiveTab('overview');
     } catch (err) {
       // TODO: replace with toast notification when global toast system is implemented
@@ -62,22 +63,22 @@ const Profile: React.FC = () => {
             </div>
           </div>
           <Button variant="secondary" onClick={() => navigate(-1)}>
-            {t('form.buttons.back')}
+            {t('profile.form.buttons.back')}
           </Button>
         </div>
 
         <nav className={styles.profileNav}>
           <button
-            className={`${styles.navLinkBtn} ${activeTab === 'overview' ? styles.active : ''}`}
+            className={clsx(styles.navLinkBtn, { [styles.active]: activeTab === 'overview' })}
             onClick={() => setActiveTab('overview')}
           >
-            {t('header.tabs.overview')}
+            {t('profile.header.tabs.overview')}
           </button>
           <button
-            className={`${styles.navLinkBtn} ${activeTab === 'settings' ? styles.active : ''}`}
+            className={clsx(styles.navLinkBtn, { [styles.active]: activeTab === 'settings' })}
             onClick={() => setActiveTab('settings')}
           >
-            {t('header.tabs.settings')}
+            {t('profile.header.tabs.settings')}
           </button>
         </nav>
       </div>
@@ -87,7 +88,9 @@ const Profile: React.FC = () => {
 
       <div className={styles.card}>
         <div className={styles.cardHeader}>
-          <h3>{activeTab === 'overview' ? t('overview.headers.details') : t('form.headers.settings')}</h3>
+          <h3>
+            {activeTab === 'overview' ? t('profile.overview.headers.details') : t('profile.form.headers.settings')}
+          </h3>
         </div>
         <div className={styles.cardBody}>
           {activeTab === 'overview' ? (

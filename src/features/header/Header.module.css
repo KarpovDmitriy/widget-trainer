@@ -4,6 +4,7 @@
   z-index: 100;
   display: flex;
   flex-wrap: wrap;
+  gap: 8px;
   align-items: center;
   justify-content: space-between;
   height: 115px;
@@ -80,7 +81,7 @@
   border-radius: 0.475rem;
 }
 
-[class*='_secondary'] {
+.logoutButton {
   width: 95px;
 }
 

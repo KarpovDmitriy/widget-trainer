@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { LangSwitcher } from '@shared/LangSwitcher/LangSwitcher';
 import { LogoutButton } from '@shared/LogoutButton';
+import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { useProfileStore } from '@s/profile.store';
 import styles from './Header.module.css';
@@ -29,7 +30,7 @@ const Header: React.FC = () => {
           <Link
             key={item.path}
             to={item.path}
-            className={`${styles.navLink} ${pathname === item.path ? styles.navLinkActive : ''}`}
+            className={clsx(styles.navLink, { [styles.navLinkActive]: pathname === item.path })}
           >
             {item.label}
           </Link>
@@ -45,7 +46,7 @@ const Header: React.FC = () => {
             {profile?.lastName?.charAt(0) || 'P'}
           </div>
 
-          <LogoutButton>{t('header.user.signOut')}</LogoutButton>
+          <LogoutButton className={styles.logoutButton}>{t('header.user.signOut')}</LogoutButton>
         </div>
       </div>
     </header>

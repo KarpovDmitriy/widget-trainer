@@ -53,7 +53,7 @@ const Login: React.FC = (): React.JSX.Element => {
       <AuthInfo />
       <div className={styles.loginMain}>
         <div className={styles.authLangSwitcher}>
-          <LangSwitcher />
+          <LangSwitcher buttonClassName={styles.langBtn} containerClassName={styles.langSwitcher} />
         </div>
         <div className={styles.loginCard}>
           <h2>{t(`${loginLang}.title`)}</h2>

@@ -6,8 +6,10 @@ const {
   auth: { login: loginLang, register: regLang },
 } = authContent;
 const {
-  form: { labels },
-  errors: profErrors,
+  profile: {
+    form: { labels },
+    errors: profErrors,
+  },
 } = profileContent;
 
 const emailRule = z.string().min(1, loginLang.errors.email).email(loginLang.errors.email);

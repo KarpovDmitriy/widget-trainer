@@ -21,11 +21,11 @@
   right: 0;
   padding: 1.5rem;
 
-  [class*='_langSwitcher'] {
+  .langSwitcher {
     padding-right: 0;
     border-right: none;
 
-    [class*='_langBtn']:hover {
+    .langBtn:hover {
       color: var(--text-gray);
     }
   }

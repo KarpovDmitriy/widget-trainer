@@ -18,10 +18,6 @@ i18n
           ...authEn,
           ...headerEn,
           ...profileEn,
-          header: {
-            ...headerEn.header,
-            ...profileEn.header,
-          },
         },
       },
       ru: {
@@ -29,10 +25,6 @@ i18n
           ...authRu,
           ...profileRu,
           ...headerRu,
-          header: {
-            ...headerRu.header,
-            ...profileRu.header,
-          },
         },
       },
     },

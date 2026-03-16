@@ -53,7 +53,7 @@ const RegisterPageFeature: React.FC = (): React.JSX.Element => {
       <AuthInfo />
       <div className={styles.registerMain}>
         <div className={styles.authLangSwitcher}>
-          <LangSwitcher />
+          <LangSwitcher buttonClassName={styles.langBtn} containerClassName={styles.langSwitcher} />
         </div>
         <div className={styles.registerCard}>
           <h2>{t(`${regPath}.title`)}</h2>

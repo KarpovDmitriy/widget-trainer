@@ -1,8 +1,14 @@
 import React from 'react';
+import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import styles from './LangSwitcher.module.css';
 
-export const LangSwitcher: React.FC = () => {
+interface props {
+  buttonClassName?: string;
+  containerClassName?: string;
+}
+
+export const LangSwitcher: React.FC<props> = ({ buttonClassName, containerClassName }) => {
   const { i18n } = useTranslation();
 
   const currentLang = i18n.language.substring(0, 2);
@@ -12,17 +18,17 @@ export const LangSwitcher: React.FC = () => {
   };
 
   return (
-    <div className={styles.langSwitcher}>
+    <div className={clsx(styles.langSwitcher, containerClassName)}>
       <button
         type="button"
-        className={`${styles.langBtn} ${currentLang === 'en' ? styles.langBtnActive : ''}`}
+        className={clsx(styles.langBtn, buttonClassName, { [styles.langBtnActive]: currentLang === 'en' })}
         onClick={() => changeLanguage('en')}
       >
         EN
       </button>
       <button
         type="button"
-        className={`${styles.langBtn} ${currentLang === 'ru' ? styles.langBtnActive : ''}`}
+        className={clsx(styles.langBtn, buttonClassName, { [styles.langBtnActive]: currentLang === 'ru' })}
         onClick={() => changeLanguage('ru')}
       >
         RU
