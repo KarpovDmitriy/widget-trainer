@@ -10,13 +10,13 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   }, []);
 
   const addToast = useCallback(
-    (message: string, type: ToastType = 'info'): void => {
+    (message: string, type: ToastType = 'info', msec = 4000): void => {
       const id = Date.now();
       setToasts((prev) => [...prev, { id, message, type }]);
 
       setTimeout(() => {
         removeToast(id);
-      }, 4000);
+      }, msec);
     },
     [removeToast],
   );

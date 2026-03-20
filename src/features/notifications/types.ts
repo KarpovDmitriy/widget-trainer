@@ -4,10 +4,11 @@ export interface IToast {
   id: number;
   message: string;
   type: ToastType;
+  msec?: number;
 }
 
 export interface ToastContextType {
-  addToast: (message: string, type?: ToastType) => void;
+  addToast: (message: string, type?: ToastType, msec?: number) => void;
   removeToast: (id: number) => void;
   toasts: IToast[];
 }
