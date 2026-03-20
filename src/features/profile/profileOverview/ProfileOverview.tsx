@@ -1,6 +1,5 @@
-import React from 'react';
-import { countryOptions, languageOptions, timezoneOptions } from '@data/selectOptions';
 import type { UserData } from '@data/userDefaults';
+import { useSelectOptions } from '@utils/useSelectOptions';
 import { useTranslation } from 'react-i18next';
 import styles from '../Profile.module.css';
 
@@ -11,10 +10,9 @@ interface ProfileOverviewProps {
 const ProfileOverview: React.FC<ProfileOverviewProps> = ({ profileData }): React.JSX.Element => {
   const { t } = useTranslation();
 
-  const notSpecified = t('profile.overview.placeholders.notSpecified');
+  const { displayCountry, displayLanguage, displayTimezone } = useSelectOptions(profileData);
 
-  const getLabel = (options: { value: string; label: string }[], value: string): string =>
-    options.find((o) => o.value === value)?.label || notSpecified;
+  const notSpecified = t('profile.overview.placeholders.notSpecified');
 
   const infoItems = [
     {
@@ -24,9 +22,9 @@ const ProfileOverview: React.FC<ProfileOverviewProps> = ({ profileData }): React
     { label: t('profile.overview.labels.company'), value: profileData.company || notSpecified },
     { label: t('profile.overview.labels.phone'), value: profileData.phone || notSpecified },
     { label: t('profile.overview.labels.site'), value: profileData.site || notSpecified },
-    { label: t('profile.overview.labels.country'), value: getLabel(countryOptions, profileData.country) },
-    { label: t('profile.overview.labels.language'), value: getLabel(languageOptions, profileData.language) },
-    { label: t('profile.overview.labels.timezone'), value: getLabel(timezoneOptions, profileData.timezone) },
+    { label: t('profile.overview.labels.country'), value: displayCountry },
+    { label: t('profile.overview.labels.language'), value: displayLanguage },
+    { label: t('profile.overview.labels.timezone'), value: displayTimezone },
   ];
 
   return (

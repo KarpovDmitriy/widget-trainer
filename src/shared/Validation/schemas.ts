@@ -1,54 +1,46 @@
+import { i18CheckPath } from '@utils/zod-i18.typecheck';
 import { z } from 'zod';
-import { authContent } from '@src/locales/en/auth';
-import { profileContent } from '@src/locales/en/profile';
 
-const {
-  auth: { login: loginLang, register: regLang },
-} = authContent;
-const {
-  profile: {
-    form: { labels },
-    errors: profErrors,
-  },
-} = profileContent;
+const emailRule = z
+  .string()
+  .min(1, i18CheckPath('auth.login.errors.email'))
+  .email(i18CheckPath('auth.login.errors.email'));
 
-const emailRule = z.string().min(1, loginLang.errors.email).email(loginLang.errors.email);
+const passwordRule = z.string().min(8, i18CheckPath('auth.login.errors.password'));
 
-const passwordRule = z.string().min(8, loginLang.errors.password);
-
-const requiredProfile = (label: string): z.ZodString => z.string().min(1, profErrors.required(label));
+const requiredProfile = z.string().min(1, i18CheckPath('profile.errors.required'));
 
 export const loginSchema = z.object({
   email: emailRule,
-  password: z.string().min(1, loginLang.errors.password),
+  password: z.string().min(1, i18CheckPath('auth.login.errors.password')),
 });
 
 export const registerSchema = z
   .object({
-    username: z.string().min(3, regLang.errors.username),
+    username: z.string().min(3, i18CheckPath('auth.register.errors.username')),
     email: emailRule,
     password: passwordRule,
-    confirmPassword: z.string().min(1, regLang.errors.confirmPassword),
+    confirmPassword: z.string().min(1, i18CheckPath('auth.register.errors.confirmPassword')),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: regLang.errors.confirmPassword,
+    message: i18CheckPath('auth.register.errors.confirmPassword'),
     path: ['confirmPassword'],
   });
 
 export const profileSchema = z.object({
-  firstName: requiredProfile(labels.firstName),
-  lastName: requiredProfile(labels.lastName),
-  company: requiredProfile(labels.company),
+  firstName: requiredProfile,
+  lastName: requiredProfile,
+  company: requiredProfile,
   email: emailRule,
   phone: z
     .string()
-    .regex(/^[0-9+\-() ]*$/, profErrors.invalidPhone)
+    .regex(/^[0-9+\-() ]*$/, i18CheckPath('profile.errors.invalidPhone'))
     .optional()
     .or(z.literal('')),
-  site: z.string().url(profErrors.invalidUrl).optional().or(z.literal('')),
-  country: requiredProfile(labels.country),
-  language: requiredProfile(labels.language),
-  timezone: requiredProfile(labels.timezone),
+  site: z.string().url(i18CheckPath('profile.errors.invalidUrl')).optional().or(z.literal('')),
+  country: requiredProfile,
+  language: requiredProfile,
+  timezone: requiredProfile,
 });
 
 export type ProfileFormData = z.infer<typeof profileSchema>;

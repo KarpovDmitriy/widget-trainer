@@ -1,5 +1,7 @@
 import React from 'react';
+import type { ParseKeys, TOptions } from 'i18next';
 import { type Control, type FieldValues, type Path, useController } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import Field from '../Field/Field';
 
 interface ControlledInputProps<T extends FieldValues> {
@@ -10,6 +12,7 @@ interface ControlledInputProps<T extends FieldValues> {
   type?: string;
   placeholder?: string;
   extra?: React.ReactNode;
+  translateKeys?: TOptions;
 }
 
 export function ControlledInput<T extends FieldValues>({
@@ -19,15 +22,20 @@ export function ControlledInput<T extends FieldValues>({
   rules,
   type = 'text',
   placeholder,
+  translateKeys,
   extra,
 }: ControlledInputProps<T>): React.JSX.Element {
   const {
     field,
     fieldState: { error },
   } = useController({ name, control, rules });
+  const { t } = useTranslation();
+  const keysForTranslations: TOptions = { label, ...(translateKeys ?? {}) };
+
+  const errorMessage = error?.message ? t(error.message as ParseKeys, keysForTranslations) : undefined;
 
   return (
-    <Field label={label} error={error?.message} extra={extra}>
+    <Field label={label} error={errorMessage} extra={extra}>
       <input {...field} type={type} placeholder={placeholder} className={error ? 'invalid' : ''} />
     </Field>
   );

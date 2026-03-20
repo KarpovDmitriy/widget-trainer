@@ -54,7 +54,7 @@ export const profileContent = {
       saveFailed: '[Profile] failed to save profile',
       invalidPhone: 'Invalid phone number format',
       invalidUrl: 'Please enter a valid URL',
-      required: (label: string): string => `${label} is required`,
+      required: '{{label}} is required',
     },
   },
 };

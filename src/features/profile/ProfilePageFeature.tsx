@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { countryOptions } from '@data/selectOptions';
 import { INITIAL_USER_DATA, type UserData } from '@data/userDefaults';
+import { useSelectOptions } from '@utils/useSelectOptions';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '@s/auth.store';
@@ -21,8 +21,9 @@ const Profile: React.FC = () => {
 
   const [activeTab, setActiveTab] = useState<'overview' | 'settings'>('overview');
   const navigate = useNavigate();
-
   const profileData: UserData = profile ?? INITIAL_USER_DATA;
+
+  const { displayCountry } = useSelectOptions(profileData);
 
   useEffect(() => {
     if (!userId) {
@@ -57,7 +58,7 @@ const Profile: React.FC = () => {
               </h1>
               <div className={styles.profileMeta}>
                 <span>{profileData.company}</span>
-                <span>{countryOptions.find((o) => o.value === profileData.country)?.label}</span>
+                <span>{displayCountry}</span>
                 <span>{profileData.email}</span>
               </div>
             </div>

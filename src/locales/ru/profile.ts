@@ -54,7 +54,7 @@ export const profileContent = {
       saveFailed: '[Профиль] ошибка при сохранении данных',
       invalidPhone: 'Неверный формат номера телефона',
       invalidUrl: 'Пожалуйста, введите корректный URL',
-      required: (label: string): string => `Поле "${label}" обязательно для заполнения`,
+      required: 'Поле {{label}}  обязательно',
     },
   },
 };

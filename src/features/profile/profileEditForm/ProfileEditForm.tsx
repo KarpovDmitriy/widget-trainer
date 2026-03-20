@@ -1,11 +1,11 @@
 import React from 'react';
-import { countryOptions, languageOptions, timezoneOptions } from '@data/selectOptions';
 import { type UserData } from '@data/userDefaults';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Button from '@shared/Button/Button';
 import { ControlledInput } from '@shared/Controlled/ControlledInput';
 import { ControlledSelect } from '@shared/Controlled/ControlledSelect';
 import { type ProfileFormData, profileSchema } from '@shared/Validation/schemas';
+import { useSelectOptions } from '@utils/useSelectOptions';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import styles from '../Profile.module.css';
@@ -18,6 +18,7 @@ interface ProfileEditFormProps {
 
 const ProfileEditForm: React.FC<ProfileEditFormProps> = ({ initialValues, onSubmit }): React.JSX.Element => {
   const { t } = useTranslation();
+  const { countryOptions, languageOptions, timezoneOptions } = useSelectOptions();
   const {
     control,
     handleSubmit,
