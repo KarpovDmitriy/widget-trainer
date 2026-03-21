@@ -1,11 +1,11 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
+import { useToastStore } from '@s/toast.store';
 import styles from './Toast.module.css';
 import { ToastItem } from './ToastItem';
-import { useToast } from './useToast';
 
 export const ToastContainer: React.FC = () => {
-  const { toasts, removeToast } = useToast();
+  const { toasts, removeToast } = useToastStore();
 
   if (toasts.length === 0) {
     return null;

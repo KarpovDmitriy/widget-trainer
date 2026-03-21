@@ -1,11 +1,14 @@
-import { useContext } from 'react';
-import { ToastContext } from './ToastContext';
+import { useToastStore } from '@s/toast.store';
 import type { ToastContextType } from './types';
 
 export const useToast = (): ToastContextType => {
-  const context = useContext(ToastContext);
-  if (!context) {
-    throw new Error('useToast must be used within ToastProvider');
-  }
-  return context;
+  const addToast = useToastStore((s) => s.addToast);
+  const removeToast = useToastStore((s) => s.removeToast);
+  const toasts = useToastStore((s) => s.toasts);
+
+  return {
+    addToast,
+    removeToast,
+    toasts,
+  };
 };

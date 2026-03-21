@@ -1,6 +1,7 @@
 import { processAuthError } from '@api/helpers';
 import { SYSTEM_ERROR } from '@shared/Constants/constants';
 import type { AuthResponse as SupabaseResponse, User } from '@supabase/supabase-js';
+import { useToastStore } from '@s/toast.store';
 import { supabase } from '@src/lib/supabase';
 
 export interface LoginPayload {
@@ -19,7 +20,10 @@ export interface AuthResult {
   error: string | null;
 }
 
-const handleAuthRequest = async (request: () => Promise<SupabaseResponse>): Promise<AuthResult> => {
+const handleAuthRequest = async (
+  request: () => Promise<SupabaseResponse>,
+  successMsg?: string,
+): Promise<AuthResult> => {
   try {
     const { data, error } = await request();
 
@@ -31,12 +35,16 @@ const handleAuthRequest = async (request: () => Promise<SupabaseResponse>): Prom
     }
 
     if (!data || !data.user) {
-      // TODO: I18N: The 'errors.unknown' key can be returned here
-      console.warn('[Auth No Error No user]:', data); //TODO: remove the console when toast system will be implemented.
+      const errorMsg = 'Unknown error: user data missing';
+      useToastStore.getState().addToast(errorMsg, 'error');
       return {
         user: null,
-        error: 'unknown_error',
+        error: errorMsg,
       };
+    }
+
+    if (successMsg) {
+      useToastStore.getState().addToast(successMsg, 'success');
     }
 
     return {
@@ -44,8 +52,8 @@ const handleAuthRequest = async (request: () => Promise<SupabaseResponse>): Prom
       error: null,
     };
   } catch (err: unknown) {
-    console.warn('[Auth API Catch]:', err); //TODO: remove the console when toast system will be implemented.
-    // TODO: TOAST: addToast('Critical error', 'error')
+    const errorMsg = err instanceof Error ? err.message : 'Critical auth error';
+    useToastStore.getState().addToast(errorMsg, 'error');
     return {
       user: null,
       error: SYSTEM_ERROR,
@@ -54,20 +62,23 @@ const handleAuthRequest = async (request: () => Promise<SupabaseResponse>): Prom
 };
 
 export const authLogin = async ({ email, password }: LoginPayload): Promise<AuthResult> => {
-  return handleAuthRequest(() => supabase.auth.signInWithPassword({ email, password }));
+  return handleAuthRequest(() => supabase.auth.signInWithPassword({ email, password }), 'Successfully logged in!');
 };
 
 export const authRegister = async ({ email, password, username }: RegisterPayload): Promise<AuthResult> => {
-  return handleAuthRequest(() =>
-    supabase.auth.signUp({
-      email,
-      password,
-      options: { data: { username } },
-    }),
+  return handleAuthRequest(
+    () =>
+      supabase.auth.signUp({
+        email,
+        password,
+        options: { data: { username } },
+      }),
+    'Account created successfully!',
   );
 };
 
 export const authLogout = async (): Promise<{ error: string | null }> => {
+  const { addToast } = useToastStore.getState();
   try {
     const { error } = await supabase.auth.signOut();
     if (error) {
@@ -75,8 +86,8 @@ export const authLogout = async (): Promise<{ error: string | null }> => {
     }
     return { error: null };
   } catch (err: unknown) {
-    console.warn('[Auth API Catch]:', err); //TODO: remove the console when toast system will be implemented.
-    // TODO: TOAST: addToast('Critical error', 'error')
+    const errorMsg = err instanceof Error ? err.message : 'Critical logout error';
+    addToast(errorMsg, 'error');
     return { error: SYSTEM_ERROR };
   }
 };

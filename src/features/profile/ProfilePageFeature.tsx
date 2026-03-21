@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { INITIAL_USER_DATA, type UserData } from '@data/userDefaults';
-import { useToast } from '@features/notifications';
 import { useSelectOptions } from '@utils/useSelectOptions';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
@@ -14,9 +13,8 @@ import ProfileOverview from './profileOverview/ProfileOverview';
 
 const Profile: React.FC = () => {
   const { t } = useTranslation();
-  const { addToast } = useToast();
+
   const profile = useProfileStore((s) => s.profile);
-  const storeError = useProfileStore((s) => s.error);
   const saveProfile = useProfileStore((s) => s.saveProfile);
   const fetchProfile = useProfileStore((s) => s.fetchProfile);
   const { id: userId } = useAuthStore((s) => s.user) ?? {};
@@ -34,12 +32,6 @@ const Profile: React.FC = () => {
     void fetchProfile(userId);
   }, [fetchProfile, userId]);
 
-  useEffect(() => {
-    if (storeError) {
-      addToast(storeError, 'error');
-    }
-  }, [storeError, addToast]);
-
   const handleSave = async (data: UserData): Promise<void> => {
     if (!userId) {
       return;
@@ -47,12 +39,9 @@ const Profile: React.FC = () => {
 
     try {
       await saveProfile(userId, data);
-      alert(t('profile.notifications.success'));
-      addToast(t('profile.notifications.success'), 'success');
       setActiveTab('overview');
     } catch (err) {
-      const errorMessage = (err as Error).message ?? '[Profile] failed to save profile';
-      addToast(errorMessage, 'error');
+      console.error('[Profile Save Error]:', err);
     }
   };
 

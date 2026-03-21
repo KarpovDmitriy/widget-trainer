@@ -61,6 +61,14 @@
   text-align: center;
 }
 
+.errorText {
+  position: absolute;
+  padding-top: 5px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-error);
+}
+
 @media (width <= 805px) {
   .registerPage {
     flex-direction: column;

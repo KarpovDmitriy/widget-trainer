@@ -3,11 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { authLogin } from '@api/auth.api';
 import googleIcon from '@assets/icon-google.png';
 import AuthInfo from '@features/auth/authInfo/AuthInfo';
-import { useToast } from '@features/notifications';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { SYSTEM_ERROR } from '@shared/Constants/constants';
 import { LangSwitcher } from '@shared/LangSwitcher/LangSwitcher';
 import { type LoginFormData, loginSchema } from '@shared/Validation/schemas';
-import type { AuthError } from '@supabase/supabase-js';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import Button from '@src/shared/Button/Button';
@@ -22,8 +21,9 @@ const INITIAL_LOGIN_DATA: LoginFormData = {
 const Login: React.FC = (): React.JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { addToast } = useToast();
+
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [apiError, setApiError] = useState<string | null>(null);
 
   const loginLang = 'auth.login';
   const regLang = 'auth.register';
@@ -39,16 +39,15 @@ const Login: React.FC = (): React.JSX.Element => {
   });
 
   const onFormSubmit = async (data: LoginFormData): Promise<void> => {
+    setApiError(null);
     setIsSubmitting(true);
 
-    const { error } = (await authLogin(data)) as { error: AuthError | string | null };
+    const { error } = await authLogin(data);
 
     if (!error) {
-      addToast('Successfully logged in!', 'success');
-      navigate('/dashboard');
-    } else {
-      const errorMessage = typeof error === 'string' ? error : error.message;
-      addToast(errorMessage, 'error');
+      navigate('/dashboard'); //TODO Что здесь написать ?
+    } else if (error && error !== SYSTEM_ERROR) {
+      setApiError(error);
     }
     setIsSubmitting(false);
   };
@@ -77,6 +76,13 @@ const Login: React.FC = (): React.JSX.Element => {
               label={t(`${loginLang}.form.email`)}
               type="email"
               placeholder="example@domain.com"
+              rules={{
+                onChange: () => {
+                  if (apiError) {
+                    setApiError(null);
+                  }
+                },
+              }}
             />
 
             <ControlledInput
@@ -90,13 +96,20 @@ const Login: React.FC = (): React.JSX.Element => {
                   {t(`${loginLang}.forgotPassword`)}
                 </Link>
               }
+              rules={{
+                onChange: () => {
+                  if (apiError) {
+                    setApiError(null);
+                  }
+                },
+              }}
             />
 
             <Button className={styles.loginBtn} type="submit" variant="primary" disabled={!isValid || isSubmitting}>
               {isSubmitting ? '...' : t(`${loginLang}.submitBtn`)}
             </Button>
 
-            {/* Какие-то ошибки будут отображаться здесь */}
+            {apiError && <div className={styles.errorText}>{apiError}</div>}
           </form>
 
           <div className={styles.signupLink}>

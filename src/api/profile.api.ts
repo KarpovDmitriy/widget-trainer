@@ -2,6 +2,7 @@ import { processPostgrestError } from '@api/helpers';
 import type { UserData } from '@data/userDefaults';
 import { SYSTEM_ERROR } from '@shared/Constants/constants';
 import type { PostgrestSingleResponse } from '@supabase/supabase-js';
+import { useToastStore } from '@s/toast.store';
 import { supabase } from '@src/lib/supabase';
 
 interface UserProfileRow {
@@ -70,7 +71,7 @@ const handleProfileRequest = async <T extends UserProfileRow>(
     if (err instanceof Error) {
       console.warn('[Profile API Catch]:', err.message);
     }
-    // TODO: TOAST: addToast('Critical data error', 'error')
+    useToastStore.getState().addToast('Critical data error', 'error');
     return { data: null, error: SYSTEM_ERROR };
   }
 };

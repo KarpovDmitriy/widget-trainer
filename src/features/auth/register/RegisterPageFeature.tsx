@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { authRegister } from '@api/auth.api';
 import AuthInfo from '@features/auth/authInfo/AuthInfo';
-import { useToast } from '@features/notifications';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { SYSTEM_ERROR } from '@shared/Constants/constants';
 import { LangSwitcher } from '@shared/LangSwitcher/LangSwitcher';
 import { type RegisterFormData, registerSchema } from '@shared/Validation/schemas';
-import type { AuthError } from '@supabase/supabase-js';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import Button from '@src/shared/Button/Button';
@@ -23,8 +22,8 @@ const INITIAL_REGISTER_DATA: RegisterFormData = {
 const RegisterPageFeature: React.FC = (): React.JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { addToast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [apiError, setApiError] = useState<string | null>(null);
   const regPath = 'auth.register';
 
   const {
@@ -38,16 +37,15 @@ const RegisterPageFeature: React.FC = (): React.JSX.Element => {
   });
 
   const onFormSubmit = async (data: RegisterFormData): Promise<void> => {
+    setApiError(null);
     setIsSubmitting(true);
 
-    const { error } = (await authRegister(data)) as { error: AuthError | string | null };
+    const { error } = await authRegister(data);
 
     if (!error) {
-      addToast('Account created successfully!', 'success');
-      navigate('/dashboard');
-    } else {
-      const errorMessage = typeof error === 'string' ? error : error.message;
-      addToast(errorMessage, 'error');
+      navigate('/dashboard'); //TODO Что здесь написать ?
+    } else if (error && error !== SYSTEM_ERROR) {
+      setApiError(error);
     }
     setIsSubmitting(false);
   };
@@ -74,6 +72,13 @@ const RegisterPageFeature: React.FC = (): React.JSX.Element => {
               control={control}
               label={t(`${regPath}.form.username`)}
               placeholder={t(`${regPath}.form.placeholderUsername`)}
+              rules={{
+                onChange: () => {
+                  if (apiError) {
+                    setApiError(null);
+                  }
+                },
+              }}
             />
 
             <ControlledInput
@@ -82,6 +87,13 @@ const RegisterPageFeature: React.FC = (): React.JSX.Element => {
               label={t(`${regPath}.form.email`)}
               type="email"
               placeholder="example@domain.com"
+              rules={{
+                onChange: () => {
+                  if (apiError) {
+                    setApiError(null);
+                  }
+                },
+              }}
             />
 
             <ControlledInput
@@ -90,6 +102,13 @@ const RegisterPageFeature: React.FC = (): React.JSX.Element => {
               label={t(`${regPath}.form.password`)}
               type="password"
               placeholder="••••••••"
+              rules={{
+                onChange: () => {
+                  if (apiError) {
+                    setApiError(null);
+                  }
+                },
+              }}
             />
 
             <ControlledInput
@@ -98,13 +117,20 @@ const RegisterPageFeature: React.FC = (): React.JSX.Element => {
               label={t(`${regPath}.form.confirmPassword`)}
               type="password"
               placeholder="••••••••"
+              rules={{
+                onChange: () => {
+                  if (apiError) {
+                    setApiError(null);
+                  }
+                },
+              }}
             />
 
             <Button className={styles.registerBtn} type="submit" variant="primary" disabled={!isValid || isSubmitting}>
               {isSubmitting ? '...' : t(`${regPath}.submitBtn`)}
             </Button>
 
-            {/*  Какие-то ошибки будут отображаться здесь */}
+            {apiError && <div className={styles.errorText}>{apiError}</div>}
           </form>
         </div>
       </div>
