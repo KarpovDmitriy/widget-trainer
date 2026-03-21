@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { INITIAL_USER_DATA, type UserData } from '@data/userDefaults';
+import { SYSTEM_ERROR } from '@shared/Constants/constants';
 import { useSelectOptions } from '@utils/useSelectOptions';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '@s/auth.store';
 import { useProfileStore } from '@s/profile.store';
+import { useToastStore } from '@s/toast.store';
 import Button from '@src/shared/Button/Button';
 import styles from './Profile.module.css';
 import ProfileEditForm from './profileEditForm/ProfileEditForm';
@@ -37,11 +39,14 @@ const Profile: React.FC = () => {
       return;
     }
 
-    try {
-      await saveProfile(userId, data);
+    const error = await saveProfile(userId, data);
+
+    if (!error) {
       setActiveTab('overview');
-    } catch (err) {
-      console.error('[Profile Save Error]:', err);
+    } else {
+      if (error !== SYSTEM_ERROR) {
+        useToastStore.getState().addToast(error, 'error');
+      }
     }
   };
 
@@ -81,8 +86,6 @@ const Profile: React.FC = () => {
           </button>
         </nav>
       </div>
-
-      {/* Какие-то ошибки будут отображаться здесь */}
 
       <div className={styles.card}>
         <div className={styles.cardHeader}>

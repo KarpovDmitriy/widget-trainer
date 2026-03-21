@@ -8,13 +8,11 @@ export interface LoginPayload {
   email: string;
   password: string;
 }
-
 export interface RegisterPayload {
   username: string;
   email: string;
   password: string;
 }
-
 export interface AuthResult {
   user: User | null;
   error: string | null;
@@ -28,41 +26,29 @@ const handleAuthRequest = async (
     const { data, error } = await request();
 
     if (error) {
-      return {
-        user: null,
-        error: processAuthError(error),
-      };
+      return { user: null, error: processAuthError(error) };
     }
 
-    if (!data || !data.user) {
-      const errorMsg = 'Unknown error: user data missing';
+    if (!data?.user) {
+      const errorMsg = 'auth.apiErrors.unknown';
       useToastStore.getState().addToast(errorMsg, 'error');
-      return {
-        user: null,
-        error: errorMsg,
-      };
+      return { user: null, error: errorMsg };
     }
 
     if (successMsg) {
       useToastStore.getState().addToast(successMsg, 'success');
     }
 
-    return {
-      user: data.user,
-      error: null,
-    };
-  } catch (err: unknown) {
-    const errorMsg = err instanceof Error ? err.message : 'Critical auth error';
+    return { user: data.user, error: null };
+  } catch {
+    const errorMsg = 'auth.apiErrors.systemError';
     useToastStore.getState().addToast(errorMsg, 'error');
-    return {
-      user: null,
-      error: SYSTEM_ERROR,
-    };
+    return { user: null, error: SYSTEM_ERROR };
   }
 };
 
-export const authLogin = async ({ email, password }: LoginPayload): Promise<AuthResult> => {
-  return handleAuthRequest(() => supabase.auth.signInWithPassword({ email, password }), 'Successfully logged in!');
+export const authLogin = async (payload: LoginPayload): Promise<AuthResult> => {
+  return handleAuthRequest(() => supabase.auth.signInWithPassword(payload), 'auth.apiErrors.loginSuccess');
 };
 
 export const authRegister = async ({ email, password, username }: RegisterPayload): Promise<AuthResult> => {
@@ -73,21 +59,19 @@ export const authRegister = async ({ email, password, username }: RegisterPayloa
         password,
         options: { data: { username } },
       }),
-    'Account created successfully!',
+    'auth.apiErrors.registerSuccess',
   );
 };
 
 export const authLogout = async (): Promise<{ error: string | null }> => {
-  const { addToast } = useToastStore.getState();
   try {
     const { error } = await supabase.auth.signOut();
     if (error) {
       return { error: processAuthError(error) };
     }
     return { error: null };
-  } catch (err: unknown) {
-    const errorMsg = err instanceof Error ? err.message : 'Critical logout error';
-    addToast(errorMsg, 'error');
+  } catch {
+    useToastStore.getState().addToast('auth.apiErrors.systemError', 'error');
     return { error: SYSTEM_ERROR };
   }
 };

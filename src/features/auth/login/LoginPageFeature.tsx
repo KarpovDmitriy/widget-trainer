@@ -45,7 +45,7 @@ const Login: React.FC = (): React.JSX.Element => {
     const { error } = await authLogin(data);
 
     if (!error) {
-      navigate('/dashboard'); //TODO Что здесь написать ?
+      navigate('/profile'); //TODO Что здесь написать ?
     } else if (error && error !== SYSTEM_ERROR) {
       setApiError(error);
     }
