@@ -30,7 +30,10 @@ export function ControlledInput<T extends FieldValues>({
     fieldState: { error },
   } = useController({ name, control, rules });
   const { t } = useTranslation();
-  const keysForTranslations: TOptions = { label, ...(translateKeys ?? {}) };
+  const keysForTranslations = {
+    label,
+    ...(translateKeys ?? {}),
+  } as Omit<TOptions, 'context'> & { context?: string };
 
   const errorMessage = error?.message ? t(error.message as ParseKeys, keysForTranslations) : undefined;
 
