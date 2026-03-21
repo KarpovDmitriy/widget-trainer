@@ -38,6 +38,8 @@ export function ControlledSelect<T extends FieldValues>({
         value={selectedValue}
         onChange={(val: SingleValue<SelectOption>) => field.onChange(val?.value)}
         classNamePrefix="custom-select"
+        menuPlacement="auto"
+        menuPosition="fixed"
       />
     </Field>
   );

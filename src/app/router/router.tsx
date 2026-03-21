@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { PATHS } from '@shared/Constants/paths';
+import { MainLayout } from '@shared/Layout/MainLayout';
 import { LoginPage } from '@src/pages/LoginPage';
 import { ProfilePage } from '@src/pages/ProfilePage';
 import { RegisterPage } from '@src/pages/RegisterPage';
@@ -23,10 +24,15 @@ export const router = createBrowserRouter([
   {
     element: <ProtectedRoute />,
     children: [
-      { path: PATHS.DASHBOARD, element: <DashboardPage /> },
-      { path: PATHS.LIBRARY, element: <LibraryPage /> },
-      { path: PATHS.PRACTICE(), element: <PracticePage /> },
-      { path: PATHS.PROFILE, element: <ProfilePage /> },
+      {
+        element: <MainLayout />,
+        children: [
+          { path: PATHS.DASHBOARD, element: <DashboardPage /> },
+          { path: PATHS.LIBRARY, element: <LibraryPage /> },
+          { path: PATHS.PRACTICE(), element: <PracticePage /> },
+          { path: PATHS.PROFILE, element: <ProfilePage /> },
+        ],
+      },
     ],
   },
   {

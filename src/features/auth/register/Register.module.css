@@ -7,12 +7,29 @@
 }
 
 .registerMain {
+  position: relative;
   display: flex;
   flex: 1;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 2rem;
+}
+
+.authLangSwitcher {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 1.5rem;
+
+  .langSwitcher {
+    padding-right: 0;
+    border-right: none;
+
+    .langBtn:hover {
+      color: var(--text-gray);
+    }
+  }
 }
 
 .registerCard {
