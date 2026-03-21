@@ -1,27 +1,35 @@
 import React from 'react';
-import { authContent } from '@locales/en/auth';
+import { useTranslation } from 'react-i18next';
 import styles from './AuthInfo.module.css';
 
+interface Feature {
+  label: string;
+  text: string;
+}
+
 const HeaderAuth: React.FC = () => {
-  const { aside } = authContent;
+  const { t } = useTranslation();
+
+  const features = t('auth.aside.features', { returnObjects: true }) as Feature[];
 
   return (
     <div className={styles.authAside}>
-      <h1>{aside.title}</h1>
+      <h1>{t('auth.aside.title')}</h1>
       <div className={styles.authAsideContent}>
-        <h2>{aside.subtitle}</h2>
-        <p className={styles.authAsideDescription}>{aside.description}</p>
+        <h2>{t('auth.aside.subtitle')}</h2>
+        <p className={styles.authAsideDescription}>{t('auth.aside.description')}</p>
 
         <ul className={styles.authAsideFeatures}>
-          {aside.features.map((feature, index) => (
-            <li key={index}>
-              <strong>{feature.label}</strong> {feature.text}
-            </li>
-          ))}
+          {Array.isArray(features) &&
+            features.map((feature, index) => (
+              <li key={index}>
+                <strong>{feature.label}</strong> {feature.text}
+              </li>
+            ))}
         </ul>
       </div>
       <div className={styles.authAsideFooter}>
-        <span>{aside.footer}</span>
+        <span>{t('auth.aside.footer')}</span>
       </div>
     </div>
   );
