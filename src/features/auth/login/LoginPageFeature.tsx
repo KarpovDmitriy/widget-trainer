@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SYSTEM_ERROR } from '@shared/Constants/constants';
 import { LangSwitcher } from '@shared/LangSwitcher/LangSwitcher';
 import { type LoginFormData, loginSchema } from '@shared/Validation/schemas';
+import type { ParseKeys } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import Button from '@src/shared/Button/Button';
@@ -51,6 +52,8 @@ const Login: React.FC = (): React.JSX.Element => {
     }
     setIsSubmitting(false);
   };
+
+  const apiErrorMessage = t(apiError as ParseKeys);
 
   return (
     <div className={styles.loginPage}>
@@ -109,7 +112,7 @@ const Login: React.FC = (): React.JSX.Element => {
               {isSubmitting ? '...' : t(`${loginLang}.submitBtn`)}
             </Button>
 
-            {apiError && <div className={styles.errorText}>{apiError}</div>}
+            {apiError && <div className={styles.errorText}>{apiErrorMessage}</div>}
           </form>
 
           <div className={styles.signupLink}>

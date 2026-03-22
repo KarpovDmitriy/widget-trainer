@@ -1,6 +1,7 @@
 import { processAuthError } from '@api/helpers';
 import { SYSTEM_ERROR } from '@shared/Constants/constants';
 import type { AuthResponse as SupabaseResponse, User } from '@supabase/supabase-js';
+import { i18CheckPath } from '@utils/zod-i18.typecheck';
 import { useToastStore } from '@s/toast.store';
 import { supabase } from '@src/lib/supabase';
 
@@ -30,7 +31,7 @@ const handleAuthRequest = async (
     }
 
     if (!data?.user) {
-      const errorMsg = 'auth.apiErrors.unknown';
+      const errorMsg = i18CheckPath('auth.apiErrors.unknown');
       useToastStore.getState().addToast(errorMsg, 'error');
       return { user: null, error: errorMsg };
     }
@@ -41,14 +42,17 @@ const handleAuthRequest = async (
 
     return { user: data.user, error: null };
   } catch {
-    const errorMsg = 'auth.apiErrors.systemError';
+    const errorMsg = i18CheckPath('auth.apiErrors.systemError');
     useToastStore.getState().addToast(errorMsg, 'error');
     return { user: null, error: SYSTEM_ERROR };
   }
 };
 
 export const authLogin = async (payload: LoginPayload): Promise<AuthResult> => {
-  return handleAuthRequest(() => supabase.auth.signInWithPassword(payload), 'auth.apiErrors.loginSuccess');
+  return handleAuthRequest(
+    () => supabase.auth.signInWithPassword(payload),
+    i18CheckPath('auth.apiErrors.loginSuccess'),
+  );
 };
 
 export const authRegister = async ({ email, password, username }: RegisterPayload): Promise<AuthResult> => {
@@ -59,7 +63,7 @@ export const authRegister = async ({ email, password, username }: RegisterPayloa
         password,
         options: { data: { username } },
       }),
-    'auth.apiErrors.registerSuccess',
+    i18CheckPath('auth.apiErrors.registerSuccess'),
   );
 };
 
@@ -71,7 +75,7 @@ export const authLogout = async (): Promise<{ error: string | null }> => {
     }
     return { error: null };
   } catch {
-    useToastStore.getState().addToast('auth.apiErrors.systemError', 'error');
+    useToastStore.getState().addToast(i18CheckPath('auth.apiErrors.systemError'), 'error');
     return { error: SYSTEM_ERROR };
   }
 };
