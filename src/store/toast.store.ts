@@ -20,7 +20,7 @@ export const useToastStore = create<ToastState>((set, get) => ({
     }));
 
     setTimeout(() => {
-      get().removeToast(id);
+      get().dismissToast(id);
     }, msec);
   },
 
