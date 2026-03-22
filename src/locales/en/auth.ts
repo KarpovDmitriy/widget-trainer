@@ -56,6 +56,8 @@ export const authContent = {
       tooManyAttempts: 'Too many attempts. Please try again later.',
       systemError: 'A system error occurred. Please try again later.',
       unknown: 'Something went wrong. Please check your data.',
+      loginSuccess: 'You have successfully logged in!',
+      registerSuccess: 'You have successfully logged in!',
     },
   },
 };

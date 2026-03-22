@@ -5,7 +5,7 @@ import styles from './Toast.module.css';
 import { ToastItem } from './ToastItem';
 
 export const ToastContainer: React.FC = () => {
-  const { toasts, removeToast } = useToastStore();
+  const { toasts, dismissToast } = useToastStore();
 
   if (toasts.length === 0) {
     return null;
@@ -14,7 +14,7 @@ export const ToastContainer: React.FC = () => {
   return createPortal(
     <div className={styles.container}>
       {toasts.map((toast) => (
-        <ToastItem key={toast.id} {...toast} onClose={() => removeToast(toast.id)} />
+        <ToastItem key={toast.id} {...toast} onClose={() => dismissToast(toast.id)} />
       ))}
     </div>,
     document.body,

@@ -5,6 +5,7 @@ export interface IToast {
   message: string;
   type: ToastType;
   msec?: number;
+  isExiting?: boolean;
 }
 
 export interface ToastContextType {

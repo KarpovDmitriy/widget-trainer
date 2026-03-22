@@ -46,7 +46,7 @@ export const useProfileStore = create<ProfileState>((set) => ({
     });
 
     if (!error) {
-      useToastStore.getState().addToast('profile.saveSuccess', 'success');
+      useToastStore.getState().addToast('profile.notifications.success', 'success');
       return null;
     }
 
