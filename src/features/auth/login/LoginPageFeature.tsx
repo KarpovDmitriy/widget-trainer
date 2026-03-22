@@ -4,8 +4,10 @@ import { authLogin } from '@api/auth.api';
 import googleIcon from '@assets/icon-google.png';
 import AuthInfo from '@features/auth/authInfo/AuthInfo';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { SYSTEM_ERROR } from '@shared/Constants/constants';
 import { LangSwitcher } from '@shared/LangSwitcher/LangSwitcher';
 import { type LoginFormData, loginSchema } from '@shared/Validation/schemas';
+import type { ParseKeys } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import Button from '@src/shared/Button/Button';
@@ -20,8 +22,9 @@ const INITIAL_LOGIN_DATA: LoginFormData = {
 const Login: React.FC = (): React.JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [serverError, setServerError] = useState<string | null>(null);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [apiError, setApiError] = useState<string | null>(null);
 
   const loginLang = 'auth.login';
   const regLang = 'auth.register';
@@ -37,16 +40,20 @@ const Login: React.FC = (): React.JSX.Element => {
   });
 
   const onFormSubmit = async (data: LoginFormData): Promise<void> => {
-    setServerError(null);
+    setApiError(null);
     setIsSubmitting(true);
+
     const { error } = await authLogin(data);
+
     if (!error) {
-      navigate('/dashboard');
-    } else {
-      setServerError(error);
+      navigate('/profile'); //TODO Что здесь написать ?
+    } else if (error && error !== SYSTEM_ERROR) {
+      setApiError(error);
     }
     setIsSubmitting(false);
   };
+
+  const apiErrorMessage = t(apiError as ParseKeys);
 
   return (
     <div className={styles.loginPage}>
@@ -72,6 +79,13 @@ const Login: React.FC = (): React.JSX.Element => {
               label={t(`${loginLang}.form.email`)}
               type="email"
               placeholder="example@domain.com"
+              rules={{
+                onChange: () => {
+                  if (apiError) {
+                    setApiError(null);
+                  }
+                },
+              }}
             />
 
             <ControlledInput
@@ -85,13 +99,20 @@ const Login: React.FC = (): React.JSX.Element => {
                   {t(`${loginLang}.forgotPassword`)}
                 </Link>
               }
+              rules={{
+                onChange: () => {
+                  if (apiError) {
+                    setApiError(null);
+                  }
+                },
+              }}
             />
 
             <Button className={styles.loginBtn} type="submit" variant="primary" disabled={!isValid || isSubmitting}>
               {isSubmitting ? '...' : t(`${loginLang}.submitBtn`)}
             </Button>
 
-            {serverError && <p className={styles.serverError}>{serverError}</p>}
+            {apiError && <div className={styles.errorText}>{apiErrorMessage}</div>}
           </form>
 
           <div className={styles.signupLink}>

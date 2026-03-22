@@ -48,5 +48,15 @@ export const authContent = {
         confirmPassword: 'Подтверждение пароля',
       },
     },
+    apiErrors: {
+      alreadyRegistered: 'Этот e-mail уже используется.',
+      weakPassword: 'Пароль слишком простой (минимум 6 символов).',
+      invalidCredentials: 'Неверный e-mail или пароль.',
+      tooManyAttempts: 'Слишком много попыток. Пожалуйста, попробуйте позже.',
+      systemError: 'Произошла системная ошибка. Повторите попытку позже.',
+      unknown: 'Что-то пошло не так. Пожалуйста, проверьте данные.',
+      loginSuccess: 'Вы успешно вошли в систему!',
+      registerSuccess: 'Вы успешно зарегистрировались!',
+    },
   },
 };
