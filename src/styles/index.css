@@ -29,6 +29,12 @@
   --btn-primary: #7239ea;
   --btn-primary-hover: #5014d0;
   --btn-primary-light: #f8f5ff;
+  --success-light: #dfffea;
+  --success: #17c653;
+  --error-light: #ffeef3;
+  --error: #f8285a;
+  --warning-light: #fff8dd;
+  --warning: #f6c000;
 }
 
 /* ----Add styles for selectors - Start----- */

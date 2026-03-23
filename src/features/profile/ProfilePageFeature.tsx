@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { INITIAL_USER_DATA, type UserData } from '@data/userDefaults';
-import { SYSTEM_ERROR } from '@shared/Constants/constants';
 import { useSelectOptions } from '@utils/useSelectOptions';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '@s/auth.store';
 import { useProfileStore } from '@s/profile.store';
-import { useToastStore } from '@s/toast.store';
 import Button from '@src/shared/Button/Button';
 import styles from './Profile.module.css';
 import ProfileEditForm from './profileEditForm/ProfileEditForm';
@@ -43,10 +41,6 @@ const Profile: React.FC = () => {
 
     if (!error) {
       setActiveTab('overview');
-    } else {
-      if (error !== SYSTEM_ERROR) {
-        useToastStore.getState().addToast(error, 'error');
-      }
     }
   };
 

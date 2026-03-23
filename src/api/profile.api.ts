@@ -65,7 +65,7 @@ const handleProfileRequest = async <T extends UserProfileRow>(
 
     return { data: data ? mapRowToUserData(data) : null, error: null };
   } catch {
-    const systemMsg = i18CheckPath('auth.apiErrors.systemError');
+    const systemMsg = i18CheckPath('auth.apiErrors.systemError'); //TODO: Заменить на profile.apiError ?
     useToastStore.getState().addToast(systemMsg, 'error');
     return { data: null, error: SYSTEM_ERROR };
   } finally {
