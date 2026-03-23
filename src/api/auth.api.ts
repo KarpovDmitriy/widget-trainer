@@ -2,6 +2,7 @@ import { processAuthError } from '@api/helpers';
 import { SYSTEM_ERROR } from '@shared/Constants/constants';
 import type { AuthResponse as SupabaseResponse, User } from '@supabase/supabase-js';
 import { i18CheckPath } from '@utils/zod-i18.typecheck';
+import { useLoaderStore } from '@s/loader.store';
 import { useToastStore } from '@s/toast.store';
 import { supabase } from '@src/lib/supabase';
 
@@ -24,6 +25,7 @@ const handleAuthRequest = async (
   successMsg?: string,
 ): Promise<AuthResult> => {
   try {
+    useLoaderStore.getState().setLoading({ isAuthLoading: true });
     const { data, error } = await request();
 
     if (error) {
@@ -45,6 +47,8 @@ const handleAuthRequest = async (
     const errorMsg = i18CheckPath('auth.apiErrors.systemError');
     useToastStore.getState().addToast(errorMsg, 'error');
     return { user: null, error: SYSTEM_ERROR };
+  } finally {
+    useLoaderStore.getState().setLoading({ isAuthLoading: false });
   }
 };
 
