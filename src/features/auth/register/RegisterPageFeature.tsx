@@ -44,7 +44,7 @@ const RegisterPageFeature: React.FC = (): React.JSX.Element => {
     const { error } = await authRegister(data);
 
     if (!error) {
-      navigate('/profile'); //TODO Что здесь написать ?
+      navigate('/profile');
     } else if (error && error !== SYSTEM_ERROR) {
       setApiError(error);
     }
