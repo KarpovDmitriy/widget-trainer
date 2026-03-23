@@ -49,5 +49,15 @@ export const authContent = {
         confirmPassword: 'Confirm password',
       },
     },
+    apiErrors: {
+      alreadyRegistered: 'This email is already in use.',
+      weakPassword: 'Password is too weak (at least 6 characters).',
+      invalidCredentials: 'Invalid email or password.',
+      tooManyAttempts: 'Too many attempts. Please try again later.',
+      systemError: 'A system error occurred. Please try again later.',
+      unknown: 'Something went wrong. Please check your data.',
+      loginSuccess: 'You have successfully logged in!',
+      registerSuccess: 'You have successfully registered!',
+    },
   },
 };

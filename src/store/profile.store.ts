@@ -1,15 +1,15 @@
 import { create } from 'zustand';
 import * as profileApi from '@api/profile.api';
 import type { UserData } from '@data/userDefaults';
-
-//TODO:  import { useToastStore } from './toast.store';
+import { SYSTEM_ERROR } from '@shared/Constants/constants';
+import { useToastStore } from './toast.store';
 
 interface ProfileState {
   profile: UserData | null;
   isLoading: boolean;
   error: string | null;
   fetchProfile: (userId: string) => Promise<void>;
-  saveProfile: (userId: string, data: UserData) => Promise<void>;
+  saveProfile: (userId: string, data: UserData) => Promise<string | null>;
   reset: () => void;
 }
 
@@ -29,10 +29,12 @@ export const useProfileStore = create<ProfileState>((set) => ({
       isLoading: false,
     });
 
-    // TODO: TOAST: if (error && error !== SYSTEM_ERROR) useToastStore.getState().addToast(error, 'error');
+    if (error && error !== SYSTEM_ERROR) {
+      useToastStore.getState().addToast(error, 'error');
+    }
   },
 
-  saveProfile: async (userId: string, profileData: UserData): Promise<void> => {
+  saveProfile: async (userId: string, profileData: UserData): Promise<string | null> => {
     set({ isLoading: true, error: null });
 
     const { data, error } = await profileApi.saveProfile(userId, profileData);
@@ -44,11 +46,11 @@ export const useProfileStore = create<ProfileState>((set) => ({
     });
 
     if (!error) {
-      // TODO: TOAST: useToastStore.getState().addToast('Profile successfully updated', 'success');
-    } else {
-      // TODO: TOAST: if (error !== SYSTEM_ERROR) useToastStore.getState().addToast(error, 'error');
-      throw new Error(error); // Pass it on for local processing in the form
+      useToastStore.getState().addToast('profile.notifications.success', 'success');
+      return null;
     }
+
+    return error;
   },
 
   reset: (): void => set({ profile: null, isLoading: false, error: null }),

@@ -2,6 +2,8 @@ import { processPostgrestError } from '@api/helpers';
 import type { UserData } from '@data/userDefaults';
 import { SYSTEM_ERROR } from '@shared/Constants/constants';
 import type { PostgrestSingleResponse } from '@supabase/supabase-js';
+import { i18CheckPath } from '@utils/zod-i18.typecheck';
+import { useToastStore } from '@s/toast.store';
 import { supabase } from '@src/lib/supabase';
 
 interface UserProfileRow {
@@ -56,21 +58,13 @@ const handleProfileRequest = async <T extends UserProfileRow>(
     const { data, error } = await request();
 
     if (error) {
-      return {
-        data: null,
-        error: processPostgrestError(error),
-      };
+      return { data: null, error: processPostgrestError(error) };
     }
 
-    return {
-      data: data ? mapRowToUserData(data) : null,
-      error: null,
-    };
-  } catch (err: unknown) {
-    if (err instanceof Error) {
-      console.warn('[Profile API Catch]:', err.message);
-    }
-    // TODO: TOAST: addToast('Critical data error', 'error')
+    return { data: data ? mapRowToUserData(data) : null, error: null };
+  } catch {
+    const systemMsg = i18CheckPath('auth.apiErrors.systemError');
+    useToastStore.getState().addToast(systemMsg, 'error');
     return { data: null, error: SYSTEM_ERROR };
   }
 };
@@ -81,18 +75,10 @@ export const getProfile = async (userId: string): Promise<ProfileResponse> => {
 
 export const saveProfile = async (user_id: string, profileData: UserData): Promise<ProfileResponse> => {
   const row = mapUserDataToRow(profileData);
-
   return handleProfileRequest(() =>
     supabase
       .from('user_profiles')
-      .upsert(
-        {
-          user_id,
-          ...row,
-          updated_at: new Date().toISOString(),
-        },
-        { onConflict: 'user_id' },
-      )
+      .upsert({ user_id, ...row, updated_at: new Date().toISOString() }, { onConflict: 'user_id' })
       .select()
       .single(),
   );
