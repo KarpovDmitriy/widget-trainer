@@ -29,3 +29,5 @@ The application will have login and registration pages, as well as a test histor
 | Vitaliy Shelepkov - https://github.com/av-shell | Alena Yakimovich - https://github.com/ayaki-coder |
 
 Link to the deployed site: [WidgetTrainer](https://tandem-virid.vercel.app/)
+
+Link to video to Week 5 Checkpoint [Link to YouTube](https://youtu.be/sKFpzNc4HS8)
