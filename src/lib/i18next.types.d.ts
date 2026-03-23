@@ -1,6 +1,7 @@
 import 'i18next';
 import { authContent } from '../locales/en/auth';
 import { headerContent } from '../locales/en/header';
+import { libraryContent } from '../locales/en/library';
 import { profileContent } from '../locales/en/profile';
 
 declare module 'i18next' {
@@ -8,7 +9,7 @@ declare module 'i18next' {
     defaultNS: 'translation';
     returnNull: false;
     resources: {
-      translation: typeof authContent & typeof profileContent & typeof headerContent;
+      translation: typeof authContent & typeof profileContent & typeof headerContent & typeof libraryContent;
     };
   }
 }
