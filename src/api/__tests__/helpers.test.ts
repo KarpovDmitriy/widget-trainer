@@ -48,16 +48,16 @@ describe('processPostgrestError', () => {
 
   it('returns message for regular DB error', () => {
     const error = makePostgrestError('23505', 'duplicate key value');
-    expect(processPostgrestError(error)).toBe('duplicate key value');
+    expect(processPostgrestError(error, 409)).toBe('duplicate key value');
   });
 
   it('returns SYSTEM_ERROR for permission errors (42xxx)', () => {
     const error = makePostgrestError('42501', 'permission denied');
-    expect(processPostgrestError(error)).toBe(SYSTEM_ERROR);
+    expect(processPostgrestError(error, 403)).toBe(SYSTEM_ERROR);
   });
 
   it('returns SYSTEM_ERROR for PGRST116 (not found)', () => {
     const error = makePostgrestError('PGRST116', 'not found');
-    expect(processPostgrestError(error)).toBe(SYSTEM_ERROR);
+    expect(processPostgrestError(error, 406)).toBe(SYSTEM_ERROR);
   });
 });

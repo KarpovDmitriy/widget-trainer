@@ -55,15 +55,15 @@ const handleProfileRequest = async <T extends UserProfileRow>(
   request: () => PromiseLike<PostgrestSingleResponse<T>>,
 ): Promise<ProfileResponse> => {
   try {
-    const { data, error } = await request();
+    const { data, error, status } = await request();
 
     if (error) {
-      return { data: null, error: processPostgrestError(error) };
+      return { data: null, error: processPostgrestError(error, status) };
     }
 
     return { data: data ? mapRowToUserData(data) : null, error: null };
   } catch {
-    const systemMsg = i18CheckPath('auth.apiErrors.systemError');
+    const systemMsg = i18CheckPath('common.errors.system');
     useToastStore.getState().addToast(systemMsg, 'error');
     return { data: null, error: SYSTEM_ERROR };
   }

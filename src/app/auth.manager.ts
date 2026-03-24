@@ -13,7 +13,7 @@ const startAuthOrchestrator = (): (() => void) => {
       return;
     }
     if (user) {
-      useProfileStore.getState().fetchProfile(user.id);
+      // useProfileStore.getState().fetchProfile(user.id);
       //TODO: get data;
     } else {
       useProfileStore.getState().reset();
