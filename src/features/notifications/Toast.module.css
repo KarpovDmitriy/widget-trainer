@@ -10,11 +10,14 @@
 
 .toast {
   display: flex;
+  gap: 12px;
   align-items: center;
   justify-content: space-between;
-  min-width: 280px;
+  min-width: 310px;
   padding: 12px 16px;
-  color: white;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  border: 1px solid var(--text-color);
   border-radius: 6px;
   box-shadow: 0 4px 10px rgb(0 0 0 / 10%);
   animation: slide-in 0.3s ease forwards;
@@ -22,43 +25,48 @@
 
 .success {
   --text-color: var(--success);
+  --bg-color: var(--success-light);
+  --icon-bg: var(--success-bg-icon);
 }
 
 .error {
   --text-color: var(--error);
+  --bg-color: var(--error-light);
+  --icon-bg: var(--error-bg-icon);
 }
 
 .info {
   --text-color: var(--warning);
+  --bg-color: var(--warning-light);
+  --icon-bg: var(--warning-bg-icon);
 }
 
-.success {
-  background-color: var(--success-light);
-}
-
-.error {
-  background-color: var(--error-light);
-}
-
-.info {
-  background-color: var(--warning-light);
-}
-
-.success,
-.error,
-.info {
+.icon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  font-size: 1.1rem;
+  font-weight: bold;
   color: var(--text-color);
+  background-color: var(--icon-bg);
+  clip-path: polygon(50% 0%, 100% 25%, 85% 75%, 50% 100%, 15% 75%, 0% 25%);
 }
 
 .closeBtn {
   color: var(--text-color);
-}
-
-.closeBtn {
-  font-size: 20px;
   cursor: pointer;
   background: none;
   border: none;
+  transition: transform 0.3s;
+}
+
+.closeBtn:hover {
+  opacity: 1;
+  transform: scale(1.1);
+  transition: transform 0.3s;
 }
 
 @keyframes slide-in {
