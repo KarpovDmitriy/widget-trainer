@@ -8,6 +8,12 @@ interface Props extends IToast {
   onClose: () => void;
 }
 
+const textIconMap: Record<IToast['type'], string> = {
+  success: '✔',
+  error: '✖',
+  info: 'ℹ',
+};
+
 export const ToastItem: React.FC<Props> = ({ message, type, onClose, isExiting }) => {
   const { t, i18n } = useTranslation();
 
@@ -15,9 +21,10 @@ export const ToastItem: React.FC<Props> = ({ message, type, onClose, isExiting }
 
   return (
     <div className={`${styles.toast} ${styles[type]} ${isExiting ? styles.toastExit : ''}`}>
+      <span className={styles.icon}>{textIconMap[type]}</span>
       <span className={styles.message}>{translatedMessage}</span>
       <button onClick={onClose} className={styles.closeBtn}>
-        &times;
+        &#10006;
       </button>
     </div>
   );
