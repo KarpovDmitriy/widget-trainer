@@ -1,14 +1,15 @@
+import { authContent } from '@locales/en/auth';
+import { commonContent } from '@locales/en/common';
+import { headerContent } from '@locales/en/header';
+import { profileContent } from '@locales/en/profile';
 import 'i18next';
-import { authContent } from '../locales/en/auth';
-import { headerContent } from '../locales/en/header';
-import { profileContent } from '../locales/en/profile';
 
 declare module 'i18next' {
   interface CustomTypeOptions {
     defaultNS: 'translation';
     returnNull: false;
     resources: {
-      translation: typeof authContent & typeof profileContent & typeof headerContent;
+      translation: typeof authContent & typeof profileContent & typeof headerContent & typeof commonContent;
     };
   }
 }

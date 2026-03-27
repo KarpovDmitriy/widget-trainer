@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { INITIAL_USER_DATA, type UserData } from '@data/userDefaults';
 import { SYSTEM_ERROR } from '@shared/Constants/constants';
@@ -14,12 +14,14 @@ import ProfileEditForm from './profileEditForm/ProfileEditForm';
 import ProfileOverview from './profileOverview/ProfileOverview';
 
 const Profile: React.FC = () => {
+  const isFirstLoad = useRef(true);
   const { t } = useTranslation();
 
   const profile = useProfileStore((s) => s.profile);
   const saveProfile = useProfileStore((s) => s.saveProfile);
   const fetchProfile = useProfileStore((s) => s.fetchProfile);
   const { id: userId } = useAuthStore((s) => s.user) ?? {};
+  const addToast = useToastStore((s) => s.addToast);
 
   const [activeTab, setActiveTab] = useState<'overview' | 'settings'>('overview');
   const navigate = useNavigate();
@@ -31,8 +33,11 @@ const Profile: React.FC = () => {
     if (!userId) {
       return;
     }
-    void fetchProfile(userId);
-  }, [fetchProfile, userId]);
+    if (!profile && isFirstLoad.current) {
+      isFirstLoad.current = false;
+      fetchProfile(userId);
+    }
+  }, [fetchProfile, userId, profile]);
 
   const handleSave = async (data: UserData): Promise<void> => {
     if (!userId) {
@@ -42,10 +47,11 @@ const Profile: React.FC = () => {
     const error = await saveProfile(userId, data);
 
     if (!error) {
+      addToast('profile.notifications.success', 'success');
       setActiveTab('overview');
     } else {
       if (error !== SYSTEM_ERROR) {
-        useToastStore.getState().addToast(error, 'error');
+        addToast(error, 'error');
       }
     }
   };

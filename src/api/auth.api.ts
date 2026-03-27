@@ -33,7 +33,7 @@ const handleAuthRequest = async (
     }
 
     if (!data?.user) {
-      const errorMsg = i18CheckPath('auth.apiErrors.unknown');
+      const errorMsg = i18CheckPath('common.errors.unknown');
       useToastStore.getState().addToast(errorMsg, 'error');
       return { user: null, error: errorMsg };
     }
@@ -44,7 +44,7 @@ const handleAuthRequest = async (
 
     return { user: data.user, error: null };
   } catch {
-    const errorMsg = i18CheckPath('auth.apiErrors.systemError');
+    const errorMsg = i18CheckPath('common.errors.system');
     useToastStore.getState().addToast(errorMsg, 'error');
     return { user: null, error: SYSTEM_ERROR };
   } finally {
@@ -79,7 +79,7 @@ export const authLogout = async (): Promise<{ error: string | null }> => {
     }
     return { error: null };
   } catch {
-    useToastStore.getState().addToast(i18CheckPath('auth.apiErrors.systemError'), 'error');
+    useToastStore.getState().addToast(i18CheckPath('common.errors.system'), 'error');
     return { error: SYSTEM_ERROR };
   }
 };
