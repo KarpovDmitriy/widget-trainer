@@ -1,5 +1,5 @@
 import { SYSTEM_ERROR } from '@shared/Constants/constants';
-import type { AuthError, PostgrestError } from '@supabase/supabase-js';
+import { type AuthError, type PostgrestError, isAuthRetryableFetchError } from '@supabase/supabase-js';
 import { i18CheckPath } from '@utils/zod-i18.typecheck';
 import { useToastStore } from '@s/toast.store';
 
@@ -20,7 +20,6 @@ export const processAuthError = (error: AuthError): string | null => {
     status >= 500 ||
     status === 429 ||
     status === 401 ||
-    message === 'Fetch error' ||
     (status === 400 && (message.includes('configuration') || message.includes('provider')));
 
   if (isSystemError) {
@@ -65,6 +64,12 @@ export const processPostgrestError = (error: PostgrestError, status: number): st
     return SYSTEM_ERROR;
   }
 
+  if (!code) {
+    const systemMsg = i18CheckPath('common.errors.unknown');
+    addToast(systemMsg, 'error');
+    return SYSTEM_ERROR;
+  }
+
   const isServerError = code.startsWith('42') || code.startsWith('5') || status >= 500 || status === 429;
 
   if (isServerError) {
@@ -86,8 +91,9 @@ export const processPostgrestError = (error: PostgrestError, status: number): st
 };
 
 function isNetworkError(error: PostgrestError | AuthError): boolean {
-  const { code, message } = error;
-  const lowerMessage = message?.toLowerCase() || '';
-
-  return !code || lowerMessage.includes('fetch') || lowerMessage.includes('network');
+  if (isAuthRetryableFetchError(error)) {
+    return true;
+  }
+  const message = error.message?.toLowerCase() || '';
+  return message.includes('fetch') || message.includes('network');
 }
