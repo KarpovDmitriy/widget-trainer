@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Button from '@shared/Button/Button';
+import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import type { QuizAnswer, QuizWidget } from '@src/types/widget.types';
 import type { WidgetStrategyProps } from '../types';
@@ -37,11 +38,11 @@ const QuizComponent: React.FC<WidgetStrategyProps<QuizWidget, QuizAnswer>> = ({
           <button
             key={index}
             type="button"
-            className={`${styles.optionItem} ${selectedIndex === index ? styles.optionSelected : ''}`}
+            className={clsx(styles.optionItem, { [styles.optionSelected]: selectedIndex === index })}
             onClick={() => handleSelect(index)}
             disabled={disabled}
           >
-            <span className={`${styles.radio} ${selectedIndex === index ? styles.radioChecked : ''}`}>
+            <span className={clsx(styles.radio, { [styles.radioChecked]: selectedIndex === index })}>
               {selectedIndex === index && <span className={styles.radioDot} />}
             </span>
             <span className={styles.optionText}>{option[language]}</span>

@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import Button from '@shared/Button/Button';
+import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import type { CodeOrderingAnswer, CodeOrderingWidget } from '@src/types/widget.types';
 import type { WidgetStrategyProps } from '../types';
@@ -112,7 +113,7 @@ const CodeOrderingComponent: React.FC<WidgetStrategyProps<CodeOrderingWidget, Co
         {order.map((originalIndex, position) => (
           <div
             key={originalIndex}
-            className={`${styles.lineItem} ${disabled ? styles.lineDisabled : ''}`}
+            className={clsx(styles.lineItem, { [styles.lineDisabled]: disabled })}
             draggable={!disabled}
             onDragStart={() => handleDragStart(position)}
             onDragEnter={() => handleDragEnter(position)}

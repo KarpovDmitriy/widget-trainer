@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import WidgetEngine from '@features/widget-engine/WidgetEngine';
 import Button from '@shared/Button/Button';
 import { PATHS } from '@shared/Constants/paths';
+import clsx from 'clsx';
 import type { ParseKeys } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { usePracticeStore } from '@s/practice.store';
@@ -93,7 +94,13 @@ const PracticePageFeature: React.FC = () => {
 
           <div className={styles.resultsList}>
             {summary.results.map((result, idx) => (
-              <div key={idx} className={`${styles.resultItem} ${result.isCorrect ? styles.correct : styles.incorrect}`}>
+              <div
+                key={idx}
+                className={clsx(styles.resultItem, {
+                  [styles.correct]: result.isCorrect,
+                  [styles.incorrect]: !result.isCorrect,
+                })}
+              >
                 <span className={styles.resultIndex}>#{idx + 1}</span>
                 <span className={styles.resultType}>{t(WIDGET_TYPE_KEYS[result.widgetType] ?? result.widgetType)}</span>
                 <span className={styles.resultIcon}>{result.isCorrect ? '✓' : '✗'}</span>
@@ -158,7 +165,10 @@ const PracticePageFeature: React.FC = () => {
       {/* Feedback section */}
       {lastVerdict && (
         <div
-          className={`${styles.feedbackCard} ${lastVerdict.isCorrect ? styles.feedbackCorrect : styles.feedbackIncorrect}`}
+          className={clsx(styles.feedbackCard, {
+            [styles.feedbackCorrect]: lastVerdict.isCorrect,
+            [styles.feedbackIncorrect]: !lastVerdict.isCorrect,
+          })}
         >
           <div className={styles.feedbackHeader}>
             <span className={styles.feedbackIcon}>{lastVerdict.isCorrect ? '✓' : '✗'}</span>
