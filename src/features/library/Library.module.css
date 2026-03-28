@@ -1,0 +1,165 @@
+.libraryContainer {
+  max-width: 960px;
+  padding: 2rem;
+  margin: 0 auto;
+}
+
+.pageTitle {
+  margin-bottom: 0.25rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.pageSubtitle {
+  margin-bottom: 1.75rem;
+  font-size: 1rem;
+  color: var(--text-gray);
+}
+
+.filtersRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.filtersRow > div {
+  margin-bottom: 0;
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 200px;
+}
+
+.topicsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.topicCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  background-color: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 0.625rem;
+  transition: box-shadow 0.2s;
+}
+
+.topicCard:hover {
+  box-shadow: 0 4px 16px rgb(0 0 0 / 6%);
+}
+
+.cardHeader {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cardTitle {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.difficultyBadge {
+  flex-shrink: 0;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--white);
+  border-radius: 0.375rem;
+}
+
+.difficultyBadge[data-difficulty='1'] {
+  background-color: var(--color-easy);
+}
+
+.difficultyBadge[data-difficulty='2'] {
+  background-color: var(--color-medium);
+}
+
+.difficultyBadge[data-difficulty='3'] {
+  background-color: var(--color-hard);
+}
+
+.cardDescription {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-gray);
+}
+
+.cardTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.tag {
+  padding: 0.2rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--btn-primary);
+  background-color: var(--btn-primary-light);
+  border-radius: 0.375rem;
+}
+
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.widgetCount {
+  font-size: 0.85rem;
+  color: var(--text-gray);
+}
+
+.loadingState {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 0;
+  color: var(--text-gray);
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--border);
+  border-top-color: var(--btn-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.emptyState {
+  padding: 4rem 0;
+  font-size: 1rem;
+  color: var(--text-gray);
+  text-align: center;
+}
+
+@media (width <= 600px) {
+  .libraryContainer {
+    padding: 1rem;
+  }
+
+  .filtersRow {
+    flex-direction: column;
+  }
+}

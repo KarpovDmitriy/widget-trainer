@@ -1,0 +1,16 @@
+.engineContainer {
+  width: 100%;
+}
+
+.errorContainer {
+  padding: 2rem;
+  text-align: center;
+  background-color: var(--bg-invalid);
+  border: 1px solid var(--text-error);
+  border-radius: 0.475rem;
+}
+
+.errorText {
+  font-size: 0.95rem;
+  color: var(--text-error);
+}
