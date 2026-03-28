@@ -29,6 +29,15 @@
   --btn-primary: #7239ea;
   --btn-primary-hover: #5014d0;
   --btn-primary-light: #f8f5ff;
+  --success-light: #dfffea;
+  --success: #17c653;
+  --success-bg-icon: #8decaead;
+  --error-light: #ffeef3;
+  --error: #f8285a;
+  --error-bg-icon: #f891a9cc;
+  --warning-light: #fff8dd;
+  --warning: #f6c000;
+  --warning-bg-icon: #f5d86ed7;
   --color-easy: #50cd89;
   --color-medium: #ffc700;
   --color-hard: #f1416c;

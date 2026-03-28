@@ -3,6 +3,7 @@ import type { UserData } from '@data/userDefaults';
 import { SYSTEM_ERROR } from '@shared/Constants/constants';
 import type { PostgrestSingleResponse } from '@supabase/supabase-js';
 import { i18CheckPath } from '@utils/zod-i18.typecheck';
+import { useLoaderStore } from '@s/loader.store';
 import { useToastStore } from '@s/toast.store';
 import { supabase } from '@src/lib/supabase';
 
@@ -55,17 +56,20 @@ const handleProfileRequest = async <T extends UserProfileRow>(
   request: () => PromiseLike<PostgrestSingleResponse<T>>,
 ): Promise<ProfileResponse> => {
   try {
-    const { data, error } = await request();
+    useLoaderStore.getState().setLoading({ isProfileLoading: true });
+    const { data, error, status } = await request();
 
     if (error) {
-      return { data: null, error: processPostgrestError(error) };
+      return { data: null, error: processPostgrestError(error, status) };
     }
 
     return { data: data ? mapRowToUserData(data) : null, error: null };
   } catch {
-    const systemMsg = i18CheckPath('auth.apiErrors.systemError');
+    const systemMsg = i18CheckPath('common.errors.system');
     useToastStore.getState().addToast(systemMsg, 'error');
     return { data: null, error: SYSTEM_ERROR };
+  } finally {
+    useLoaderStore.getState().setLoading({ isProfileLoading: false });
   }
 };
 

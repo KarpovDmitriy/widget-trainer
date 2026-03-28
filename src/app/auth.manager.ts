@@ -1,5 +1,6 @@
 import { onSessionChange } from '@api/auth.api';
 import { useAuthStore } from '@s/auth.store';
+import { useLoaderStore } from '@s/loader.store';
 import { useProfileStore } from '@s/profile.store';
 
 const startAuthOrchestrator = (): (() => void) => {
@@ -8,12 +9,13 @@ const startAuthOrchestrator = (): (() => void) => {
 
     useAuthStore.getState().setUser(user);
     useAuthStore.getState().setAuthInit(true);
+    useLoaderStore.getState().setLoading({ isAppLoading: false });
 
     if (currentUser?.id === user?.id) {
       return;
     }
     if (user) {
-      useProfileStore.getState().fetchProfile(user.id);
+      // useProfileStore.getState().fetchProfile(user.id);
       //TODO: get data;
     } else {
       useProfileStore.getState().reset();

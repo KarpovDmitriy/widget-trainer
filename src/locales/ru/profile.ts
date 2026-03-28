@@ -4,7 +4,7 @@ export const profileContent = {
       title: 'Профиль',
       tabs: {
         overview: 'Обзор',
-        settings: 'Настройки',
+        settings: 'Редактирование',
       },
     },
     overview: {

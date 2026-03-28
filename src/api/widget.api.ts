@@ -72,7 +72,7 @@ function mapRowToWidget(row: WidgetRow, tags: string[]): Widget {
 
 export const getTopics = async (): Promise<ApiResponse<Topic[]>> => {
   try {
-    const { data, error } = await supabase
+    const { data, error, status } = await supabase
       .from('topics')
       .select(
         `
@@ -88,7 +88,7 @@ export const getTopics = async (): Promise<ApiResponse<Topic[]>> => {
       .order('order_index', { ascending: true });
 
     if (error) {
-      return { data: null, error: processPostgrestError(error) };
+      return { data: null, error: processPostgrestError(error, status) };
     }
 
     const rows = (data ?? []) as unknown as TopicRow[];
@@ -111,10 +111,10 @@ export const getTopics = async (): Promise<ApiResponse<Topic[]>> => {
 
 export const getTags = async (): Promise<ApiResponse<Tag[]>> => {
   try {
-    const { data, error } = await supabase.from('tags').select('id, name, label').order('name');
+    const { data, error, status } = await supabase.from('tags').select('id, name, label').order('name');
 
     if (error) {
-      return { data: null, error: processPostgrestError(error) };
+      return { data: null, error: processPostgrestError(error, status) };
     }
 
     return { data: (data ?? []) as Tag[], error: null };
@@ -128,13 +128,14 @@ export const getTags = async (): Promise<ApiResponse<Tag[]>> => {
 export const getWidgetsByTopicId = async (topicId: string): Promise<ApiResponse<Widget[]>> => {
   try {
     // 1. Get widget IDs for this topic
-    const { data: junctionData, error: junctionError } = await supabase
-      .from('topic_widgets')
-      .select('widget_id')
-      .eq('topic_id', topicId);
+    const {
+      data: junctionData,
+      error: junctionError,
+      status: junctionStatus,
+    } = await supabase.from('topic_widgets').select('widget_id').eq('topic_id', topicId);
 
     if (junctionError) {
-      return { data: null, error: processPostgrestError(junctionError) };
+      return { data: null, error: processPostgrestError(junctionError, junctionStatus) };
     }
 
     const widgetIds = ((junctionData ?? []) as JunctionRow[]).map((r) => r.widget_id);
@@ -144,13 +145,14 @@ export const getWidgetsByTopicId = async (topicId: string): Promise<ApiResponse<
     }
 
     // 2. Fetch widget rows (excluding correct_answer - security)
-    const { data: widgetRows, error: widgetError } = await supabase
-      .from('widgets')
-      .select('id, type, difficulty, payload, created_at')
-      .in('id', widgetIds);
+    const {
+      data: widgetRows,
+      error: widgetError,
+      status: widgetStatus,
+    } = await supabase.from('widgets').select('id, type, difficulty, payload, created_at').in('id', widgetIds);
 
     if (widgetError) {
-      return { data: null, error: processPostgrestError(widgetError) };
+      return { data: null, error: processPostgrestError(widgetError, widgetStatus) };
     }
 
     // 3. Fetch tags for these widgets
@@ -184,14 +186,14 @@ export const getWidgetsByTopicId = async (topicId: string): Promise<ApiResponse<
 export const submitAnswer = async (widgetId: string, answer: WidgetAnswer): Promise<ApiResponse<Verdict>> => {
   try {
     // Fetch the correct answer from DB
-    const { data: row, error: fetchError } = await supabase
-      .from('widgets')
-      .select('type, correct_answer, payload')
-      .eq('id', widgetId)
-      .single();
+    const {
+      data: row,
+      error: fetchError,
+      status: fetchStatus,
+    } = await supabase.from('widgets').select('type, correct_answer, payload').eq('id', widgetId).single();
 
     if (fetchError) {
-      return { data: null, error: processPostgrestError(fetchError) };
+      return { data: null, error: processPostgrestError(fetchError, fetchStatus) };
     }
 
     if (!row) {

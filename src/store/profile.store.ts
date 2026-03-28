@@ -40,15 +40,10 @@ export const useProfileStore = create<ProfileState>((set) => ({
     const { data, error } = await profileApi.saveProfile(userId, profileData);
 
     set({
-      profile: data,
+      ...(error ? {} : { profile: data }),
       error,
       isLoading: false,
     });
-
-    if (!error) {
-      useToastStore.getState().addToast('profile.notifications.success', 'success');
-      return null;
-    }
 
     return error;
   },
