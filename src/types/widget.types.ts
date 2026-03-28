@@ -4,7 +4,7 @@ export interface LocalizedString {
 }
 
 // Widget Types
-export type WidgetType = 'quiz' | 'code-ordering';
+export type WidgetType = 'quiz' | 'code-ordering' | 'true-false';
 // When new widgets are added, extend this union:
 // | 'true-false' | 'code-completion' | 'async-sorter' | 'memory-game' | 'stack-builder';
 
@@ -43,16 +43,29 @@ export interface CodeOrderingAnswer {
   order: number[];
 }
 
-// Discriminated Union
-export type Widget = QuizWidget | CodeOrderingWidget;
+export interface TrueFalsePayload {
+  statement: LocalizedString;
+  explanation: LocalizedString;
+}
+export interface TrueFalseWidget extends BaseWidget {
+  type: 'true-false';
+  payload: TrueFalsePayload;
+}
+export interface TrueFalseAnswer {
+  isTrue: boolean;
+}
 
-export type WidgetAnswer = QuizAnswer | CodeOrderingAnswer;
+// Discriminated Union
+export type Widget = QuizWidget | CodeOrderingWidget | TrueFalseWidget;
+
+export type WidgetAnswer = QuizAnswer | CodeOrderingAnswer | TrueFalseAnswer;
 
 // Type-safe map: widget type key -> { widget model, answer model }
 // When adding a new widget type, add an entry here.
 export interface WidgetModelMap {
   quiz: { widget: QuizWidget; answer: QuizAnswer };
   'code-ordering': { widget: CodeOrderingWidget; answer: CodeOrderingAnswer };
+  'true-false': { widget: TrueFalseWidget; answer: TrueFalseAnswer };
 }
 
 export interface Topic {
@@ -99,7 +112,7 @@ export interface WidgetRow {
   id: string;
   type: WidgetType;
   difficulty: 1 | 2 | 3;
-  payload: QuizPayload | CodeOrderingPayload;
+  payload: QuizPayload | CodeOrderingPayload | TrueFalsePayload;
   correct_answer: unknown;
   created_at: string;
 }

@@ -28,5 +28,8 @@ export const libraryContent = {
     empty: 'No tasks in this topic yet.',
     quiz: 'Quiz',
     codeOrdering: 'Code Ordering',
+    trueFalse: 'True / False',
+    true: 'True',
+    false: 'False',
   },
 };

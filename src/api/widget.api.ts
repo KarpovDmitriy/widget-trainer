@@ -6,6 +6,8 @@ import type {
   QuizPayload,
   Tag,
   Topic,
+  TrueFalseAnswer,
+  TrueFalsePayload,
   Verdict,
   Widget,
   WidgetAnswer,
@@ -52,7 +54,7 @@ interface WidgetDbRow {
 }
 
 // Map DB row to frontend Widget
-function mapRowToWidget(row: WidgetRow, tags: string[]): Widget {
+function mapRowToWidget(row: WidgetRow, tags: string[]): Widget | null {
   const base = {
     id: row.id,
     difficulty: row.difficulty as 1 | 2 | 3,
@@ -64,9 +66,16 @@ function mapRowToWidget(row: WidgetRow, tags: string[]): Widget {
       return { ...base, type: 'quiz', payload: row.payload as QuizPayload };
     case 'code-ordering':
       return { ...base, type: 'code-ordering', payload: row.payload as CodeOrderingPayload };
+    case 'true-false':
+      return {
+        ...base,
+        type: 'true-false',
+        payload: row.payload as TrueFalsePayload,
+      };
     default:
       // Fallback: treat unknown types as quiz so TS is satisfied. In practice, this branch should never be reached.
-      return { ...base, type: 'quiz', payload: row.payload as QuizPayload };
+      // return { ...base, type: 'quiz', payload: row.payload as QuizPayload };
+      return null;
   }
 }
 
@@ -171,9 +180,9 @@ export const getWidgetsByTopicId = async (topicId: string): Promise<ApiResponse<
       tagsByWidget.set(link.widget_id, existing);
     });
 
-    const widgets: Widget[] = ((widgetRows ?? []) as WidgetRow[]).map((row) =>
-      mapRowToWidget(row, tagsByWidget.get(row.id) ?? []),
-    );
+    const widgets: Widget[] = ((widgetRows ?? []) as WidgetRow[])
+      .map((row) => mapRowToWidget(row, tagsByWidget.get(row.id) ?? []))
+      .filter((w): w is Widget => w !== null);
 
     return { data: widgets, error: null };
   } catch {
@@ -225,6 +234,11 @@ function validateAnswer(type: WidgetType, answer: WidgetAnswer, correctAnswer: u
         orderAnswer.order.length === correctOrder.order.length &&
         orderAnswer.order.every((val, idx) => val === correctOrder.order[idx]);
       return { isCorrect };
+    }
+    case 'true-false': {
+      const tfAnswer = answer as TrueFalseAnswer;
+      const correct = correctAnswer as TrueFalseAnswer;
+      return { isCorrect: tfAnswer.isTrue === correct.isTrue };
     }
     default:
       return { isCorrect: false };

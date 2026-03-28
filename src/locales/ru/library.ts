@@ -28,5 +28,8 @@ export const libraryContent = {
     empty: 'В этой теме пока нет заданий.',
     quiz: 'Тест',
     codeOrdering: 'Порядок кода',
+    trueFalse: 'Правда / Ложь',
+    true: 'Правда',
+    false: 'Ложь',
   },
 };
