@@ -1,8 +1,7 @@
-import type { QuizAnswer, QuizWidget } from '@src/types/widget.types';
-import type { WidgetStrategy } from '../types';
-import QuizComponent from './QuizStrategy';
+import type { RegisteredStrategy } from '../types';
+import { QuizComponent } from './QuizStrategy';
 
-export const quizStrategy: WidgetStrategy<QuizWidget, QuizAnswer> = {
+export const quizStrategy: RegisteredStrategy<'quiz'> = {
   type: 'quiz',
   Component: QuizComponent,
 };

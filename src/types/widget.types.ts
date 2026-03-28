@@ -48,6 +48,13 @@ export type Widget = QuizWidget | CodeOrderingWidget;
 
 export type WidgetAnswer = QuizAnswer | CodeOrderingAnswer;
 
+// Type-safe map: widget type key -> { widget model, answer model }
+// When adding a new widget type, add an entry here.
+export interface WidgetModelMap {
+  quiz: { widget: QuizWidget; answer: QuizAnswer };
+  'code-ordering': { widget: CodeOrderingWidget; answer: CodeOrderingAnswer };
+}
+
 export interface Topic {
   id: string;
   title: LocalizedString;

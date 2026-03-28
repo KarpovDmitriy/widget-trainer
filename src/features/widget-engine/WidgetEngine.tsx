@@ -1,18 +1,25 @@
-import React from 'react';
-import type { Widget, WidgetAnswer } from '@src/types/widget.types';
+import type { ReactNode } from 'react';
+import type { Widget, WidgetAnswer, WidgetModelMap } from '@src/types/widget.types';
 import styles from './WidgetEngine.module.css';
 import { getStrategy } from './registry';
+import type { WidgetStrategyProps } from './types';
 
-interface WidgetEngineProps {
-  widget: Widget;
+interface WidgetEngineProps<W extends Widget, A extends WidgetAnswer> {
+  widget: W;
   language: 'ru' | 'en';
-  onAnswer: (answer: WidgetAnswer) => void;
+  onAnswer: (answer: A) => void;
   disabled: boolean;
 }
 
-// Widget Engine - loads the correct strategy for a given widget and renders its component. No switch/case: pure strategy dispatch.
+// Widget Engine - loads the correct strategy for a given widget and renders its component.
+// No switch/case: pure strategy dispatch.
 
-const WidgetEngine: React.FC<WidgetEngineProps> = ({ widget, language, onAnswer, disabled }) => {
+export const WidgetEngine = <K extends keyof WidgetModelMap>({
+  widget,
+  language,
+  onAnswer,
+  disabled,
+}: WidgetEngineProps<WidgetModelMap[K]['widget'], WidgetModelMap[K]['answer']>): ReactNode => {
   const strategy = getStrategy(widget.type);
 
   if (!strategy) {
@@ -25,7 +32,9 @@ const WidgetEngine: React.FC<WidgetEngineProps> = ({ widget, language, onAnswer,
     );
   }
 
-  const { Component } = strategy;
+  // Safe cast: at runtime the strategy.Component always matches the widget.type,
+  // but TS can't narrow a discriminated union through a Map lookup.
+  const Component = strategy.Component as React.FC<WidgetStrategyProps>;
 
   return (
     <div className={styles.engineContainer}>
@@ -33,5 +42,3 @@ const WidgetEngine: React.FC<WidgetEngineProps> = ({ widget, language, onAnswer,
     </div>
   );
 };
-
-export default WidgetEngine;

@@ -1,8 +1,7 @@
-import type { CodeOrderingAnswer, CodeOrderingWidget } from '@src/types/widget.types';
-import type { WidgetStrategy } from '../types';
-import CodeOrderingComponent from './CodeOrderingStrategy';
+import type { RegisteredStrategy } from '../types';
+import { CodeOrderingComponent } from './CodeOrderingStrategy';
 
-export const codeOrderingStrategy: WidgetStrategy<CodeOrderingWidget, CodeOrderingAnswer> = {
+export const codeOrderingStrategy: RegisteredStrategy<'code-ordering'> = {
   type: 'code-ordering',
   Component: CodeOrderingComponent,
 };

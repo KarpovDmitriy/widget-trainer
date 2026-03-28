@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import WidgetEngine from '@features/widget-engine/WidgetEngine';
+import { WidgetEngine } from '@features/widget-engine/WidgetEngine';
 import Button from '@shared/Button/Button';
 import { PATHS } from '@shared/Constants/paths';
 import clsx from 'clsx';

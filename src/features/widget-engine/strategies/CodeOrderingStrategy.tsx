@@ -16,7 +16,7 @@ function shuffleArray<T>(arr: T[]): T[] {
   return shuffled;
 }
 
-const CodeOrderingComponent: React.FC<WidgetStrategyProps<CodeOrderingWidget, CodeOrderingAnswer>> = ({
+export const CodeOrderingComponent: React.FC<WidgetStrategyProps<CodeOrderingWidget, CodeOrderingAnswer>> = ({
   widget,
   language,
   onAnswer,
@@ -157,5 +157,3 @@ const CodeOrderingComponent: React.FC<WidgetStrategyProps<CodeOrderingWidget, Co
     </div>
   );
 };
-
-export default CodeOrderingComponent;

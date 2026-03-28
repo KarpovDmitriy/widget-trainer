@@ -6,7 +6,7 @@ import type { QuizAnswer, QuizWidget } from '@src/types/widget.types';
 import type { WidgetStrategyProps } from '../types';
 import styles from './QuizStrategy.module.css';
 
-const QuizComponent: React.FC<WidgetStrategyProps<QuizWidget, QuizAnswer>> = ({
+export const QuizComponent: React.FC<WidgetStrategyProps<QuizWidget, QuizAnswer>> = ({
   widget,
   language,
   onAnswer,
@@ -58,5 +58,3 @@ const QuizComponent: React.FC<WidgetStrategyProps<QuizWidget, QuizAnswer>> = ({
     </div>
   );
 };
-
-export default QuizComponent;
