@@ -3,7 +3,7 @@ import Button from '@shared/Button/Button';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import type { QuizAnswer, QuizWidget } from '@src/types/widget.types';
-import type { WidgetStrategyProps } from '../types';
+import type { WidgetStrategyProps } from '../../types';
 import styles from './QuizStrategy.module.css';
 
 export const QuizComponent: React.FC<WidgetStrategyProps<QuizWidget, QuizAnswer>> = ({

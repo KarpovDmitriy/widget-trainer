@@ -3,7 +3,7 @@ import Button from '@shared/Button/Button';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import type { CodeOrderingAnswer, CodeOrderingWidget } from '@src/types/widget.types';
-import type { WidgetStrategyProps } from '../types';
+import type { WidgetStrategyProps } from '../../types';
 import styles from './CodeOrderingStrategy.module.css';
 
 // Shuffles an array using Fisher-Yates, returns new array

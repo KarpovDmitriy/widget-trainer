@@ -2,7 +2,6 @@ import type React from 'react';
 import type { BaseWidget, WidgetAnswer, WidgetModelMap } from '@src/types/widget.types';
 
 // Type-safe strategy for a specific widget type key.
-// Replaces the old WidgetStrategy<any, any> - no eslint-disable needed.
 export type RegisteredStrategy<K extends keyof WidgetModelMap> = {
   type: K;
   Component: React.FC<WidgetStrategyProps<WidgetModelMap[K]['widget'], WidgetModelMap[K]['answer']>>;

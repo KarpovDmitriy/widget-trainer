@@ -1,7 +1,7 @@
 import type { WidgetModelMap } from '@src/types/widget.types';
 // Register all built-in strategies
-import { codeOrderingStrategy } from './strategies/codeOrderingStrategy.config';
-import { quizStrategy } from './strategies/quizStrategy.config';
+import { codeOrderingStrategy } from './strategies/code-ordering/codeOrderingStrategy.config';
+import { quizStrategy } from './strategies/quiz/quizStrategy.config';
 import type { AnyWidgetStrategy, RegisteredStrategy } from './types';
 
 //  Strategy registry - a map from widget type string to its strategy.
