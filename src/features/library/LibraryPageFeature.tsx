@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getTags } from '@api/widget.api';
+import BaseSelect from '@shared/BaseSelect/BaseSelect';
 import { PATHS } from '@shared/Constants/paths';
 import type { ParseKeys } from 'i18next';
 import { useTranslation } from 'react-i18next';
@@ -12,12 +13,6 @@ const DIFFICULTY_KEYS: Record<number, ParseKeys> = {
   1: 'library.difficultyEasy',
   2: 'library.difficultyMedium',
   3: 'library.difficultyHard',
-};
-
-const DIFFICULTY_COLORS: Record<number, string> = {
-  1: '#50cd89',
-  2: '#ffc700',
-  3: '#f1416c',
 };
 
 const LibraryPageFeature: React.FC = () => {
@@ -87,25 +82,21 @@ const LibraryPageFeature: React.FC = () => {
           onChange={(e) => setSearchQuery(e.target.value)}
         />
 
-        <select className={styles.filterSelect} value={selectedTag} onChange={(e) => setSelectedTag(e.target.value)}>
+        <BaseSelect value={selectedTag} onChange={(e) => setSelectedTag(e.target.value)}>
           <option value="">{t('library.allTags')}</option>
           {tags.map((tag) => (
             <option key={tag.id} value={tag.name}>
               {tag.label[lang]}
             </option>
           ))}
-        </select>
+        </BaseSelect>
 
-        <select
-          className={styles.filterSelect}
-          value={selectedDifficulty}
-          onChange={(e) => setSelectedDifficulty(Number(e.target.value))}
-        >
+        <BaseSelect value={selectedDifficulty} onChange={(e) => setSelectedDifficulty(Number(e.target.value))}>
           <option value={0}>{t('library.allLevels')}</option>
           <option value={1}>{t('library.difficultyEasy')}</option>
           <option value={2}>{t('library.difficultyMedium')}</option>
           <option value={3}>{t('library.difficultyHard')}</option>
-        </select>
+        </BaseSelect>
       </div>
 
       {/* Loading */}
@@ -129,7 +120,7 @@ const LibraryPageFeature: React.FC = () => {
           <div key={topic.id} className={styles.topicCard}>
             <div className={styles.cardHeader}>
               <h3 className={styles.cardTitle}>{topic.title[lang]}</h3>
-              <span className={styles.difficultyBadge} style={{ backgroundColor: DIFFICULTY_COLORS[topic.difficulty] }}>
+              <span className={styles.difficultyBadge} data-difficulty={topic.difficulty}>
                 {t(DIFFICULTY_KEYS[topic.difficulty])}
               </span>
             </div>

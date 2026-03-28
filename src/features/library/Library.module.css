@@ -42,24 +42,6 @@
   border-color: var(--btn-primary);
 }
 
-.filterSelect {
-  min-width: 150px;
-  padding: 0.75rem 1rem;
-  font-size: 0.95rem;
-  color: var(--text-dark);
-  cursor: pointer;
-  background-color: var(--input-bg);
-  border: 1.5px solid transparent;
-  border-radius: 0.475rem;
-  transition: all 0.2s;
-}
-
-.filterSelect:focus {
-  outline: none;
-  background-color: var(--input-focus);
-  border-color: var(--btn-primary);
-}
-
 .topicsGrid {
   display: flex;
   flex-direction: column;
@@ -101,6 +83,18 @@
   font-weight: 600;
   color: var(--white);
   border-radius: 0.375rem;
+}
+
+.difficultyBadge[data-difficulty='1'] {
+  background-color: var(--color-easy);
+}
+
+.difficultyBadge[data-difficulty='2'] {
+  background-color: var(--color-medium);
+}
+
+.difficultyBadge[data-difficulty='3'] {
+  background-color: var(--color-hard);
 }
 
 .cardDescription {
@@ -193,10 +187,5 @@
 
   .filtersRow {
     flex-direction: column;
-  }
-
-  .filterSelect {
-    width: 100%;
-    min-width: unset;
   }
 }
