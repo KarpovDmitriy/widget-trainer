@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { LangSwitcher } from '@shared/LangSwitcher/LangSwitcher';
 import { LogoutButton } from '@shared/LogoutButton';
@@ -8,46 +8,79 @@ import { useProfileStore } from '@s/profile.store';
 import styles from './Header.module.css';
 
 const Header: React.FC = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { pathname } = useLocation();
   const { t } = useTranslation();
   const profile = useProfileStore((state) => state.profile);
 
+  const closeMenu = (): void => {
+    setIsMenuOpen(false);
+    document.body.style.overflow = '';
+  };
+
+  const toggleMenu = (): void => {
+    const newState = !isMenuOpen;
+    setIsMenuOpen(newState);
+    document.body.style.overflow = newState ? 'hidden' : '';
+  };
+
   const navItems = [
     { path: '/dashboard', label: t('header.menu.dashboard') },
     { path: '/library', label: t('header.menu.library') },
-    { path: '/practice', label: t('header.menu.practice') },
     { path: '/profile', label: t('header.menu.profile') },
   ];
 
   return (
     <header className={styles.header}>
-      <Link to="/" className={styles.logoText}>
-        <span>Widget Trainer</span>
-      </Link>
+      <div className={styles.container}>
+        <Link to="/" className={styles.logoText} onClick={closeMenu}>
+          <span>Widget Trainer</span>
+        </Link>
 
-      <nav className={styles.nav}>
-        {navItems.map((item) => (
-          <Link
-            key={item.path}
-            to={item.path}
-            className={clsx(styles.navLink, { [styles.navLinkActive]: pathname === item.path })}
-          >
-            {item.label}
-          </Link>
-        ))}
-      </nav>
-
-      <div className={styles.rightSection}>
-        <LangSwitcher />
-
-        <div className={styles.userSection}>
-          <div className={styles.avatar}>
-            {profile?.firstName?.charAt(0) || 'U'}
-            {profile?.lastName?.charAt(0) || 'P'}
+        <nav className={clsx(styles.nav, { [styles.navOpen]: isMenuOpen })}>
+          <div className={styles.navLinks}>
+            {navItems.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                onClick={closeMenu}
+                className={clsx(styles.navLink, {
+                  [styles.navLinkActive]: pathname === item.path,
+                })}
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
 
-          <LogoutButton className={styles.logoutButton}>{t('header.user.signOut')}</LogoutButton>
+          <div className={styles.mobileOnly}>
+            <LangSwitcher />
+            <LogoutButton className={clsx(styles.fullWidth, styles.logoutButton)}>
+              {t('header.user.signOut')}
+            </LogoutButton>
+          </div>
+        </nav>
+
+        <div className={styles.rightSection}>
+          <LangSwitcher />{' '}
+          <div className={styles.userSection}>
+            <div className={styles.avatar}>
+              {profile?.firstName?.charAt(0) || 'U'}
+              {profile?.lastName?.charAt(0) || 'P'}
+            </div>{' '}
+            <LogoutButton className={styles.logoutButton}>{t('header.user.signOut')}</LogoutButton>
+          </div>
         </div>
+
+        <button
+          className={clsx(styles.burger, { [styles.burgerActive]: isMenuOpen })}
+          onClick={toggleMenu}
+          aria-label="Menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
     </header>
   );

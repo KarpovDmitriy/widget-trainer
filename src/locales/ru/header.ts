@@ -2,7 +2,7 @@ export const headerContent = {
   header: {
     logo: 'Gs',
     menu: {
-      dashboard: 'Панель управления',
+      dashboard: 'Прогресс',
       library: 'Библиотека',
       practice: 'Практика',
       profile: 'Профиль',

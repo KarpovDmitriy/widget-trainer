@@ -20,7 +20,9 @@
 
 .profileHeaderTop {
   display: flex;
-  align-items: flex-start;
+  flex-wrap: wrap-reverse;
+  gap: 10px;
+  align-items: start;
   justify-content: space-between;
 }
 
@@ -31,10 +33,13 @@
 }
 
 .profileDetails h1 {
+  width: 100%;
   margin: 0 0 1.5rem;
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--text-dark);
+  word-break: break-all;
+  overflow-wrap: break-word;
 }
 
 .profileMeta {
@@ -44,6 +49,11 @@
   font-size: 0.9rem;
   font-weight: 500;
   color: var(--text-gray);
+}
+
+.profileMeta span {
+  word-break: break-all;
+  overflow-wrap: break-word;
 }
 
 .profileNav {
@@ -121,6 +131,8 @@
   font-size: 1rem;
   font-weight: 600;
   color: var(--text-dark);
+  word-break: break-all;
+  overflow-wrap: break-word;
 }
 
 .row {
