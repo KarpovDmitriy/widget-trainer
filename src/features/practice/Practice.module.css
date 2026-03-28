@@ -73,13 +73,13 @@
 }
 
 .feedbackCorrect {
-  background-color: #e8fff3;
-  border: 1px solid #50cd89;
+  background-color: var(--color-correct-bg);
+  border: 1px solid var(--color-easy);
 }
 
 .feedbackIncorrect {
-  background-color: #fff5f8;
-  border: 1px solid #f1416c;
+  background-color: var(--bg-invalid);
+  border: 1px solid var(--text-error);
 }
 
 .feedbackHeader {
@@ -100,13 +100,13 @@
 }
 
 .feedbackCorrect .feedbackIcon {
-  color: #fff;
-  background-color: #50cd89;
+  color: var(--white);
+  background-color: var(--color-easy);
 }
 
 .feedbackIncorrect .feedbackIcon {
-  color: #fff;
-  background-color: #f1416c;
+  color: var(--white);
+  background-color: var(--text-error);
 }
 
 .feedbackText {
@@ -115,11 +115,11 @@
 }
 
 .feedbackCorrect .feedbackText {
-  color: #047857;
+  color: var(--color-correct-text);
 }
 
 .feedbackIncorrect .feedbackText {
-  color: #be123c;
+  color: var(--color-incorrect-text);
 }
 
 .nextBtn {
@@ -195,11 +195,11 @@
 }
 
 .correct {
-  background-color: #e8fff3;
+  background-color: var(--color-correct-bg);
 }
 
 .incorrect {
-  background-color: #fff5f8;
+  background-color: var(--bg-invalid);
 }
 
 .resultIndex {
@@ -220,11 +220,11 @@
 }
 
 .correct .resultIcon {
-  color: #50cd89;
+  color: var(--color-easy);
 }
 
 .incorrect .resultIcon {
-  color: #f1416c;
+  color: var(--text-error);
 }
 
 .summaryActions {

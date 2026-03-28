@@ -32,6 +32,9 @@
   --color-easy: #50cd89;
   --color-medium: #ffc700;
   --color-hard: #f1416c;
+  --color-correct-bg: #e8fff3;
+  --color-correct-text: #047857;
+  --color-incorrect-text: #be123c;
 }
 
 /* ----Add styles for selectors - Start----- */
