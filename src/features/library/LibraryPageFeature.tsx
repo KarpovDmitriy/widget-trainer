@@ -2,7 +2,9 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getTags } from '@api/widget.api';
 import BaseSelect from '@shared/BaseSelect/BaseSelect';
+import Button from '@shared/Button/Button';
 import { PATHS } from '@shared/Constants/paths';
+import Field from '@shared/Field/Field';
 import type { ParseKeys } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { usePracticeStore } from '@s/practice.store';
@@ -74,29 +76,35 @@ const LibraryPageFeature: React.FC = () => {
 
       {/* Filters */}
       <div className={styles.filtersRow}>
-        <input
-          type="text"
-          className={styles.searchInput}
-          placeholder={t('library.search')}
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
+        <Field label={t('library.search')}>
+          <input
+            type="text"
+            className={styles.searchInput}
+            placeholder={t('library.search')}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </Field>
 
-        <BaseSelect value={selectedTag} onChange={(e) => setSelectedTag(e.target.value)}>
-          <option value="">{t('library.allTags')}</option>
-          {tags.map((tag) => (
-            <option key={tag.id} value={tag.name}>
-              {tag.label[lang]}
-            </option>
-          ))}
-        </BaseSelect>
+        <Field label={t('library.allTags')}>
+          <BaseSelect value={selectedTag} onChange={(e) => setSelectedTag(e.target.value)}>
+            <option value="">{t('library.allTags')}</option>
+            {tags.map((tag) => (
+              <option key={tag.id} value={tag.name}>
+                {tag.label[lang]}
+              </option>
+            ))}
+          </BaseSelect>
+        </Field>
 
-        <BaseSelect value={selectedDifficulty} onChange={(e) => setSelectedDifficulty(Number(e.target.value))}>
-          <option value={0}>{t('library.allLevels')}</option>
-          <option value={1}>{t('library.difficultyEasy')}</option>
-          <option value={2}>{t('library.difficultyMedium')}</option>
-          <option value={3}>{t('library.difficultyHard')}</option>
-        </BaseSelect>
+        <Field label={t('library.allLevels')}>
+          <BaseSelect value={selectedDifficulty} onChange={(e) => setSelectedDifficulty(Number(e.target.value))}>
+            <option value={0}>{t('library.allLevels')}</option>
+            <option value={1}>{t('library.difficultyEasy')}</option>
+            <option value={2}>{t('library.difficultyMedium')}</option>
+            <option value={3}>{t('library.difficultyHard')}</option>
+          </BaseSelect>
+        </Field>
       </div>
 
       {/* Loading */}
@@ -139,9 +147,9 @@ const LibraryPageFeature: React.FC = () => {
               <span className={styles.widgetCount}>
                 {topic.widget_count} {t('library.questions')}
               </span>
-              <button type="button" className={styles.startBtn} onClick={() => handleStart(topic.id)}>
+              <Button variant="primary" onClick={() => handleStart(topic.id)}>
                 {t('library.start')}
-              </button>
+              </Button>
             </div>
           </div>
         ))}

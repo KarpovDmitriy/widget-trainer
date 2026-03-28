@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import WidgetEngine from '@features/widget-engine/WidgetEngine';
+import Button from '@shared/Button/Button';
 import { PATHS } from '@shared/Constants/paths';
 import type { ParseKeys } from 'i18next';
 import { useTranslation } from 'react-i18next';
@@ -101,12 +102,12 @@ const PracticePageFeature: React.FC = () => {
           </div>
 
           <div className={styles.summaryActions}>
-            <button type="button" className={styles.retryBtn} onClick={handleRetry}>
+            <Button variant="primary" className={styles.retryBtn} onClick={handleRetry}>
               {t('practice.tryAgain')}
-            </button>
-            <button type="button" className={styles.backBtn} onClick={handleBackToLibrary}>
+            </Button>
+            <Button variant="secondary" className={styles.backBtn} onClick={handleBackToLibrary}>
               {t('practice.backToLibrary')}
-            </button>
+            </Button>
           </div>
         </div>
       </div>
@@ -118,9 +119,9 @@ const PracticePageFeature: React.FC = () => {
     return (
       <div className={styles.centeredContainer}>
         <p className={styles.emptyText}>{t('practice.empty')}</p>
-        <button type="button" className={styles.backBtn} onClick={handleBackToLibrary}>
+        <Button variant="secondary" className={styles.backBtn} onClick={handleBackToLibrary}>
           {t('practice.backToLibrary')}
-        </button>
+        </Button>
       </div>
     );
   }
@@ -166,9 +167,9 @@ const PracticePageFeature: React.FC = () => {
             </span>
           </div>
 
-          <button type="button" className={styles.nextBtn} onClick={handleNext}>
+          <Button variant="primary" className={styles.nextBtn} onClick={handleNext}>
             {isLastWidget ? t('practice.finish') : t('practice.next')}
-          </button>
+          </Button>
         </div>
       )}
     </div>

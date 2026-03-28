@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
+import Button from '@shared/Button/Button';
 import { useTranslation } from 'react-i18next';
 import type { CodeOrderingAnswer, CodeOrderingWidget } from '@src/types/widget.types';
 import type { WidgetStrategyProps } from '../types';
@@ -148,9 +149,9 @@ const CodeOrderingComponent: React.FC<WidgetStrategyProps<CodeOrderingWidget, Co
       </div>
 
       <div className={styles.submitRow}>
-        <button type="button" className={styles.submitBtn} onClick={handleSubmit} disabled={disabled}>
+        <Button variant="primary" onClick={handleSubmit} disabled={disabled}>
           {t('practice.submit')}
-        </button>
+        </Button>
       </div>
     </div>
   );

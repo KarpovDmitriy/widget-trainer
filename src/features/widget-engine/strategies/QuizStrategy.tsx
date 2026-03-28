@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Button from '@shared/Button/Button';
 import { useTranslation } from 'react-i18next';
 import type { QuizAnswer, QuizWidget } from '@src/types/widget.types';
 import type { WidgetStrategyProps } from '../types';
@@ -49,14 +50,9 @@ const QuizComponent: React.FC<WidgetStrategyProps<QuizWidget, QuizAnswer>> = ({
       </div>
 
       <div className={styles.submitRow}>
-        <button
-          type="button"
-          className={styles.submitBtn}
-          onClick={handleSubmit}
-          disabled={selectedIndex === null || disabled}
-        >
+        <Button variant="primary" onClick={handleSubmit} disabled={selectedIndex === null || disabled}>
           {t('practice.submit')}
-        </button>
+        </Button>
       </div>
     </div>
   );
