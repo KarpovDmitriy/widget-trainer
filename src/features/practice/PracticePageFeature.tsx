@@ -13,6 +13,7 @@ import styles from './Practice.module.css';
 const WIDGET_TYPE_KEYS: Record<string, ParseKeys> = {
   quiz: 'practice.quiz',
   'code-ordering': 'practice.codeOrdering',
+  'true-false': 'practice.trueFalse',
 };
 
 const PracticePageFeature: React.FC = () => {
