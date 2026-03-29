@@ -55,19 +55,17 @@ const Header: React.FC = () => {
 
           <div className={styles.mobileOnly}>
             <LangSwitcher />
-            <LogoutButton className={clsx(styles.fullWidth, styles.logoutButton)}>
-              {t('header.user.signOut')}
-            </LogoutButton>
+            <LogoutButton className={styles.logoutButton}>{t('header.user.signOut')}</LogoutButton>
           </div>
         </nav>
 
         <div className={styles.rightSection}>
-          <LangSwitcher />{' '}
+          <LangSwitcher />
           <div className={styles.userSection}>
             <div className={styles.avatar}>
               {profile?.firstName?.charAt(0) || 'U'}
               {profile?.lastName?.charAt(0) || 'P'}
-            </div>{' '}
+            </div>
             <LogoutButton className={styles.logoutButton}>{t('header.user.signOut')}</LogoutButton>
           </div>
         </div>
