@@ -2,6 +2,8 @@ import { processPostgrestError } from '@api/helpers';
 import { SYSTEM_ERROR } from '@shared/Constants/constants';
 import { supabase } from '@src/lib/supabase';
 import type {
+  CodeCompletionAnswer,
+  CodeCompletionPayload,
   CodeOrderingPayload,
   QuizPayload,
   Tag,
@@ -71,6 +73,12 @@ function mapRowToWidget(row: WidgetRow, tags: string[]): Widget | null {
         ...base,
         type: 'true-false',
         payload: row.payload as TrueFalsePayload,
+      };
+    case 'code-completion':
+      return {
+        ...base,
+        type: 'code-completion',
+        payload: row.payload as CodeCompletionPayload,
       };
     default:
       // Fallback: treat unknown types as quiz so TS is satisfied. In practice, this branch should never be reached.
@@ -239,6 +247,21 @@ function validateAnswer(type: WidgetType, answer: WidgetAnswer, correctAnswer: u
       const tfAnswer = answer as TrueFalseAnswer;
       const correct = correctAnswer as TrueFalseAnswer;
       return { isCorrect: tfAnswer.isTrue === correct.isTrue };
+    }
+    case 'code-completion': {
+      const userAns = answer as CodeCompletionAnswer;
+      const dbAns = correctAnswer as CodeCompletionAnswer;
+
+      const dbValues = dbAns.answers || dbAns.values;
+
+      if (!userAns.values || !dbValues || !Array.isArray(dbValues)) {
+        return { isCorrect: false };
+      }
+
+      return {
+        isCorrect:
+          userAns.values.length === dbValues.length && userAns.values.every((v, i) => v.trim() === dbValues[i].trim()),
+      };
     }
     default:
       return { isCorrect: false };
