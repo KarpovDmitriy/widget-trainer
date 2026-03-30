@@ -10,7 +10,6 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* ----Add colors---- */
   --logo: #0c74af;
   --blue: #009ef7;
   --red: #dc3545;
@@ -46,7 +45,6 @@
   --color-incorrect-text: #be123c;
 }
 
-/* ----Add styles for selectors - Start----- */
 #root {
   width: 100%;
 }
@@ -57,21 +55,13 @@
   margin: 0;
 }
 
-/* ----Add styles for selectors - End----- */
-
 body {
   display: flex;
   min-width: 320px;
-
-  /* place-items: center; */
   max-width: 1440px;
   min-height: 100vh;
   margin: 0 auto;
-
-  /* ------Scroll----- */
   overflow-y: scroll;
-
-  /* ----Add styles for body---- */
   font-family: Inter, sans-serif;
   color: var(--text-dark);
   scrollbar-width: none;
@@ -113,9 +103,12 @@ button:hover {
   border-color: #646cff;
 }
 
-button:focus,
+button:focus:not(:focus-visible) {
+  outline: none;
+}
+
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 2px solid var(--btn-primary);
 }
 
 @media (prefers-color-scheme: light) {

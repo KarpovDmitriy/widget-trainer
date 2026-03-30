@@ -23,7 +23,7 @@ const ProfileEditForm: React.FC<ProfileEditFormProps> = ({ initialValues, onSubm
     control,
     handleSubmit,
     reset,
-    formState: { isValid },
+    formState: { isValid, isDirty },
   } = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
     defaultValues: initialValues,
@@ -72,7 +72,7 @@ const ProfileEditForm: React.FC<ProfileEditFormProps> = ({ initialValues, onSubm
       </div>
 
       <div className={styles.formFooter}>
-        <Button type="submit" variant="primary" disabled={!isValid}>
+        <Button type="submit" variant="primary" disabled={!isValid || !isDirty}>
           {t('profile.form.buttons.save')}
         </Button>
         <Button type="button" variant="secondary" onClick={handleCancel}>
