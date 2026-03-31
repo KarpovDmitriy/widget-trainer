@@ -1,6 +1,7 @@
 import { authContent } from '@locales/en/auth';
 import { commonContent } from '@locales/en/common';
 import { headerContent } from '@locales/en/header';
+import type { landingContent } from '@locales/en/landing';
 import { libraryContent } from '@locales/en/library';
 import { profileContent } from '@locales/en/profile';
 import 'i18next';
@@ -14,7 +15,8 @@ declare module 'i18next' {
         typeof profileContent &
         typeof headerContent &
         typeof libraryContent &
-        typeof commonContent;
+        typeof commonContent &
+        typeof landingContent;
     };
   }
 }
