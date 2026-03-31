@@ -68,7 +68,7 @@ export const LandingPageFeature: React.FC = () => {
         </div>
       </section>
 
-      <footer className={ui.footer}>© 2026 Tandem RSSchool </footer>
+      <footer className={ui.footer}>{t('landing.footer')}</footer>
     </div>
   );
 };
