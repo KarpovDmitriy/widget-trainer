@@ -33,6 +33,7 @@
   color: var(--text-dark);
   cursor: pointer;
   outline: none;
+  background-color: var(--bg-secondary-btn);
   border: 1px solid var(--border);
   border-radius: 0.475rem;
   transition: all 0.3s;
@@ -41,9 +42,13 @@
 .secondary:hover {
   color: var(--btn-primary);
   outline: none;
-  background-color: var(--btn-primary-light);
+  background-color: var(--bg-secondary-btn);
   border: 1px solid var(--btn-primary);
   transition: all 0.3s;
+}
+
+[data-theme='dark'] {
+  color: var(--wb-text);
 }
 
 .secondary:focus {
