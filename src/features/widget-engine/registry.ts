@@ -1,4 +1,5 @@
 import type { WidgetModelMap } from '@src/types/widget.types';
+import { codeCompletionStrategy } from './strategies/code-completion/codeCompletionStrategy.config';
 // Register all built-in strategies
 import { codeOrderingStrategy } from './strategies/code-ordering/codeOrderingStrategy.config';
 import { quizStrategy } from './strategies/quiz/quizStrategy.config';
@@ -33,3 +34,4 @@ export function getRegisteredTypes(): (keyof WidgetModelMap)[] {
 registerStrategy(quizStrategy);
 registerStrategy(codeOrderingStrategy);
 registerStrategy(trueFalseStrategy);
+registerStrategy(codeCompletionStrategy);

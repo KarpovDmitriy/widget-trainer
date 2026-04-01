@@ -4,7 +4,7 @@ export interface LocalizedString {
 }
 
 // Widget Types
-export type WidgetType = 'quiz' | 'code-ordering' | 'true-false';
+export type WidgetType = 'quiz' | 'code-ordering' | 'true-false' | 'code-completion';
 // When new widgets are added, extend this union:
 // | 'true-false' | 'code-completion' | 'async-sorter' | 'memory-game' | 'stack-builder';
 
@@ -55,10 +55,26 @@ export interface TrueFalseAnswer {
   isTrue: boolean;
 }
 
-// Discriminated Union
-export type Widget = QuizWidget | CodeOrderingWidget | TrueFalseWidget;
+export interface CodeCompletionPayload {
+  code: string;
+  blanks: string[];
+  hints: LocalizedString[];
+}
 
-export type WidgetAnswer = QuizAnswer | CodeOrderingAnswer | TrueFalseAnswer;
+export interface CodeCompletionWidget extends BaseWidget {
+  type: 'code-completion';
+  payload: CodeCompletionPayload;
+}
+
+export interface CodeCompletionAnswer {
+  values: string[];
+  answers?: string[];
+}
+
+// Discriminated Union
+export type Widget = QuizWidget | CodeOrderingWidget | TrueFalseWidget | CodeCompletionWidget;
+
+export type WidgetAnswer = QuizAnswer | CodeOrderingAnswer | TrueFalseAnswer | CodeCompletionAnswer;
 
 // Type-safe map: widget type key -> { widget model, answer model }
 // When adding a new widget type, add an entry here.
@@ -66,6 +82,7 @@ export interface WidgetModelMap {
   quiz: { widget: QuizWidget; answer: QuizAnswer };
   'code-ordering': { widget: CodeOrderingWidget; answer: CodeOrderingAnswer };
   'true-false': { widget: TrueFalseWidget; answer: TrueFalseAnswer };
+  'code-completion': { widget: CodeCompletionWidget; answer: CodeCompletionAnswer };
 }
 
 export interface Topic {
@@ -112,7 +129,7 @@ export interface WidgetRow {
   id: string;
   type: WidgetType;
   difficulty: 1 | 2 | 3;
-  payload: QuizPayload | CodeOrderingPayload | TrueFalsePayload;
+  payload: QuizPayload | CodeOrderingPayload | TrueFalsePayload | CodeCompletionPayload;
   correct_answer: unknown;
   created_at: string;
 }

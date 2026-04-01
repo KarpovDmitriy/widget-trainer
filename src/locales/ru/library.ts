@@ -31,5 +31,6 @@ export const libraryContent = {
     trueFalse: 'Правда / Ложь',
     true: 'Правда',
     false: 'Ложь',
+    codeCompletion: 'Заполни пропуски',
   },
 };

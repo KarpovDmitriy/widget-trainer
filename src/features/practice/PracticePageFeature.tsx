@@ -14,6 +14,7 @@ const WIDGET_TYPE_KEYS: Record<string, ParseKeys> = {
   quiz: 'practice.quiz',
   'code-ordering': 'practice.codeOrdering',
   'true-false': 'practice.trueFalse',
+  'code-completion': 'practice.codeCompletion',
 };
 
 const PracticePageFeature: React.FC = () => {

@@ -31,5 +31,6 @@ export const libraryContent = {
     trueFalse: 'True / False',
     true: 'True',
     false: 'False',
+    codeCompletion: 'Code Completion',
   },
 };
