@@ -73,7 +73,7 @@
 
 @media (width <= 805px) {
   .authLangSwitcher {
-    padding: 0.5rem;
+    padding: 0 1.5rem;
   }
 
   .registerPage {
@@ -82,5 +82,9 @@
 
   .registerMain {
     padding: 2.5rem 1.5rem;
+  }
+
+  .registerCard {
+    margin-top: 1rem;
   }
 }
