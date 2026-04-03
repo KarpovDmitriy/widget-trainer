@@ -63,8 +63,8 @@
 .navLink:hover {
   color: var(--wb-text);
   text-shadow:
-    0 0 10px #fff,
-    0 0 20px #fff,
+    0 0 10px var(--wb-text),
+    0 0 20px var(--wb-text),
     0 0 30px var(--blue);
   transition: 0.3s;
 }

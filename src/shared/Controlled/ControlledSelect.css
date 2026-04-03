@@ -1,40 +1,4 @@
 .custom-select__control {
-  min-height: 45px;
-  background-color: var(--input-bg);
-  border-color: var(--border);
-  border-radius: 8px;
-  box-shadow: none;
-  transition: var(--theme-transition);
-}
-
-.custom-select__control--is-focused {
-  border-color: var(--btn-primary);
-}
-
-.custom-select__control:hover {
-  border-color: var(--btn-primary);
-}
-
-.custom-select__menu {
-  overflow: hidden;
-  background-color: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  box-shadow: 0 10px 30px rgb(0 0 0 / 20%);
-}
-
-.custom-select__option {
-  color: var(--text-dark);
-  cursor: pointer;
-  background-color: transparent;
-  transition: background 0.2s ease;
-}
-
-.custom-select__option--is-focused {
-  background-color: var(--btn-primary-light);
-}
-
-.custom-select__control {
   display: flex;
   min-height: 45px;
   padding: 0 8px;
@@ -42,10 +6,12 @@
   background-color: var(--input-bg);
   border: 1px solid var(--border);
   border-radius: 8px;
+  box-shadow: none;
   transition: var(--theme-transition);
 }
 
-.custom-select__control--is-focused {
+.custom-select__control--is-focused,
+.custom-select__control:hover {
   border-color: var(--btn-primary);
 }
 
@@ -62,6 +28,8 @@
   padding: 10px 15px;
   color: var(--text-dark);
   cursor: pointer;
+  background-color: transparent;
+  transition: background 0.2s ease;
 }
 
 .custom-select__option--is-focused {

@@ -2,7 +2,7 @@ import React from 'react';
 import { type Control, type FieldValues, type Path, useController } from 'react-hook-form';
 import Select, { type SingleValue } from 'react-select';
 import Field from '../Field/Field';
-import './СontrolledSelect.css';
+import './ControlledSelect.css';
 
 interface SelectOption {
   value: string;

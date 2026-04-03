@@ -47,10 +47,6 @@
   transition: all 0.3s;
 }
 
-[data-theme='dark'] {
-  color: var(--wb-text);
-}
-
 .secondary:focus {
   outline: none;
 }
