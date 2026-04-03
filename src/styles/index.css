@@ -14,7 +14,7 @@
   --misty-rose: #fce4e4;
   --blue-hover: #0095e8;
   --wb-text: #fff;
-  --white-dark: #fff;
+  --white: #fff;
   --bg-gray: #f9f9f9;
   --bg-secondary-btn: #f0f0f0;
   --input-bg: #f5f8fa;
@@ -49,7 +49,7 @@
 [data-theme='dark'] {
   --bg-gray: #151521;
   --wb-text: #fff;
-  --white-dark: #28283d;
+  --white: #28283d;
   --text-dark: #fff;
   --text-gray: #92929f;
   --text-light-gray: #7c7c9f;
