@@ -1,3 +1,5 @@
+import { landingContent as landingEn } from '@locales/en/landing';
+import { landingContent as landingRu } from '@locales/ru/landing';
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
@@ -24,6 +26,7 @@ i18n
           ...profileEn,
           ...libraryEn,
           ...commonEn,
+          ...landingEn,
         },
       },
       ru: {
@@ -33,6 +36,7 @@ i18n
           ...headerRu,
           ...libraryRu,
           ...commonRu,
+          ...landingRu,
         },
       },
     },
