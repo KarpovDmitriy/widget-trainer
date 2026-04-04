@@ -94,8 +94,6 @@ const DashboardPageFeature: React.FC = () => {
     return result.topic?.title?.[lang] ?? result.topic_id;
   };
 
-  // ─── Loading state ────────────────────────────────────────────────
-
   if (loading && results.length === 0) {
     return (
       <div className={styles.dashboardContainer}>
@@ -108,14 +106,11 @@ const DashboardPageFeature: React.FC = () => {
     );
   }
 
-  // ─── Render ───────────────────────────────────────────────────────
-
   return (
     <div className={styles.dashboardContainer}>
       <h1 className={styles.pageTitle}>{t('dashboard.title')}</h1>
       <p className={styles.pageSubtitle}>{t('dashboard.subtitle')}</p>
 
-      {/* ── Achievements ── */}
       <h2 className={styles.sectionTitle}>{t('dashboard.achievementsTitle')}</h2>
       {achievementsLoading ? (
         <div className={styles.loadingState}>
@@ -146,7 +141,6 @@ const DashboardPageFeature: React.FC = () => {
         </div>
       )}
 
-      {/* ── Weak Topics ── */}
       <div className={styles.weakTopicsSection}>
         <h2 className={styles.sectionTitle}>{t('dashboard.weakTopicsTitle')}</h2>
         {weakTopicsLoading ? (
@@ -198,7 +192,6 @@ const DashboardPageFeature: React.FC = () => {
         )}
       </div>
 
-      {/* ── Leaderboard ── */}
       <h2 className={styles.sectionTitle}>{t('dashboard.leaderboardTitle')}</h2>
       {leaderboardLoading ? (
         <div className={styles.loadingState}>
@@ -243,7 +236,6 @@ const DashboardPageFeature: React.FC = () => {
         </div>
       )}
 
-      {/* ── Test History ── */}
       <h2 className={styles.sectionTitle}>{t('dashboard.historyTitle')}</h2>
 
       {totalResults === 0 && !loading ? (

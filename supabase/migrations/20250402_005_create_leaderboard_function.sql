@@ -1,4 +1,4 @@
--- ─── Leaderboard RPC ─────────────────────────────────────────────────
+--  Leaderboard RPC 
 -- Returns aggregated stats per user for the leaderboard.
 -- SECURITY DEFINER so it can read across all users' test_results
 -- while RLS keeps direct table access private.

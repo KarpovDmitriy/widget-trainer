@@ -3,8 +3,6 @@ import { devtools } from 'zustand/middleware';
 import * as dashboardApi from '@api/dashboard.api';
 import type { LeaderboardEntry, TestResultWithTopic, WeakTopic } from '@api/dashboard.api';
 
-// ─── Achievement types ──────────────────────────────────────────────
-
 export type AchievementKey = 'first_perfect' | 'streak_3' | 'streak_7';
 
 export interface Achievement {
@@ -12,8 +10,6 @@ export interface Achievement {
   unlocked: boolean;
   unlockedAt?: string;
 }
-
-// ─── State ──────────────────────────────────────────────────────────
 
 interface DashboardState {
   results: TestResultWithTopic[];
@@ -60,8 +56,6 @@ const initialState: DashboardState = {
   weakTopics: [],
   weakTopicsLoading: false,
 };
-
-// ─── Achievement calculator ─────────────────────────────────────────
 
 function computeAchievements(rows: Pick<dashboardApi.TestResultRow, 'completed_at' | 'percentage'>[]): Achievement[] {
   const achievements: Achievement[] = [];
@@ -128,8 +122,6 @@ function computeAchievements(rows: Pick<dashboardApi.TestResultRow, 'completed_a
 
   return achievements;
 }
-
-// ─── Store ──────────────────────────────────────────────────────────
 
 export const useDashboardStore = create<DashboardStore>()(
   devtools(

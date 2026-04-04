@@ -17,8 +17,6 @@
   color: var(--text-gray);
 }
 
-/* ─── Achievements ─────────────────────────────────────────────────── */
-
 .sectionTitle {
   margin-bottom: 1rem;
   font-size: 1.25rem;
@@ -108,8 +106,6 @@
   color: var(--text-gray);
   background-color: var(--border);
 }
-
-/* ─── Results table ────────────────────────────────────────────────── */
 
 .tableWrapper {
   overflow-x: auto;
@@ -219,8 +215,6 @@
   color: var(--text-gray);
 }
 
-/* ─── Pagination ───────────────────────────────────────────────────── */
-
 .pagination {
   display: flex;
   gap: 0.5rem;
@@ -260,8 +254,6 @@
   opacity: 0.5;
 }
 
-/* ─── Empty state ──────────────────────────────────────────────────── */
-
 .emptyState {
   display: flex;
   flex-direction: column;
@@ -281,8 +273,6 @@
   line-height: 1.6;
   color: var(--text-gray);
 }
-
-/* ─── Loading ──────────────────────────────────────────────────────── */
 
 .loadingState {
   display: flex;
@@ -308,8 +298,6 @@
     transform: rotate(360deg);
   }
 }
-
-/* ─── Leaderboard ──────────────────────────────────────────────────── */
 
 .leaderboardWrapper {
   margin-bottom: 2.5rem;
@@ -398,8 +386,6 @@
   color: var(--text-gray);
   text-align: center;
 }
-
-/* ─── Weak Topics ──────────────────────────────────────────────────── */
 
 .weakTopicsSection {
   margin-bottom: 2.5rem;
@@ -504,8 +490,6 @@
   font-size: 0.95rem;
   font-weight: 500;
 }
-
-/* ─── Mobile cards (replaces table on small screens) ───────────────── */
 
 .mobileCards {
   display: none;

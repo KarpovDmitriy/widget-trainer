@@ -2,8 +2,6 @@ import { processPostgrestError } from '@api/helpers';
 import { SYSTEM_ERROR } from '@shared/Constants/constants';
 import { supabase } from '@src/lib/supabase';
 
-// ─── Types ───────────────────────────────────────────────────────────
-
 export interface TestResultRow {
   id: string;
   user_id: string;
@@ -39,8 +37,6 @@ interface PaginatedResponse<T> {
   total: number;
   error: string | null;
 }
-
-// ─── API ─────────────────────────────────────────────────────────────
 
 export const saveTestResult = async (payload: SaveTestResultPayload): Promise<ApiResponse<TestResultRow>> => {
   try {
@@ -109,10 +105,6 @@ export const getTestResults = async (
   }
 };
 
-/**
- * Get all results for achievement calculations.
- * We fetch only the fields needed: completed_at and percentage.
- */
 export const getAllResultsForAchievements = async (
   userId: string,
 ): Promise<ApiResponse<Pick<TestResultRow, 'completed_at' | 'percentage'>[]>> => {
@@ -132,8 +124,6 @@ export const getAllResultsForAchievements = async (
     return { data: null, error: SYSTEM_ERROR };
   }
 };
-
-// ─── Leaderboard ─────────────────────────────────────────────────────
 
 export interface LeaderboardEntry {
   user_id: string;
@@ -158,8 +148,6 @@ export const getLeaderboard = async (limit: number = 20): Promise<ApiResponse<Le
   }
 };
 
-// ─── Weak Topics ─────────────────────────────────────────────────────
-
 export interface WeakTopic {
   topic_id: string;
   topic_title: { ru: string; en: string };
@@ -170,10 +158,6 @@ export interface WeakTopic {
   last_completed: string;
 }
 
-/**
- * Returns topics where the user's average score is below the threshold.
- * Groups all user results by topic and computes stats.
- */
 export const getWeakTopics = async (userId: string, threshold: number = 70): Promise<ApiResponse<WeakTopic[]>> => {
   try {
     // Fetch all user results with topic info
