@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { LangSwitcher } from '@shared/LangSwitcher/LangSwitcher';
 import { LogoutButton } from '@shared/LogoutButton';
+import { ThemeSwitcher } from '@shared/ThemeSwitcher/ThemeSwitcher';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { useProfileStore } from '@s/profile.store';
@@ -54,12 +55,14 @@ const Header: React.FC = () => {
           </div>
 
           <div className={styles.mobileOnly}>
+            <ThemeSwitcher />
             <LangSwitcher />
             <LogoutButton className={styles.logoutButton}>{t('header.user.signOut')}</LogoutButton>
           </div>
         </nav>
 
         <div className={styles.rightSection}>
+          <ThemeSwitcher />
           <LangSwitcher />
           <div className={styles.userSection}>
             <div className={styles.avatar}>

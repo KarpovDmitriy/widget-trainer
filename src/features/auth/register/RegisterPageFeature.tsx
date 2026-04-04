@@ -5,6 +5,7 @@ import AuthInfo from '@features/auth/authInfo/AuthInfo';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SYSTEM_ERROR } from '@shared/Constants/constants';
 import { LangSwitcher } from '@shared/LangSwitcher/LangSwitcher';
+import { ThemeSwitcher } from '@shared/ThemeSwitcher/ThemeSwitcher';
 import { type RegisterFormData, registerSchema } from '@shared/Validation/schemas';
 import type { ParseKeys } from 'i18next';
 import { useForm } from 'react-hook-form';
@@ -58,6 +59,7 @@ const RegisterPageFeature: React.FC = (): React.JSX.Element => {
       <AuthInfo />
       <div className={styles.registerMain}>
         <div className={styles.authLangSwitcher}>
+          <ThemeSwitcher />
           <LangSwitcher buttonClassName={styles.langBtn} containerClassName={styles.langSwitcher} />
         </div>
         <div className={styles.registerCard}>
