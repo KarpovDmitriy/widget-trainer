@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
+import { saveTestResult } from '@api/dashboard.api';
 import * as widgetApi from '@api/widget.api';
+import { useAuthStore } from '@s/auth.store';
 import type { SessionResult, SessionSummary, Topic, Verdict, Widget, WidgetAnswer } from '@src/types/widget.types';
 
 interface PracticeState {
@@ -150,6 +152,7 @@ export const usePracticeStore = create<PracticeStore>()(
       finishSession: (): void => {
         const { currentTopicId, results } = get();
         const totalCorrect = results.filter((r) => r.isCorrect).length;
+        const percentage = results.length > 0 ? Math.round((totalCorrect / results.length) * 100) : 0;
 
         set(
           {
@@ -159,12 +162,26 @@ export const usePracticeStore = create<PracticeStore>()(
               results,
               totalCorrect,
               totalQuestions: results.length,
-              percentage: results.length > 0 ? Math.round((totalCorrect / results.length) * 100) : 0,
+              percentage,
             },
           },
           false,
           'finishSession',
         );
+
+        // Persist result to DB (fire-and-forget)
+        const userId = useAuthStore.getState().user?.id;
+        if (userId && currentTopicId) {
+          saveTestResult({
+            user_id: userId,
+            topic_id: currentTopicId,
+            percentage,
+            total_correct: totalCorrect,
+            total_questions: results.length,
+          }).catch(() => {
+            // silently ignore – dashboard will show whatever is saved
+          });
+        }
       },
 
       resetSession: (): void => {

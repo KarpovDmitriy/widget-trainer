@@ -1,0 +1,581 @@
+.dashboardContainer {
+  max-width: 960px;
+  padding: 2rem;
+  margin: 0 auto;
+}
+
+.pageTitle {
+  margin-bottom: 0.25rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.pageSubtitle {
+  margin-bottom: 1.75rem;
+  font-size: 1rem;
+  color: var(--text-gray);
+}
+
+/* ─── Achievements ─────────────────────────────────────────────────── */
+
+.sectionTitle {
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.achievementsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.achievementCard {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding: 1.25rem;
+  background-color: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 0.625rem;
+  transition: box-shadow 0.2s;
+}
+
+.achievementCard:hover {
+  box-shadow: 0 4px 16px rgb(0 0 0 / 6%);
+}
+
+.achievementUnlocked {
+  background-color: var(--color-correct-bg);
+  border-color: var(--color-easy);
+}
+
+.achievementIcon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  font-size: 1.5rem;
+  border-radius: 50%;
+}
+
+.achievementUnlocked .achievementIcon {
+  background-color: var(--success-bg-icon);
+}
+
+.achievementLocked .achievementIcon {
+  background-color: var(--border);
+  opacity: 0.5;
+}
+
+.achievementInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.achievementName {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.achievementDesc {
+  font-size: 0.8rem;
+  color: var(--text-gray);
+}
+
+.achievementBadge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  margin-top: 0.25rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  border-radius: 0.375rem;
+}
+
+.achievementUnlocked .achievementBadge {
+  color: var(--color-correct-text);
+  background-color: var(--success-light);
+}
+
+.achievementLocked .achievementBadge {
+  color: var(--text-gray);
+  background-color: var(--border);
+}
+
+/* ─── Results table ────────────────────────────────────────────────── */
+
+.tableWrapper {
+  overflow-x: auto;
+  background-color: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 0.625rem;
+}
+
+.resultsTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.resultsTable th {
+  padding: 0.875rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-gray);
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: var(--bg-gray);
+  border-bottom: 1px solid var(--border);
+}
+
+.resultsTable td {
+  padding: 0.875rem 1rem;
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  border-bottom: 1px solid var(--border);
+}
+
+.resultsTable tr:last-child td {
+  border-bottom: none;
+}
+
+.resultsTable tr:hover td {
+  background-color: var(--btn-primary-light);
+}
+
+.topicName {
+  font-weight: 600;
+}
+
+.scoreBadge {
+  display: inline-flex;
+  gap: 0.4rem;
+  align-items: center;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 0.375rem;
+}
+
+.scoreHigh {
+  color: var(--color-correct-text);
+  background-color: var(--success-light);
+}
+
+.scoreMedium {
+  color: #92400e;
+  background-color: var(--warning-light);
+}
+
+.scoreLow {
+  color: var(--color-incorrect-text);
+  background-color: var(--error-light);
+}
+
+.difficultyBadge {
+  flex-shrink: 0;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--white);
+  border-radius: 0.375rem;
+}
+
+.difficultyBadge[data-difficulty='1'] {
+  background-color: var(--color-easy);
+}
+
+.difficultyBadge[data-difficulty='2'] {
+  background-color: var(--color-medium);
+}
+
+.difficultyBadge[data-difficulty='3'] {
+  background-color: var(--color-hard);
+}
+
+.retakeBtn {
+  min-width: auto;
+  padding: 0.45rem 1rem;
+  font-size: 0.8rem;
+}
+
+.dateCell {
+  font-size: 0.85rem;
+  color: var(--text-gray);
+  white-space: nowrap;
+}
+
+.scoreDetail {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--text-gray);
+}
+
+/* ─── Pagination ───────────────────────────────────────────────────── */
+
+.pagination {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 0;
+}
+
+.paginationInfo {
+  padding: 0 0.75rem;
+  font-size: 0.9rem;
+  color: var(--text-gray);
+}
+
+.paginationBtn {
+  min-width: 6rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  cursor: pointer;
+  background-color: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 0.475rem;
+  transition: all 0.2s;
+}
+
+.paginationBtn:hover:not(:disabled) {
+  color: var(--btn-primary);
+  background-color: var(--btn-primary-light);
+  border-color: var(--btn-primary);
+}
+
+.paginationBtn:disabled {
+  color: var(--text-gray);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* ─── Empty state ──────────────────────────────────────────────────── */
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.emptyIcon {
+  font-size: 3rem;
+  opacity: 0.4;
+}
+
+.emptyText {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-gray);
+}
+
+/* ─── Loading ──────────────────────────────────────────────────────── */
+
+.loadingState {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 0;
+  color: var(--text-gray);
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--border);
+  border-top-color: var(--btn-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ─── Leaderboard ──────────────────────────────────────────────────── */
+
+.leaderboardWrapper {
+  margin-bottom: 2.5rem;
+  overflow-x: auto;
+  background-color: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 0.625rem;
+}
+
+.leaderboardTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.leaderboardTable th {
+  padding: 0.75rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-gray);
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: var(--bg-gray);
+  border-bottom: 1px solid var(--border);
+}
+
+.leaderboardTable td {
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  border-bottom: 1px solid var(--border);
+}
+
+.leaderboardTable tr:last-child td {
+  border-bottom: none;
+}
+
+.leaderboardTable tr:hover td {
+  background-color: var(--btn-primary-light);
+}
+
+.rankCell {
+  width: 40px;
+  font-weight: 700;
+  color: var(--text-gray);
+  text-align: center;
+}
+
+.rankGold {
+  color: #d4a017;
+}
+
+.rankSilver {
+  color: #8a8a8a;
+}
+
+.rankBronze {
+  color: #b87333;
+}
+
+.userCell {
+  font-weight: 600;
+}
+
+.youTag {
+  padding: 0.1rem 0.4rem;
+  margin-left: 0.375rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--btn-primary);
+  background-color: var(--btn-primary-light);
+  border-radius: 0.25rem;
+}
+
+.isCurrentUser td {
+  background-color: var(--btn-primary-light);
+}
+
+.leaderboardScore {
+  font-weight: 600;
+}
+
+.leaderboardEmptyState {
+  padding: 2.5rem;
+  font-size: 0.95rem;
+  color: var(--text-gray);
+  text-align: center;
+}
+
+/* ─── Weak Topics ──────────────────────────────────────────────────── */
+
+.weakTopicsSection {
+  margin-bottom: 2.5rem;
+}
+
+.weakTopicsHint {
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  color: var(--text-gray);
+}
+
+.weakTopicsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.weakTopicCard {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding: 1.25rem;
+  background-color: var(--white);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--error);
+  border-radius: 0.625rem;
+  transition: box-shadow 0.2s;
+}
+
+.weakTopicCard:hover {
+  box-shadow: 0 4px 16px rgb(0 0 0 / 6%);
+}
+
+.weakTopicWarning {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  font-size: 1.25rem;
+  background-color: var(--error-light);
+  border-radius: 50%;
+}
+
+.weakTopicInfo {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.weakTopicName {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.weakTopicStats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.weakTopicStat {
+  font-size: 0.8rem;
+  color: var(--text-gray);
+}
+
+.weakTopicAvg {
+  font-weight: 600;
+  color: var(--color-incorrect-text);
+}
+
+.weakTopicAction {
+  flex-shrink: 0;
+}
+
+.weakTopicPracticeBtn {
+  min-width: auto;
+  padding: 0.45rem 1rem;
+  font-size: 0.8rem;
+}
+
+.weakTopicsEmptyState {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 1.5rem;
+  color: var(--color-correct-text);
+  background-color: var(--color-correct-bg);
+  border: 1px solid var(--color-easy);
+  border-radius: 0.625rem;
+}
+
+.weakTopicsEmptyIcon {
+  font-size: 1.5rem;
+}
+
+.weakTopicsEmptyText {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* ─── Mobile cards (replaces table on small screens) ───────────────── */
+
+.mobileCards {
+  display: none;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.mobileCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  padding: 1.25rem;
+  background-color: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 0.625rem;
+}
+
+.mobileCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mobileCardBody {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.mobileCardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+}
+
+@media (width <= 700px) {
+  .dashboardContainer {
+    padding: 1rem;
+  }
+
+  .achievementsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .tableWrapper {
+    display: none;
+  }
+
+  .mobileCards {
+    display: flex;
+  }
+
+  .leaderboardWrapper {
+    font-size: 0.85rem;
+  }
+
+  .leaderboardTable th,
+  .leaderboardTable td {
+    padding: 0.6rem 0.5rem;
+  }
+
+  .weakTopicCard {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .weakTopicAction {
+    align-self: flex-end;
+  }
+}
