@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { WidgetEngine } from '@features/widget-engine/WidgetEngine';
 import Button from '@shared/Button/Button';
@@ -7,6 +7,7 @@ import clsx from 'clsx';
 import type { ParseKeys } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { usePracticeStore } from '@s/practice.store';
+import { SoundService } from '@src/lib/soundService';
 import type { WidgetAnswer } from '@src/types/widget.types';
 import styles from './Practice.module.css';
 
@@ -45,6 +46,28 @@ const PracticePageFeature: React.FC = () => {
       resetSession();
     };
   }, [topicId, startSession, resetSession]);
+
+  // Sound: correct / incorrect answer
+  const prevVerdictRef = useRef(lastVerdict);
+  useEffect(() => {
+    if (lastVerdict && lastVerdict !== prevVerdictRef.current) {
+      if (lastVerdict.isCorrect) {
+        SoundService.playCorrect();
+      } else {
+        SoundService.playIncorrect();
+      }
+    }
+    prevVerdictRef.current = lastVerdict;
+  }, [lastVerdict]);
+
+  // Sound: test finished - fanfare depends on score
+  const prevSummaryRef = useRef(summary);
+  useEffect(() => {
+    if (summary && summary !== prevSummaryRef.current) {
+      SoundService.playFinish(summary.percentage);
+    }
+    prevSummaryRef.current = summary;
+  }, [summary]);
 
   const currentWidget = widgets[currentIndex];
   const isLastWidget = currentIndex + 1 >= widgets.length;

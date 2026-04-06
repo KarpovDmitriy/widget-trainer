@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PATHS } from '@shared/Constants/paths';
+import type { Achievement } from '@utils/achievements';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '@s/auth.store';
 import { useDashboardStore } from '@s/dashboard.store';
+import { SoundService } from '@src/lib/soundService';
 import AchievementsSection from './AchievementsSection';
 import styles from './Dashboard.module.css';
 import LeaderboardSection from './LeaderboardSection';
@@ -34,6 +36,25 @@ const DashboardPageFeature: React.FC = () => {
       fetchAll(user.id);
     }
   }, [user?.id, fetchAll]);
+
+  // Sound: play "level up" when newly unlocked achievements are detected
+  const prevAchievementsRef = useRef<Achievement[]>([]);
+  useEffect(() => {
+    if (achievements.length === 0) {
+      return;
+    }
+
+    const prev = prevAchievementsRef.current;
+    // Only compare once we already have a previous snapshot (not on first load)
+    if (prev.length > 0) {
+      const prevUnlockedKeys = new Set(prev.filter((a) => a.unlocked).map((a) => a.key));
+      const hasNewUnlock = achievements.some((a) => a.unlocked && !prevUnlockedKeys.has(a.key));
+      if (hasNewUnlock) {
+        SoundService.playAchievement();
+      }
+    }
+    prevAchievementsRef.current = achievements;
+  }, [achievements]);
 
   const handlePageChange = (page: number): void => {
     if (user?.id) {
