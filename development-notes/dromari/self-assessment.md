@@ -6,23 +6,22 @@
 
 ## **Личные баллы: Marina**
 
-| Категория             | Фича                           | Баллы   | Ссылки                                                  |
-| --------------------- | ------------------------------ | ------- | ------------------------------------------------------- |
-| My Components         | Profile Page                   | +20     | https://github.com/KarpovDmitriy/widget-trainer/pull/17 |
-| My Components         | Landing Page                   | +20     | https://github.com/KarpovDmitriy/widget-trainer/pull/45 |
-| My Components         | Login Page                     | +20     | https://github.com/KarpovDmitriy/widget-trainer/pull/9  |
-| My Components         | Register Page                  | +20     | https://github.com/KarpovDmitriy/widget-trainer/pull/9  |
-| My Components         | Header                         | +20     | https://github.com/KarpovDmitriy/widget-trainer/pull/29 |
-| My Components         | Toast system                   | +20     | https://github.com/KarpovDmitriy/widget-trainer/pull/35 |
-| My Components         | Loading state                  | +20     | https://github.com/KarpovDmitriy/widget-trainer/pull/37 |
-| My Components         | Wigdets true/false             | +20     | https://github.com/KarpovDmitriy/widget-trainer/pull/41 |
-| My Components         | Wigdets code completion        | +20     | https://github.com/KarpovDmitriy/widget-trainer/pull/43 |
-| UI & Interaction      | i18n (2 language)              | +10     | https://github.com/KarpovDmitriy/widget-trainer/pull/29 |
-| UI & Interaction      | Theme Switcher                 | +10     | https://github.com/KarpovDmitriy/widget-trainer/pull/46 |
-| UI & Interaction      | Responsive                     | +5      | https://github.com/KarpovDmitriy/widget-trainer/pull/42 |
+| Категория             | Фича                           | Баллы   | Ссылки                                                            |
+| --------------------- | ------------------------------ | ------- | ----------------------------------------------------------------- |
+| My Components         | Register Page & Login Page     | +20     | [PR #9](https://github.com/KarpovDmitriy/widget-trainer/pull/9)   |
+| My Components         | Profile Page                   | +20     | [PR #17](https://github.com/KarpovDmitriy/widget-trainer/pull/17) |
+| My Components         | Header                         | +20     | [PR #29](https://github.com/KarpovDmitriy/widget-trainer/pull/29) |
+| My Components         | Toast system                   | +20     | [PR #35](https://github.com/KarpovDmitriy/widget-trainer/pull/35) |
+| My Components         | Loading state                  | +20     | [PR #37](https://github.com/KarpovDmitriy/widget-trainer/pull/37) |
+| My Components         | Wigdets true/false             | +20     | [PR #41](https://github.com/KarpovDmitriy/widget-trainer/pull/41) |
+| My Components         | Wigdets code completion        | +20     | [PR #43](https://github.com/KarpovDmitriy/widget-trainer/pull/43) |
+| My Components         | Landing Page                   | +20     | [PR #45](https://github.com/KarpovDmitriy/widget-trainer/pull/45) |
+| UI & Interaction      | i18n (2 language)              | +10     | [PR #29](https://github.com/KarpovDmitriy/widget-trainer/pull/29) |
+| UI & Interaction      | Responsive                     | +5      | [PR #42](https://github.com/KarpovDmitriy/widget-trainer/pull/42) |
+| UI & Interaction      | Theme Switcher                 | +10     | [PR #46](https://github.com/KarpovDmitriy/widget-trainer/pull/46) |
 | Architecture          | State Manager - Zustand (used) | +10     |
 | Frameworks            | React                          | +5      |
-| **Personal Features** |                                | **220** |
+| **Personal Features** |                                | **200** |
 
 # **Описание работы**
 
