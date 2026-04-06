@@ -5,6 +5,7 @@ interface LoaderFlags {
   isAuthLoading: boolean;
   isProfileLoading: boolean;
   isAppLoading: boolean;
+  isDashboardLoading: boolean;
 }
 
 interface LoaderAction {
@@ -21,6 +22,7 @@ const initialFlags: LoaderFlags = {
   isAuthLoading: false,
   isProfileLoading: false,
   isAppLoading: true,
+  isDashboardLoading: false,
 };
 
 const computeIsAnyLoading = (flags: LoaderFlags): boolean => {

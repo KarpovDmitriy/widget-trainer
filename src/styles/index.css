@@ -76,6 +76,10 @@
   --color-correct-text: #50cd89;
   --color-incorrect-text: #f1416c;
   --misty-rose: #3a2434;
+  --color-medium-text: #92400e;
+  --rank-gold: #d4a017;
+  --rank-silver: #8a8a8a;
+  --rank-bronze: #b87333;
 }
 
 #root {
