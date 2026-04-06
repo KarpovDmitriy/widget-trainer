@@ -19,6 +19,8 @@
   position: absolute;
   top: 0;
   right: 0;
+  display: flex;
+  gap: 10px;
   padding: 1.5rem;
 
   .langSwitcher {
@@ -118,5 +120,13 @@
 
   .loginMain {
     padding: 2.5rem 1.5rem;
+  }
+
+  .authLangSwitcher {
+    padding: 0 1.5rem;
+  }
+
+  .loginCard {
+    margin-top: 1rem;
   }
 }

@@ -1,0 +1,25 @@
+.themeSwitcher {
+  display: flex;
+  align-items: center;
+}
+
+.themeBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  background: var(--white);
+  border-radius: 0.475rem;
+  transition: all 0.2s ease;
+}
+
+.themeBtn:hover {
+  text-shadow:
+    0 0 10px var(--white),
+    0 0 20px var(--blue),
+    0 0 30px var(--logo);
+  background: var(--white);
+}

@@ -50,3 +50,10 @@
   background-color: var(--blue);
   border-radius: 2px;
 }
+
+@media (width <= 820px) {
+  .langSwitcher {
+    padding-right: 0;
+    border-right: none;
+  }
+}
