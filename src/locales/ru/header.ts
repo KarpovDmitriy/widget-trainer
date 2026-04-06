@@ -14,5 +14,10 @@ export const headerContent = {
     user: {
       signOut: 'Выйти',
     },
+    sound: {
+      toggle: 'Переключить звук',
+      on: 'Звук включён',
+      off: 'Звук выключен',
+    },
   },
 };

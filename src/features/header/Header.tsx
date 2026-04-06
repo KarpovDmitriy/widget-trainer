@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { LangSwitcher } from '@shared/LangSwitcher/LangSwitcher';
 import { LogoutButton } from '@shared/LogoutButton';
+import { SoundToggle } from '@shared/SoundToggle/SoundToggle';
 import { ThemeSwitcher } from '@shared/ThemeSwitcher/ThemeSwitcher';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
@@ -56,6 +57,7 @@ const Header: React.FC = () => {
 
           <div className={styles.mobileOnly}>
             <ThemeSwitcher />
+            <SoundToggle />
             <LangSwitcher />
             <LogoutButton className={styles.logoutButton}>{t('header.user.signOut')}</LogoutButton>
           </div>
@@ -63,6 +65,7 @@ const Header: React.FC = () => {
 
         <div className={styles.rightSection}>
           <ThemeSwitcher />
+          <SoundToggle />
           <LangSwitcher />
           <div className={styles.userSection}>
             <div className={styles.avatar}>

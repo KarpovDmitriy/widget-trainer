@@ -67,16 +67,22 @@ export const CodeOrderingComponent: React.FC<WidgetStrategyProps<CodeOrderingWid
       return;
     }
 
-    setOrder((prev) => {
-      const updated = [...prev];
-      const draggedItemValue = updated[dragItem.current!];
-      updated.splice(dragItem.current!, 1);
-      updated.splice(dragOverItem.current!, 0, draggedItemValue);
-      return updated;
-    });
+    // Capture ref values BEFORE calling setOrder - React 18 batches
+    // state updates, so the callback inside setOrder runs later during
+    // render, by which time the refs would already be null.
+    const from = dragItem.current;
+    const to = dragOverItem.current;
 
     dragItem.current = null;
     dragOverItem.current = null;
+
+    setOrder((prev) => {
+      const updated = [...prev];
+      const draggedItemValue = updated[from];
+      updated.splice(from, 1);
+      updated.splice(to, 0, draggedItemValue);
+      return updated;
+    });
   }, [disabled]);
 
   const moveItem = useCallback(
