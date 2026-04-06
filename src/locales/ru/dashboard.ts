@@ -46,7 +46,7 @@ export const dashboardContent = {
       avgScore: 'Средний: {{score}}%',
       lastScore: 'Последний: {{score}}%',
       attempts: '{{count}} попыток',
-      empty: 'Отлично! Слабых тем не найдено — так держать!',
+      empty: 'Отлично! Слабых тем не найдено - так держать!',
       threshold: 'Темы со средним баллом ниже 70%',
     },
   },

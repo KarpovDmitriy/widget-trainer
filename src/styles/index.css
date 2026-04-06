@@ -43,6 +43,10 @@
   --color-correct-bg: #e8fff3;
   --color-correct-text: #047857;
   --color-incorrect-text: #be123c;
+  --color-medium-text: #92400e;
+  --rank-gold: #d4a017;
+  --rank-silver: #8a8a8a;
+  --rank-bronze: #b87333;
 }
 
 #root {

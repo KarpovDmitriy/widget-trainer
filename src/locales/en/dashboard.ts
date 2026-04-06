@@ -46,7 +46,7 @@ export const dashboardContent = {
       avgScore: 'Avg: {{score}}%',
       lastScore: 'Last: {{score}}%',
       attempts: '{{count}} attempts',
-      empty: 'Great job! No weak topics found — keep it up!',
+      empty: 'Great job! No weak topics found - keep it up!',
       threshold: 'Topics with average score below 70%',
     },
   },
