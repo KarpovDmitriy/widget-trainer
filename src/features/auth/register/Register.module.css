@@ -7,12 +7,31 @@
 }
 
 .registerMain {
+  position: relative;
   display: flex;
   flex: 1;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 2rem;
+}
+
+.authLangSwitcher {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  gap: 10px;
+  padding: 1.5rem;
+
+  .langSwitcher {
+    padding-right: 0;
+    border-right: none;
+
+    .langBtn:hover {
+      color: var(--text-gray);
+    }
+  }
 }
 
 .registerCard {
@@ -44,12 +63,28 @@
   text-align: center;
 }
 
+.errorText {
+  position: absolute;
+  padding-top: 5px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-error);
+}
+
 @media (width <= 805px) {
+  .authLangSwitcher {
+    padding: 0 1.5rem;
+  }
+
   .registerPage {
     flex-direction: column;
   }
 
   .registerMain {
     padding: 2.5rem 1.5rem;
+  }
+
+  .registerCard {
+    margin-top: 1rem;
   }
 }

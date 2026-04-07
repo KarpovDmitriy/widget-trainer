@@ -4,8 +4,8 @@
   flex-direction: column;
   justify-content: center;
   padding: 4rem;
-  color: var(--white);
-  background: linear-gradient(135deg, var(--logo) 0%, #085a8a 100%);
+  color: var(--wb-text);
+  background: var(--logo);
 }
 
 .authAside h1 {
@@ -13,7 +13,7 @@
   font-size: 2.25rem;
   font-weight: 800;
   line-height: 1.2;
-  color: var(--white);
+  color: var(--wb-text);
   text-align: left;
 }
 
@@ -46,7 +46,7 @@
   display: block;
   margin-bottom: 0.25rem;
   font-size: 1.1rem;
-  color: var(--white);
+  color: var(--wb-text);
 }
 
 .authAsideFooter {
@@ -67,15 +67,20 @@
   .authAside {
     flex: 0 0 auto;
     align-items: center;
-    padding: 3rem 2rem;
+    padding: 1rem 2rem;
+    margin-bottom: 1rem;
   }
 
   .authAside h1 {
-    font-size: 2.2rem;
+    font-size: 1.8rem;
   }
 
-  .authAsideContent,
   .authAsideFooter {
+    padding-top: 1rem;
+    text-align: center;
+  }
+
+  .authAsideContent {
     display: none;
   }
 }

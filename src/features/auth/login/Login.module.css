@@ -7,11 +7,30 @@
 }
 
 .loginMain {
+  position: relative;
   display: flex;
   flex: 1;
   align-items: center;
   justify-content: center;
   padding: 2rem;
+}
+
+.authLangSwitcher {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  gap: 10px;
+  padding: 1.5rem;
+
+  .langSwitcher {
+    padding-right: 0;
+    border-right: none;
+
+    .langBtn:hover {
+      color: var(--text-gray);
+    }
+  }
 }
 
 .loginCard {
@@ -74,7 +93,7 @@
 }
 
 .signupLink {
-  margin-top: 1.5rem;
+  margin-top: 2.5rem;
   font-size: 0.9rem;
   color: var(--text-gray);
   text-align: center;
@@ -86,6 +105,14 @@
   text-decoration: none;
 }
 
+.errorText {
+  position: absolute;
+  padding-top: 5px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-error);
+}
+
 @media (width <= 805px) {
   .loginPage {
     flex-direction: column;
@@ -93,5 +120,13 @@
 
   .loginMain {
     padding: 2.5rem 1.5rem;
+  }
+
+  .authLangSwitcher {
+    padding: 0 1.5rem;
+  }
+
+  .loginCard {
+    margin-top: 1rem;
   }
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import { type Control, type FieldValues, type Path, useController } from 'react-hook-form';
 import Select, { type SingleValue } from 'react-select';
 import Field from '../Field/Field';
+import './ControlledSelect.css';
 
 interface SelectOption {
   value: string;
@@ -34,10 +35,13 @@ export function ControlledSelect<T extends FieldValues>({
     <Field label={label} error={error?.message}>
       <Select
         {...field}
+        unstyled
         options={options}
         value={selectedValue}
         onChange={(val: SingleValue<SelectOption>) => field.onChange(val?.value)}
         classNamePrefix="custom-select"
+        menuPlacement="auto"
+        menuPosition="fixed"
       />
     </Field>
   );

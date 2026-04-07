@@ -1,0 +1,56 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.75rem;
+  background-color: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  box-shadow: 0 0.1rem 1rem 0.25rem rgb(0 0 0 / 3%);
+}
+
+.codeBox {
+  padding: 1.25rem;
+  overflow-x: auto;
+  background-color: var(--bg-gray);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+}
+
+.pre {
+  margin: 0;
+  font-family: Monaco, Menlo, 'Ubuntu Mono', monospace;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-dark);
+}
+
+.input {
+  min-width: 40px;
+  padding: 2px 6px;
+  margin: 0 4px;
+  font-family: inherit;
+  font-size: inherit;
+  color: var(--btn-primary);
+  outline: none;
+  background-color: var(--white);
+  border: 1px solid var(--text-light-gray);
+  border-radius: 4px;
+  transition: border-color 0.2s;
+}
+
+.input:focus {
+  border-color: var(--btn-primary);
+}
+
+.input:disabled {
+  cursor: not-allowed;
+  background-color: var(--input-bg);
+}
+
+.submitRow {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1.25rem;
+  border-top: 1px dashed var(--border);
+}

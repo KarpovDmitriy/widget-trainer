@@ -1,47 +1,58 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { countryOptions } from '@data/selectOptions';
 import { INITIAL_USER_DATA, type UserData } from '@data/userDefaults';
-import { profileContent } from '@locales/en/profile';
+import { SYSTEM_ERROR } from '@shared/Constants/constants';
+import { useSelectOptions } from '@utils/useSelectOptions';
+import clsx from 'clsx';
+import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '@s/auth.store';
 import { useProfileStore } from '@s/profile.store';
+import { useToastStore } from '@s/toast.store';
 import Button from '@src/shared/Button/Button';
 import styles from './Profile.module.css';
 import ProfileEditForm from './profileEditForm/ProfileEditForm';
 import ProfileOverview from './profileOverview/ProfileOverview';
 
 const Profile: React.FC = () => {
+  const isFirstLoad = useRef(true);
+  const { t } = useTranslation();
+
   const profile = useProfileStore((s) => s.profile);
-  const storeError = useProfileStore((s) => s.error);
   const saveProfile = useProfileStore((s) => s.saveProfile);
   const fetchProfile = useProfileStore((s) => s.fetchProfile);
   const { id: userId } = useAuthStore((s) => s.user) ?? {};
+  const addToast = useToastStore((s) => s.addToast);
 
   const [activeTab, setActiveTab] = useState<'overview' | 'settings'>('overview');
   const navigate = useNavigate();
-  const { nav, headers, notifications } = profileContent;
-
   const profileData: UserData = profile ?? INITIAL_USER_DATA;
+
+  const { displayCountry } = useSelectOptions(profileData);
 
   useEffect(() => {
     if (!userId) {
       return;
     }
-    void fetchProfile(userId);
-  }, [fetchProfile, userId]);
+    if (!profile && isFirstLoad.current) {
+      isFirstLoad.current = false;
+      fetchProfile(userId);
+    }
+  }, [fetchProfile, userId, profile]);
 
   const handleSave = async (data: UserData): Promise<void> => {
     if (!userId) {
       return;
     }
 
-    try {
-      await saveProfile(userId, data);
-      alert(notifications.success);
+    const error = await saveProfile(userId, data);
+
+    if (!error) {
+      addToast('profile.notifications.success', 'success');
       setActiveTab('overview');
-    } catch (err) {
-      // TODO: replace with toast notification when global toast system is implemented
-      alert((err as Error).message ?? '[Profile] failed to save profile');
+    } else {
+      if (error !== SYSTEM_ERROR) {
+        addToast(error, 'error');
+      }
     }
   };
 
@@ -56,38 +67,37 @@ const Profile: React.FC = () => {
               </h1>
               <div className={styles.profileMeta}>
                 <span>{profileData.company}</span>
-                <span>{countryOptions.find((o) => o.value === profileData.country)?.label}</span>
+                <span>{displayCountry}</span>
                 <span>{profileData.email}</span>
               </div>
             </div>
           </div>
           <Button variant="secondary" onClick={() => navigate(-1)}>
-            {nav.back}
+            {t('profile.form.buttons.back')}
           </Button>
         </div>
 
         <nav className={styles.profileNav}>
           <button
-            className={`${styles.navLinkBtn} ${activeTab === 'overview' ? styles.active : ''}`}
+            className={clsx(styles.navLinkBtn, { [styles.active]: activeTab === 'overview' })}
             onClick={() => setActiveTab('overview')}
           >
-            {nav.overview}
+            {t('profile.header.tabs.overview')}
           </button>
           <button
-            className={`${styles.navLinkBtn} ${activeTab === 'settings' ? styles.active : ''}`}
+            className={clsx(styles.navLinkBtn, { [styles.active]: activeTab === 'settings' })}
             onClick={() => setActiveTab('settings')}
           >
-            {nav.settings}
+            {t('profile.header.tabs.settings')}
           </button>
         </nav>
       </div>
 
-      {/* TODO: remove this inline error once the global toast system is implemented */}
-      {storeError && <p className={styles.storeError}>{storeError}</p>}
-
       <div className={styles.card}>
         <div className={styles.cardHeader}>
-          <h3>{activeTab === 'overview' ? headers.details : headers.settings}</h3>
+          <h3>
+            {activeTab === 'overview' ? t('profile.overview.headers.details') : t('profile.form.headers.settings')}
+          </h3>
         </div>
         <div className={styles.cardBody}>
           {activeTab === 'overview' ? (

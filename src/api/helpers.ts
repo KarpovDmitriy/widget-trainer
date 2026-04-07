@@ -1,90 +1,99 @@
 import { SYSTEM_ERROR } from '@shared/Constants/constants';
-import type { AuthError, PostgrestError } from '@supabase/supabase-js';
+import { type AuthError, type PostgrestError, isAuthRetryableFetchError } from '@supabase/supabase-js';
+import { i18CheckPath } from '@utils/zod-i18.typecheck';
+import { useToastStore } from '@s/toast.store';
 
 export const USE_MOCK = import.meta.env.VITE_USE_MOCK === 'true';
 
 export const processAuthError = (error: AuthError): string | null => {
   const { status, message, code } = error;
-  // TODO: TOAST: const { showToast } = useToastStore.getState();
-  // TODO: add an i18n store and, depending on the language, retrieve systemMsg errors.
+  const { addToast } = useToastStore.getState();
+
+  if (isNetworkError(error)) {
+    const systemMsg = i18CheckPath('common.errors.network');
+    addToast(systemMsg, 'error');
+    return SYSTEM_ERROR;
+  }
 
   const isSystemError =
     !status ||
     status >= 500 ||
     status === 429 ||
     status === 401 ||
-    message === 'Fetch error' ||
     (status === 400 && (message.includes('configuration') || message.includes('provider')));
 
   if (isSystemError) {
-    let systemMsg = 'A system error occurred';
+    let systemMsg = i18CheckPath('common.errors.server');
 
     if (status === 429) {
-      systemMsg = 'Too many attempts. Please wait.';
-    } else if (message === 'Fetch error') {
-      systemMsg = 'Network error. Check your connection.';
-    } else if (status && status >= 500) {
-      systemMsg = 'Server error. We are working on fixing it.';
+      systemMsg = i18CheckPath('common.errors.tooManyAttempts');
     }
 
-    // TODO: I18N: Translate systemMsg based on lang
-    // TODO: TOAST: addToast(systemMsg, 'error')
-    console.warn(`[System Auth Error]: ${systemMsg}`, {
-      //TODO: remove console when toast system will be implemented
-      message,
-      systemMsg,
-    });
-
+    addToast(systemMsg, 'error');
     return SYSTEM_ERROR;
   }
 
-  if (!message) {
-    const systemMsg = `unknown_auth_error, status: ${status}, code: ${code}`;
-    console.warn(`[System Auth Error]: ${systemMsg}`, {
-      //TODO: remove console when toast system will be implemented
-      systemMsg,
-      message,
-      code,
-      status,
-    });
-    return systemMsg;
+  if (status === 422 || status === 400) {
+    if (message.includes('already registered')) {
+      return i18CheckPath('auth.apiErrors.alreadyRegistered');
+    }
+    if (message.includes('weak_password') || message.includes('at least 6 characters')) {
+      return i18CheckPath('auth.apiErrors.weakPassword');
+    }
+    if (message.includes('Invalid login credentials')) {
+      return i18CheckPath('auth.apiErrors.invalidCredentials');
+    }
   }
 
-  /*
-  // 4. Errors that the component must handle (400, 401, 422)
-  // - Invalid login credentials (400)
-  // - User already registered (400/422)
-  // - Weak password (422)
-  // - Email not confirmed (400)
-      TODO: add i18n store and take error message depending on language.
-    */
+  if (!message) {
+    const systemMsg = i18CheckPath('common.errors.unknown');
+    addToast(systemMsg, 'error');
+    return `${systemMsg}: ${status || ''} ${code || ''}`;
+  }
+
   return message;
 };
 
-export const processPostgrestError = (error: PostgrestError): string | null => {
+export const processPostgrestError = (error: PostgrestError, status: number): string | null => {
   const { code, message } = error;
-  // TODO: TOAST: const { showToast } = useToastStore.getState();
+  const { addToast } = useToastStore.getState();
 
-  const isSystemError =
-    code.startsWith('42') || // Syntax/Permission Errors
-    code.startsWith('5') || // Server error
-    message === 'Fetch error';
+  if (isNetworkError(error)) {
+    const systemMsg = i18CheckPath('common.errors.network');
+    addToast(systemMsg, 'error');
+    return SYSTEM_ERROR;
+  }
 
-  if (isSystemError) {
-    const systemMsg = 'Database error. Please try again later.';
-    // TODO: TOAST: showToast(systemMsg, 'error')
-    console.warn(`[System DB Error]: ${message}`, { code, message, systemMsg });
+  if (!code) {
+    const systemMsg = i18CheckPath('common.errors.unknown');
+    addToast(systemMsg, 'error');
+    return SYSTEM_ERROR;
+  }
+
+  const isServerError = code.startsWith('42') || code.startsWith('5') || status >= 500 || status === 429;
+
+  if (isServerError) {
+    let systemMsg = i18CheckPath('common.errors.server');
+    if (status === 429) {
+      systemMsg = i18CheckPath('common.errors.tooManyAttempts');
+    }
+    addToast(systemMsg, 'error');
     return SYSTEM_ERROR;
   }
 
   if (code === 'PGRST116') {
-    // TODO: TOAST: showToast(systemMsg, 'error')
+    const systemMsg = i18CheckPath('common.errors.unknown');
+    addToast(systemMsg, 'error');
     return SYSTEM_ERROR;
   }
 
-  console.warn(`[DB Error]: ${message}`, { code });
-  // TODO: Decide whether to send them to toasts or show them on the profile
-  // TODO: TOAST: showToast(systemMsg, 'error')
-
   return message;
 };
+
+function isNetworkError(error: PostgrestError | AuthError): boolean {
+  if (isAuthRetryableFetchError(error)) {
+    return true;
+  }
+  const message = error.message?.toLowerCase() || '';
+  return message.includes('fetch') || message.includes('network');
+}
