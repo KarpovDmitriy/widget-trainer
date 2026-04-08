@@ -1,6 +1,6 @@
 # **Self assessment**
 
-Ссылка на PR - https://github.com/KarpovDmitriy/widget-trainer/pull/48
+Ссылка на PR - https://github.com/KarpovDmitriy/widget-trainer/pull/54
 
 # **Таблица фич - реализованные фичи, со ссылками на PR, и итоговая оценка**
 
@@ -23,8 +23,8 @@
 | UI & Interaction      | Theme Switcher                                | +10     | [PR #47](https://github.com/KarpovDmitriy/widget-trainer/pull/47)                                                                    |
 | Quality               | Unit Tests (Basic)                            | +10     | [PR #31](https://github.com/KarpovDmitriy/widget-trainer/pull/31)                                                                    |
 | Quality               | E2E Tests                                     | +10     | [PR #50](https://github.com/KarpovDmitriy/widget-trainer/pull/50)                                                                    |
-| DevOps & Role         | Auto-deploy (Vercel with git???)              | +5      | [PR #46](https://github.com/KarpovDmitriy/widget-trainer/pull/46)                                                                    |
-| Architecture          | State Manager (Zustand)                       | +10     |
+| DevOps & Role         | Auto-deploy                                   | +5      |                                                                                                                                      |
+| Architecture          | State Manager (Zustand)                       | +10     | [PR #26](https://github.com/KarpovDmitriy/widget-trainer/pull/26)                                                                    |
 | Architecture          | Design Patterns: Strategy in Widget engine    | +10     | [PR #36](https://github.com/KarpovDmitriy/widget-trainer/pull/36)                                                                    |
 | Architecture          | API Layer                                     | +10     | [PR #36](https://github.com/KarpovDmitriy/widget-trainer/pull/36), [PR #26](https://github.com/KarpovDmitriy/widget-trainer/pull/26) |
 | Frameworks            | React                                         | +5      |
