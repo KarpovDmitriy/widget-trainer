@@ -26,7 +26,7 @@
   font-size: 1rem;
   color: var(--text-dark);
   background-color: var(--input-bg);
-  border: 1px solid transparent;
+  border: 1px solid var(--border);
   border-radius: 0.475rem;
   transition: 0.2s;
 }

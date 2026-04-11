@@ -17,7 +17,7 @@
   color: var(--text-dark);
   cursor: pointer;
   background-color: var(--input-bg);
-  border: 1.5px solid transparent;
+  border: 1.5px solid var(--border);
   border-radius: 0.475rem;
   transition: all 0.2s;
 }
