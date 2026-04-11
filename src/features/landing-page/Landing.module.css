@@ -34,6 +34,10 @@
   align-items: center;
 }
 
+.langSwitcher {
+  border-right: none;
+}
+
 .hero {
   display: flex;
   flex-direction: column;
