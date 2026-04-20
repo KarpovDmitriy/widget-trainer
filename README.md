@@ -129,9 +129,37 @@ VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY=<your-supabase-anon-key>
 
 ### Тестирование
 
+#### Unit-тесты (Vitest)
+
 ```bash
-npm test                # Unit-тесты (Vitest)
-npm run test:e2e        # E2E-тесты (Playwright)
+npm test              # запуск тестов
+npm run test:watch    # режим watch
+npm run test:coverage # тесты + coverage отчёт
+```
+
+#### Coverage
+
+| Категория | % Stmts | % Branch | % Funcs | % Lines |
+| --------- | ------- | -------- | ------- | ------- |
+| All files | 16.74   | 15.38    | 16.34   | 16.61   |
+| api/      | 38.73   | 37.19    | 46.34   | 38.52   |
+| store/    | 22.13   | 6.52     | 23.63   | 20.49   |
+| shared/   | ~40     | ~50      | ~30     | ~40     |
+
+**Покрытые модули (>80%):**
+
+- `auth.api.ts` - 86% statements
+- `helpers.ts` - 83% statements
+- `profile.api.ts` - 95% statements
+- `ProfileEditForm.tsx` - 100%
+- Shared компоненты (Button, Field, ControlledInput) - 100%
+
+> Coverage отчёт генерируется в папку `coverage/`. HTML-версия: `coverage/index.html`
+
+#### E2E-тесты (Playwright)
+
+```bash
+npm run test:e2e
 ```
 
 ---

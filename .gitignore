@@ -34,3 +34,4 @@ dist-ssr
 /playwright/.cache/
 
 tsconfig.e2e.tsbuildinfo
+coverage
